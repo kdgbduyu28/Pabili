@@ -6,7 +6,7 @@ import { Header, Wrap } from '../components/Page';
 import { ProductImage } from '../components/ProductImage';
 import { getProduct, variantLabel } from '../data/catalog';
 import { peso } from '../lib/format';
-import { useGrid } from '../lib/hooks';
+import { useMeasuredWidth } from '../lib/hooks';
 import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
 import { C, R } from '../theme';
@@ -21,7 +21,7 @@ function ownedFor(ms: number) {
 
 export default function Haul() {
   const orders = useShop((s) => s.orders);
-  const { content } = useGrid();
+  const { width: content, onLayout } = useMeasuredWidth();
   const cols = content < 600 ? 3 : content < 900 ? 4 : 6;
   const w = Math.floor((content - 16 - 8 * (cols - 1)) / cols);
 
@@ -63,7 +63,7 @@ export default function Haul() {
             />
           ) : (
             <>
-              <View style={styles.grid}>
+              <View style={styles.grid} onLayout={onLayout}>
                 {items.map((i) => {
                   const p = getProduct(i.productId);
                   if (!p) return null;

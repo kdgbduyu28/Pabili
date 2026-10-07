@@ -2,14 +2,18 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { ReactNode } from 'react';
-import { Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
+import { LayoutChangeEvent, Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { C, MAX_WIDTH } from '../theme';
 import { CartButton } from './CartButton';
 
 /** Centers content and caps its width so desktop web doesn't stretch edge to edge. */
-export function Wrap({ children, style }: { children: ReactNode; style?: StyleProp<ViewStyle> }) {
-  return <View style={[styles.wrap, style]}>{children}</View>;
+export function Wrap({ children, style, onLayout }: { children: ReactNode; style?: StyleProp<ViewStyle>; onLayout?: (e: LayoutChangeEvent) => void }) {
+  return (
+    <View style={[styles.wrap, style]} onLayout={onLayout}>
+      {children}
+    </View>
+  );
 }
 
 export function back() {

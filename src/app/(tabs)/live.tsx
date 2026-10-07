@@ -11,13 +11,13 @@ import { getShop } from '../../data/catalog';
 import { CLIPS } from '../../data/extras';
 import { STREAMS, currentItem, livePrice, viewers } from '../../data/live';
 import { compact, peso } from '../../lib/format';
-import { useGrid, useNow } from '../../lib/hooks';
+import { useMeasuredWidth, useNow } from '../../lib/hooks';
 import { C, R } from '../../theme';
 
 export default function LiveList() {
   const insets = useSafeAreaInsets();
   const now = useNow(2000);
-  const { content } = useGrid();
+  const { width: content, onLayout } = useMeasuredWidth();
   const cols = content < 600 ? 2 : content < 900 ? 3 : 4;
   const w = Math.floor((content - 16 - 8 * (cols - 1)) / cols);
   const [mode, setMode] = useState<'live' | 'videos'>('live');
@@ -40,7 +40,7 @@ export default function LiveList() {
       </View>
       <ScrollView>
         {mode === 'videos' ? (
-          <Wrap style={styles.grid}>
+          <Wrap style={styles.grid} onLayout={onLayout}>
             {CLIPS.map((c, i) => (
               <Pressable key={c.id} style={[styles.card, { width: w }]} onPress={() => router.push(`/feed?start=${i}`)}>
                 <LinearGradient colors={c.colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.thumb, { height: w * 1.5 }]}>
@@ -61,7 +61,7 @@ export default function LiveList() {
             ))}
           </Wrap>
         ) : (
-        <Wrap style={styles.grid}>
+        <Wrap style={styles.grid} onLayout={onLayout}>
           {STREAMS.map((s) => {
             const { product } = currentItem(s, now);
             const shop = getShop(s.shopId);

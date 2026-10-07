@@ -32,7 +32,7 @@ import { MEGA_EXTRA_PCT, SLOT_MS, activeFlash, bundleFor, flashProgress, shopVou
 import { baseShipping, deliveryDays } from '../../lib/checkout';
 import { compact, deliveryWindow, peso, shortDate, soldLabel } from '../../lib/format';
 import { bump, success, tap, warn } from '../../lib/haptics';
-import { useGrid, useNow } from '../../lib/hooks';
+import { useGrid, useMeasuredWidth, useNow } from '../../lib/hooks';
 import { Question, useShop } from '../../store/useShop';
 import { toast, useUi } from '../../store/useUi';
 import { C, R } from '../../theme';
@@ -66,7 +66,8 @@ function priceRange(p: Product, now: number): [number, number] {
 
 function ProductDetail({ p }: { p: Product }) {
   const insets = useSafeAreaInsets();
-  const { content, wide, width } = useGrid();
+  const { wide } = useGrid();
+  const { width: avail, onLayout } = useMeasuredWidth();
   const now = useNow();
   const shop = getShop(p.shopId);
   const flash = activeFlash(p.id, now);
@@ -117,7 +118,7 @@ function ProductDetail({ p }: { p: Product }) {
   const pct = Math.round((1 - lo / original) * 100);
   const [d1, d2] = deliveryDays(shop, false);
 
-  const imgSize = wide ? Math.min(460, content * 0.42) : Math.min(width, content);
+  const imgSize = wide ? Math.min(460, avail * 0.42) : avail;
   const images = [0, 1, 2];
 
   const open = (m: Mode) => {
@@ -300,7 +301,7 @@ function ProductDetail({ p }: { p: Product }) {
   return (
     <View style={{ flex: 1, backgroundColor: C.bg }}>
       <ScrollView contentContainerStyle={{ paddingBottom: 72 + insets.bottom }}>
-        <Wrap>
+        <Wrap onLayout={onLayout}>
           {wide ? (
             <View style={[styles.block, { flexDirection: 'row', gap: 16, paddingTop: insets.top + 56, paddingHorizontal: 12 }]}>
               {gallery}

@@ -15,7 +15,7 @@ import { forYou } from '../../data/extras';
 import { BANNERS, SLOT_MS, flashDeals, flashProgress, megaInfo, slotStart } from '../../data/promos';
 import { todayKey } from '../../lib/format';
 import { tap, success } from '../../lib/haptics';
-import { useGrid, useNow } from '../../lib/hooks';
+import { useMeasuredWidth, useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R } from '../../theme';
@@ -81,8 +81,7 @@ export default function Home() {
 }
 
 function Banners() {
-  const { content } = useGrid();
-  const w = content - 16;
+  const { width: w, onLayout } = useMeasuredWidth(16);
   const h = Math.min(Math.round(w * 0.36), 260);
   const ref = useRef<ScrollView>(null);
   const [index, setIndex] = useState(0);
@@ -99,7 +98,7 @@ function Banners() {
   }, [w]);
 
   return (
-    <View style={{ margin: 8, borderRadius: R.md, overflow: 'hidden' }}>
+    <View style={{ margin: 8, borderRadius: R.md, overflow: 'hidden' }} onLayout={onLayout}>
       <ScrollView
         ref={ref}
         horizontal

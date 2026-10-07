@@ -2,16 +2,17 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Product } from '../data/catalog';
 import { unitPrice } from '../data/promos';
-import { GRID_GAP, GRID_PAD, useGrid, useNow } from '../lib/hooks';
+import { GRID_GAP, GRID_PAD, gridFor, useMeasuredWidth, useNow } from '../lib/hooks';
 import { C } from '../theme';
 import { ProductCard } from './ProductCard';
 
 /** Plain wrapped grid. Lives inside a parent ScrollView so it can sit under other sections. */
 export function ProductGrid({ products, keyPrefix = '' }: { products: Product[]; keyPrefix?: string }) {
-  const { cardWidth } = useGrid();
+  const { width, onLayout } = useMeasuredWidth();
+  const { cardWidth } = gridFor(width);
   const now = useNow(30_000);
   return (
-    <View style={styles.grid}>
+    <View style={styles.grid} onLayout={onLayout}>
       {products.map((p, i) => (
         <ProductCard key={`${keyPrefix}${p.id}-${i}`} product={p} width={cardWidth} now={now} />
       ))}

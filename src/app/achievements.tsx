@@ -3,13 +3,13 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Header, Wrap } from '../components/Page';
 import { ACHIEVEMENTS } from '../lib/achievements';
 import { dateTime } from '../lib/format';
-import { useGrid } from '../lib/hooks';
+import { useMeasuredWidth } from '../lib/hooks';
 import { useShop } from '../store/useShop';
 import { C, R } from '../theme';
 
 export default function Achievements() {
   const unlocked = useShop((s) => s.achievements);
-  const { content } = useGrid();
+  const { width: content, onLayout } = useMeasuredWidth();
   const cols = content < 500 ? 2 : content < 900 ? 3 : 4;
   const w = Math.floor((content - 24 - 10 * (cols - 1)) / cols);
   const count = ACHIEVEMENTS.filter((a) => unlocked[a.id]).length;
@@ -31,7 +31,7 @@ export default function Achievements() {
               </View>
             </View>
           </View>
-          <View style={styles.grid}>
+          <View style={styles.grid} onLayout={onLayout}>
             {sorted.map((a) => {
               const at = unlocked[a.id];
               return (
