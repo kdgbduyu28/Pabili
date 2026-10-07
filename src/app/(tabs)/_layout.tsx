@@ -1,6 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
 import { ColorValue } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useNotifications } from '../../lib/useNotifications';
 import { cartCount, useShop } from '../../store/useShop';
 import { C } from '../../theme';
@@ -16,13 +17,17 @@ function icon(active: IconName, inactive: IconName) {
 export default function TabLayout() {
   const count = useShop(cartCount);
   const { unread } = useNotifications();
+  const insets = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: C.primary,
         tabBarInactiveTintColor: C.muted,
-        tabBarLabelStyle: { fontSize: 11 },
+        // The default 48px web bar clips label descenders; leave room for icon,
+        // label and the home-indicator area.
+        tabBarStyle: { height: 62 + insets.bottom, paddingBottom: insets.bottom },
+        tabBarLabelStyle: { fontSize: 11, lineHeight: 14 },
         sceneStyle: { backgroundColor: C.bg },
       }}
     >
@@ -32,6 +37,7 @@ export default function TabLayout() {
         name="notifications"
         options={{
           title: 'Notifications',
+          tabBarLabel: 'Alerts',
           tabBarIcon: icon('notifications', 'notifications-outline'),
           tabBarBadge: unread > 0 ? (unread > 99 ? '99+' : unread) : undefined,
           tabBarBadgeStyle: { backgroundColor: C.primary, fontSize: 10 },
