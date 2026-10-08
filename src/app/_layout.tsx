@@ -3,8 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import { View, useColorScheme } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { Notifier } from '../components/Notifier';
 import { Overlays } from '../components/Overlays';
 import { Watcher } from '../components/Watcher';
+import { NOTIFICATIONS_SUPPORTED } from '../lib/push';
 import { useShop } from '../store/useShop';
 import { C, Scheme, setScheme } from '../theme';
 
@@ -34,6 +36,7 @@ export default function RootLayout() {
             </Stack>
             <Overlays />
             <Watcher />
+            {NOTIFICATIONS_SUPPORTED && <Notifier />}
           </View>
         </ThemeProvider>
       </SafeAreaProvider>

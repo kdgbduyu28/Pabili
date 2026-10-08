@@ -5,6 +5,7 @@ import { Button } from '../components/bits';
 import { InterestPicker } from '../components/InterestPicker';
 import { Header, Wrap } from '../components/Page';
 import { tap, warn } from '../lib/haptics';
+import { NOTIFICATIONS_SUPPORTED, permission } from '../lib/push';
 import { play } from '../lib/sound';
 import { ThemePref, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
@@ -74,6 +75,28 @@ export default function Settings() {
                 onValueChange={(sound) => {
                   setSettings({ sound });
                   if (sound) play('coin');
+                }}
+                trackColor={{ true: C.primary, false: '#D4D4D8' }}
+                thumbColor="#fff"
+              />
+            </Row>
+            <Row
+              title="Notifications"
+              sub={
+                NOTIFICATIONS_SUPPORTED
+                  ? 'Parcel arrivals, restocks, group buys and a daily coin reminder'
+                  : 'Available in the iPhone and Android apps'
+              }
+            >
+              <Switch
+                value={NOTIFICATIONS_SUPPORTED && settings.notifications !== false}
+                disabled={!NOTIFICATIONS_SUPPORTED}
+                onValueChange={async (notifications) => {
+                  tap();
+                  setSettings({ notifications });
+                  if (notifications && !(await permission(true))) {
+                    toast('Turn on notifications for Pabili in your phone settings', 'notifications-off');
+                  }
                 }}
                 trackColor={{ true: C.primary, false: '#D4D4D8' }}
                 thumbColor="#fff"

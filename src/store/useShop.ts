@@ -97,7 +97,7 @@ export type Resisted = { productId: string; amount: number; at: number };
 
 export type ThemePref = 'system' | 'light' | 'dark';
 
-export type Settings = { sound: boolean; coolOff: boolean; coolOffMins: number; theme: ThemePref };
+export type Settings = { sound: boolean; coolOff: boolean; coolOffMins: number; theme: ThemePref; notifications: boolean };
 
 type State = {
   cart: CartItem[];
@@ -215,7 +215,7 @@ const initial = {
   interests: null as string[] | null,
   achievements: {} as Record<string, number>,
   resisted: [] as Resisted[],
-  settings: { sound: true, coolOff: false, coolOffMins: 10, theme: 'system' } as Settings,
+  settings: { sound: true, coolOff: false, coolOffMins: 10, theme: 'system', notifications: true } as Settings,
   feedLikes: [] as string[],
   stats: {} as Record<string, number>,
   draft: null,
