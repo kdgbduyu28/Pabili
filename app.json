@@ -24,7 +24,11 @@
     "web": {
       "bundler": "metro",
       "output": "single",
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "name": "Pabili",
+      "shortName": "Pabili",
+      "themeColor": "#F43F5E",
+      "backgroundColor": "#F4F4F5"
     },
     "plugins": [
       "expo-router",
@@ -46,10 +50,24 @@
           "microphonePermission": false
         }
       ],
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 160,
+          "resizeMode": "contain",
+          "backgroundColor": "#F43F5E",
+          "dark": {
+            "image": "./assets/splash-icon.png",
+            "backgroundColor": "#0E0E11"
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": false
-    }
+    },
+    "description": "A pretend shopping app: add to cart and check out all you want, pay ₱0."
   }
 }
