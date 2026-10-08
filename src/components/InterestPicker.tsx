@@ -1,6 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CATEGORIES } from '../data/catalog';
+import { t } from '../i18n';
 import { tap } from '../lib/haptics';
 import { C, R, themed } from '../theme';
 
@@ -20,7 +21,7 @@ export function InterestPicker({ value, onChange }: { value: string[]; onChange:
           >
             <Ionicons name={c.icon} size={26} color={on ? '#fff' : C.primary} />
             <Text style={[styles.label, on && { color: '#fff' }]} numberOfLines={2}>
-              {c.name}
+              {t(c.name)}
             </Text>
             {on && <Ionicons name="checkmark-circle" size={16} color="#fff" style={styles.check} />}
           </Pressable>

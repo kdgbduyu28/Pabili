@@ -9,6 +9,7 @@ import { Button, EmptyState } from './bits';
 import { Wrap } from './Page';
 import { ProductGrid, SortBar, useSorted } from './ProductGrid';
 import { Sheet } from './Sheet';
+import { t } from '../i18n';
 
 type Filters = {
   min: string;
@@ -87,9 +88,9 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
             (empty ?? (
               <EmptyState
                 icon="search"
-                title="No products found"
+                title={t("No products found")}
                 subtitle={active ? 'Try loosening your filters.' : 'Try a different keyword.'}
-                action={active ? <Button title="Clear filters" variant="outline" onPress={() => setFilters(EMPTY)} style={{ width: 180 }} /> : undefined}
+                action={active ? <Button title={t("Clear filters")} variant="outline" onPress={() => setFilters(EMPTY)} style={{ width: 180 }} /> : undefined}
               />
             ))
           )}
@@ -98,9 +99,9 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
 
       <Sheet open={open} onClose={() => setOpen(false)}>
         <ScrollView style={{ maxHeight: 520 }} contentContainerStyle={{ padding: 16, gap: 18 }} keyboardShouldPersistTaps="handled">
-          <Text style={styles.sheetTitle}>Search Filter</Text>
+          <Text style={styles.sheetTitle}>{t("Search Filter")}</Text>
 
-          <Group title="Price Range (₱)">
+          <Group title={t("Price Range (₱)")}>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
               <TextInput
                 value={draft.min}
@@ -122,7 +123,7 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
             </View>
           </Group>
 
-          <Group title="Rating">
+          <Group title={t("Rating")}>
             {[4.5, 4, 0].map((r) => (
               <Chip key={r} on={draft.rating === r} onPress={() => setDraft((d) => ({ ...d, rating: r }))}>
                 {r ? `${r} stars & up` : 'Any'}
@@ -130,7 +131,7 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
             ))}
           </Group>
 
-          <Group title="Ships From">
+          <Group title={t("Ships From")}>
             {LOCATIONS.map((l) => {
               const on = draft.locations.includes(l);
               return (
@@ -145,12 +146,12 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
             })}
           </Group>
 
-          <Group title="Services & Promotions">
+          <Group title={t("Services & Promotions")}>
             <Chip on={draft.mall} onPress={() => setDraft((d) => ({ ...d, mall: !d.mall }))}>
-              Pabili Mall
+              {t("Pabili Mall")}
             </Chip>
             <Chip on={draft.freeShip} onPress={() => setDraft((d) => ({ ...d, freeShip: !d.freeShip }))}>
-              Free Shipping
+              {t("Free Shipping")}
             </Chip>
             <Chip on={draft.cod} onPress={() => setDraft((d) => ({ ...d, cod: !d.cod }))}>
               Cash on Delivery
@@ -158,9 +159,9 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
           </Group>
         </ScrollView>
         <View style={styles.actions}>
-          <Button title="Reset" variant="outline" style={{ flex: 1 }} onPress={() => setDraft(EMPTY)} />
+          <Button title={t("Reset")} variant="outline" style={{ flex: 1 }} onPress={() => setDraft(EMPTY)} />
           <Button
-            title="Apply"
+            title={t("Apply")}
             style={{ flex: 1 }}
             onPress={() => {
               setFilters(draft);

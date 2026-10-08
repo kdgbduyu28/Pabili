@@ -6,6 +6,7 @@ import { LayoutChangeEvent, Pressable, StyleProp, StyleSheet, Text, View, ViewSt
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { C, MAX_WIDTH, themed } from '../theme';
 import { CartButton } from './CartButton';
+import { t } from '../i18n';
 
 /** Centers content and caps its width so desktop web doesn't stretch edge to edge. */
 export function Wrap({ children, style, onLayout }: { children: ReactNode; style?: StyleProp<ViewStyle>; onLayout?: (e: LayoutChangeEvent) => void }) {
@@ -27,7 +28,7 @@ export function Header({ title, right, cart }: { title: string; right?: ReactNod
   return (
     <View style={[styles.header, { paddingTop: insets.top }]}>
       <Wrap style={styles.headerRow}>
-        <Pressable onPress={back} hitSlop={10} style={styles.backBtn} accessibilityLabel="Back">
+        <Pressable onPress={back} hitSlop={10} style={styles.backBtn} accessibilityLabel={t("Back")}>
           <Ionicons name="arrow-back" size={24} color={C.primary} />
         </Pressable>
         <Text style={styles.title} numberOfLines={1}>
@@ -47,7 +48,7 @@ export function SearchHeader({ placeholder, showBack }: { placeholder?: string; 
     <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ paddingTop: insets.top }}>
       <Wrap style={styles.searchRow}>
         {showBack && (
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </Pressable>
         )}

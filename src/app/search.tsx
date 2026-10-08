@@ -14,6 +14,7 @@ import { tap } from '../lib/haptics';
 import { toast } from '../store/useUi';
 import { useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const FILTERS: Record<string, { label: string; test: (id: string) => boolean }> = {
   mall: { label: 'Pabili Mall', test: (id) => getShop(PRODUCTS.find((p) => p.id === id)!.shopId).mall },
@@ -82,7 +83,7 @@ export default function Search() {
     <View style={{ flex: 1 }}>
       <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ paddingTop: insets.top }}>
         <Wrap style={styles.row}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </Pressable>
           <View style={styles.inputWrap}>
@@ -109,11 +110,11 @@ export default function Search() {
               </Pressable>
             )}
             {speech && (
-              <Pressable hitSlop={8} onPress={listen} accessibilityLabel="Search by voice">
+              <Pressable hitSlop={8} onPress={listen} accessibilityLabel={t("Search by voice")}>
                 <Ionicons name={listening ? 'mic' : 'mic-outline'} size={20} color={listening ? C.primary : C.muted} />
               </Pressable>
             )}
-            <Pressable hitSlop={8} onPress={pickPhoto} accessibilityLabel="Search by photo">
+            <Pressable hitSlop={8} onPress={pickPhoto} accessibilityLabel={t("Search by photo")}>
               <Ionicons name="camera-outline" size={20} color={C.muted} />
             </Pressable>
           </View>
@@ -153,9 +154,9 @@ export default function Search() {
             {recent.length > 0 && (
               <View>
                 <View style={styles.headRow}>
-                  <Text style={styles.head}>Recent Searches</Text>
+                  <Text style={styles.head}>{t("Recent Searches")}</Text>
                   <Pressable onPress={clearRecent}>
-                    <Text style={{ color: C.muted, fontSize: 12 }}>Clear</Text>
+                    <Text style={{ color: C.muted, fontSize: 12 }}>{t("Clear")}</Text>
                   </Pressable>
                 </View>
                 <View style={styles.chips}>
@@ -168,7 +169,7 @@ export default function Search() {
             <View>
               <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, marginBottom: 10 }}>
                 <Ionicons name="flame" size={16} color={C.primary} />
-                <Text style={styles.head}>Trending Now</Text>
+                <Text style={styles.head}>{t("Trending Now")}</Text>
               </View>
               <View style={styles.chips}>
                 {TRENDING.map((r) => (
@@ -198,7 +199,7 @@ export default function Search() {
                 <Text style={{ color: C.primary, fontWeight: '700' }}>{FILTERS[filter].label}</Text>
                 <Pressable onPress={() => router.setParams({ filter: '' })}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
-                    <Text style={{ color: C.muted, fontSize: 12 }}>Clear filter</Text>
+                    <Text style={{ color: C.muted, fontSize: 12 }}>{t("Clear filter")}</Text>
                     <Ionicons name="close" size={14} color={C.muted} />
                   </View>
                 </Pressable>

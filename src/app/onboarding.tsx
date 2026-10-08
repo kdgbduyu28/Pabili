@@ -9,6 +9,7 @@ import { Wrap } from '../components/Page';
 import { success } from '../lib/haptics';
 import { useShop } from '../store/useShop';
 import { C, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Onboarding() {
   const insets = useSafeAreaInsets();
@@ -25,8 +26,8 @@ export default function Onboarding() {
       <ScrollView contentContainerStyle={{ paddingTop: insets.top + 32, paddingBottom: insets.bottom + 120 }}>
         <Wrap style={{ maxWidth: 560, paddingHorizontal: 20, gap: 8, alignItems: 'center' }}>
           <Text style={styles.brand}>Pabili</Text>
-          <Text style={styles.title}>What do you love shopping for?</Text>
-          <Text style={styles.sub}>Pick a few and your For You feed will lean their way. Everything here is pretend: shop all you want, pay ₱0.</Text>
+          <Text style={styles.title}>{t("What do you love shopping for?")}</Text>
+          <Text style={styles.sub}>{t("Pick a few and your For You feed will lean their way. Everything here is pretend: shop all you want, pay ₱0.")}</Text>
           <View style={{ height: 16 }} />
           <InterestPicker value={picked} onChange={setPicked} />
         </Wrap>
@@ -34,7 +35,7 @@ export default function Onboarding() {
       <View style={[styles.bar, { paddingBottom: insets.bottom + 12 }]}>
         <Wrap style={{ maxWidth: 560, gap: 8, paddingHorizontal: 20 }}>
           <Button title={picked.length ? `Start shopping (${picked.length})` : 'Pick at least one'} disabled={!picked.length} onPress={() => finish(picked)} />
-          <Button title="Skip for now" variant="outline" onPress={() => finish([])} />
+          <Button title={t("Skip for now")} variant="outline" onPress={() => finish([])} />
         </Wrap>
       </View>
     </LinearGradient>

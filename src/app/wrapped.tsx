@@ -14,6 +14,7 @@ import { shareText } from '../lib/share';
 import { computeWrapped } from '../lib/wrapped';
 import { useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const SLIDE_MS = 5000;
 
@@ -31,9 +32,9 @@ export default function WrappedScreen() {
       colors: ['#7C3AED', '#F43F5E'],
       body: (
         <>
-          <Text style={styles.kicker}>Pabili Wrapped</Text>
+          <Text style={styles.kicker}>{t("Pabili Wrapped")}</Text>
           <Text style={styles.huge}>{w.label}</Text>
-          <Text style={styles.line}>Your month of pretend shopping, in a few taps.</Text>
+          <Text style={styles.line}>{t("Your month of pretend shopping, in a few taps.")}</Text>
         </>
       ),
     },
@@ -41,7 +42,7 @@ export default function WrappedScreen() {
       colors: ['#F43F5E', '#FB7A3C'],
       body: w.orders ? (
         <>
-          <Text style={styles.kicker}>You "bought"</Text>
+          <Text style={styles.kicker}>{t("You \"bought\"")}</Text>
           <Text style={styles.huge}>{w.items}</Text>
           <Text style={styles.line}>
             things across {w.orders} order{w.orders === 1 ? '' : 's'}
@@ -50,9 +51,9 @@ export default function WrappedScreen() {
         </>
       ) : (
         <>
-          <Text style={styles.kicker}>This month so far</Text>
-          <Text style={styles.big}>No orders yet</Text>
-          <Text style={styles.line}>Your cart is waiting. Every pretend order counts here.</Text>
+          <Text style={styles.kicker}>{t("This month so far")}</Text>
+          <Text style={styles.big}>{t("No orders yet")}</Text>
+          <Text style={styles.line}>{t("Your cart is waiting. Every pretend order counts here.")}</Text>
         </>
       ),
     },
@@ -60,7 +61,7 @@ export default function WrappedScreen() {
       colors: ['#059669', '#22D3EE'],
       body: (
         <>
-          <Text style={styles.kicker}>Stayed in your wallet</Text>
+          <Text style={styles.kicker}>{t("Stayed in your wallet")}</Text>
           <Text style={styles.huge}>{peso(w.kept)}</Text>
           <Text style={styles.line}>Plus {peso(w.saved)} in deals you "scored". Real money spent: ₱0.</Text>
         </>
@@ -72,7 +73,7 @@ export default function WrappedScreen() {
             colors: ['#DB2777', '#FBBF24'] as [string, string],
             body: (
               <>
-                <Text style={styles.kicker}>Your top category</Text>
+                <Text style={styles.kicker}>{t("Your top category")}</Text>
                 <View style={styles.iconCircle}>
                   <Ionicons name={w.topCategory.category.icon} size={56} color="#fff" />
                 </View>
@@ -91,7 +92,7 @@ export default function WrappedScreen() {
             colors: ['#1E1B4B', '#7C3AED'] as [string, string],
             body: (
               <>
-                <Text style={styles.kicker}>Biggest pretend splurge</Text>
+                <Text style={styles.kicker}>{t("Biggest pretend splurge")}</Text>
                 <Animated.View entering={ZoomIn.springify().damping(12)}>
                   <ProductImage emoji={w.priciest.product.emoji} gradient={w.priciest.product.gradient} size={150} radius={R.xl} />
                 </Animated.View>
@@ -107,7 +108,7 @@ export default function WrappedScreen() {
       body:
         w.resistedCount > 0 ? (
           <>
-            <Text style={styles.kicker}>You talked yourself out of</Text>
+            <Text style={styles.kicker}>{t("You talked yourself out of")}</Text>
             <Text style={styles.huge}>{peso(w.resisted)}</Text>
             <Text style={styles.line}>
               {w.resistedCount} item{w.resistedCount === 1 ? '' : 's'} you changed your mind about. Iron will.
@@ -115,7 +116,7 @@ export default function WrappedScreen() {
           </>
         ) : (
           <>
-            <Text style={styles.kicker}>Coins earned</Text>
+            <Text style={styles.kicker}>{t("Coins earned")}</Text>
             <Coin size={80} />
             <Text style={styles.big}>{w.coins} coins</Text>
             <Text style={styles.line}>
@@ -128,7 +129,7 @@ export default function WrappedScreen() {
       colors: ['#F59E0B', '#EF4444'],
       body: (
         <>
-          <Text style={styles.kicker}>Your shopping persona</Text>
+          <Text style={styles.kicker}>{t("Your shopping persona")}</Text>
           <View style={styles.iconCircle}>
             <Ionicons name={w.persona.icon} size={56} color="#fff" />
           </View>
@@ -157,7 +158,7 @@ export default function WrappedScreen() {
           </View>
         ))}
       </View>
-      <Pressable onPress={back} hitSlop={10} style={[styles.close, { top: insets.top + 22 }]} accessibilityLabel="Close">
+      <Pressable onPress={back} hitSlop={10} style={[styles.close, { top: insets.top + 22 }]} accessibilityLabel={t("Close")}>
         <Ionicons name="close" size={28} color="#fff" />
       </Pressable>
 
@@ -175,7 +176,7 @@ export default function WrappedScreen() {
               tap();
               setI((x) => Math.max(0, x - 1));
             }}
-            accessibilityLabel="Previous"
+            accessibilityLabel={t("Previous")}
           />
           <Pressable
             style={{ flex: 2 }}
@@ -183,7 +184,7 @@ export default function WrappedScreen() {
               tap();
               setI((x) => Math.min(last, x + 1));
             }}
-            accessibilityLabel="Next"
+            accessibilityLabel={t("Next")}
           />
         </View>
       </View>
@@ -196,7 +197,7 @@ export default function WrappedScreen() {
             }
           >
             <Ionicons name="share-social" size={18} color={C.primary} />
-            <Text style={styles.shareText}>Share my Wrapped</Text>
+            <Text style={styles.shareText}>{t("Share my Wrapped")}</Text>
           </Pressable>
         </View>
       )}

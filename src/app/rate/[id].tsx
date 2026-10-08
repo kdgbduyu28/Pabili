@@ -12,6 +12,7 @@ import { success, tap } from '../../lib/haptics';
 import { COINS_PER_REVIEW, Review, useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 export const REVIEW_TAGS = ['Good quality', 'Legit seller', 'Fast delivery', 'Worth it', 'As described', 'Well packed'];
 const RATING_WORDS = ['', 'Terrible', 'Poor', 'Okay', 'Good', 'Amazing'];
@@ -28,8 +29,8 @@ export default function Rate() {
   if (!order) {
     return (
       <View style={{ flex: 1 }}>
-        <Header title="Rate Products" />
-        <EmptyState icon="star-outline" title="Order not found" />
+        <Header title={t("Rate Products")} />
+        <EmptyState icon="star-outline" title={t("Order not found")} />
       </View>
     );
   }
@@ -61,7 +62,7 @@ export default function Rate() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Rate Products" />
+      <Header title={t("Rate Products")} />
       <ScrollView contentContainerStyle={{ paddingBottom: 90 + insets.bottom }} keyboardShouldPersistTaps="handled">
         <Wrap style={{ maxWidth: 720 }}>
           <View style={styles.banner}>
@@ -87,7 +88,7 @@ export default function Rate() {
                   {done && (
                     <View style={styles.rated}>
                       <Ionicons name="checkmark-circle" size={16} color={C.success} />
-                      <Text style={{ color: C.success, fontSize: 12, fontWeight: '600' }}>Rated</Text>
+                      <Text style={{ color: C.success, fontSize: 12, fontWeight: '600' }}>{t("Rated")}</Text>
                     </View>
                   )}
                 </View>
@@ -128,7 +129,7 @@ export default function Rate() {
                     <TextInput
                       value={d.text}
                       onChangeText={(text) => update(l.key, { text })}
-                      placeholder="Share more about the product (optional)"
+                      placeholder={t("Share more about the product (optional)")}
                       placeholderTextColor={C.faint}
                       multiline
                       style={styles.input}
@@ -145,7 +146,7 @@ export default function Rate() {
           {pending.length ? (
             <Button title={`Submit & earn ${pending.length * COINS_PER_REVIEW} coins`} onPress={submit} />
           ) : (
-            <Button title="All rated. Back to order" variant="outline" onPress={() => router.replace(`/order/${order.id}`)} />
+            <Button title={t("All rated. Back to order")} variant="outline" onPress={() => router.replace(`/order/${order.id}`)} />
           )}
         </Wrap>
       </View>

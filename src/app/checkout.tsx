@@ -18,6 +18,7 @@ import { WRAPS } from '../data/extras';
 import { play } from '../lib/sound';
 import { Gift, useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const PAYMENTS: { id: string; icon: IconName; name: string; note: string }[] = [
   { id: 'pretend', icon: 'sparkles', name: 'Pretend Pay', note: 'Recommended • Always approved' },
@@ -76,7 +77,7 @@ export default function Checkout() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Checkout" />
+      <Header title={t("Checkout")} />
       <ScrollView contentContainerStyle={{ paddingBottom: 90 + insets.bottom }}>
         <Wrap>
           {(sum.megaLive || slash) && (
@@ -129,14 +130,14 @@ export default function Checkout() {
                 {g.shopVoucherDiscount > 0 && (
                   <View style={styles.msgRow}>
                     <Ionicons name="pricetag-outline" size={16} color={C.primary} />
-                    <Text style={{ flex: 1, fontSize: 13, color: C.text }}>Shop Voucher</Text>
+                    <Text style={{ flex: 1, fontSize: 13, color: C.text }}>{t("Shop Voucher")}</Text>
                     <Text style={{ fontSize: 13, color: C.primary }}>-{peso(g.shopVoucherDiscount)}</Text>
                   </View>
                 )}
                 <View style={styles.msgRow}>
-                  <Text style={{ fontSize: 13, color: C.text }}>Message for Seller</Text>
+                  <Text style={{ fontSize: 13, color: C.text }}>{t("Message for Seller")}</Text>
                   <TextInput
-                    placeholder="Please leave a message"
+                    placeholder={t("Please leave a message")}
                     placeholderTextColor={C.faint}
                     value={messages[g.shop.id] ?? ''}
                     onChangeText={(t) => setMessages((m) => ({ ...m, [g.shop.id]: t }))}
@@ -152,7 +153,7 @@ export default function Checkout() {
                 >
                   <View style={{ flex: 1, gap: 3 }}>
                     <Text style={{ fontSize: 13, color: C.ship, fontWeight: '600' }}>
-                      Shipping Option: {g.express ? 'Express' : 'Standard Local'}
+                      Shipping Option: {g.express ? t("Express") : t("Standard Local")}
                     </Text>
                     <Text style={styles.small}>Get by {deliveryWindow(d1, d2)}</Text>
                     {g.freeShip === 'threshold' && <Text style={[styles.small, { color: C.ship }]}>Free shipping unlocked: you spent ₱499+ in this shop</Text>}
@@ -181,7 +182,7 @@ export default function Checkout() {
           <View style={styles.card}>
             <Pressable style={styles.optRow} onPress={() => setVoucherOpen((o) => !o)}>
               <Ionicons name="ticket-outline" size={20} color={C.primary} />
-              <Text style={styles.optTitle}>Pabili Voucher</Text>
+              <Text style={styles.optTitle}>{t("Pabili Voucher")}</Text>
               <Text style={[styles.small, sum.voucher && { color: C.primary }]}>
                 {sum.voucher ? sum.voucher.title : myVouchers.length ? 'Select voucher' : 'No vouchers claimed'}
               </Text>
@@ -191,7 +192,7 @@ export default function Checkout() {
               <Animated.View entering={FadeIn} style={{ paddingHorizontal: 12, paddingBottom: 12, gap: 8 }}>
                 {myVouchers.length === 0 && (
                   <Pressable onPress={() => router.push('/vouchers')}>
-                    <Text style={{ color: C.primary, fontSize: 13 }}>Claim vouchers first ›</Text>
+                    <Text style={{ color: C.primary, fontSize: 13 }}>{t("Claim vouchers first ›")}</Text>
                   </Pressable>
                 )}
                 {myVouchers.map((v) => {
@@ -248,7 +249,7 @@ export default function Checkout() {
           <View style={styles.card}>
             <View style={styles.optRow}>
               <Ionicons name="gift-outline" size={20} color={C.primary} />
-              <Text style={styles.optTitle}>Send as a gift</Text>
+              <Text style={styles.optTitle}>{t("Send as a gift")}</Text>
               <Switch
                 value={gifting}
                 onValueChange={(v) => {
@@ -264,14 +265,14 @@ export default function Checkout() {
                 <TextInput
                   value={gift.to}
                   onChangeText={(to) => setGift((g) => ({ ...g, to }))}
-                  placeholder="Recipient's name"
+                  placeholder={t("Recipient's name")}
                   placeholderTextColor={C.faint}
                   style={styles.giftInput}
                 />
                 <TextInput
                   value={gift.message}
                   onChangeText={(message) => setGift((g) => ({ ...g, message }))}
-                  placeholder="Write a message for the gift card"
+                  placeholder={t("Write a message for the gift card")}
                   placeholderTextColor={C.faint}
                   multiline
                   maxLength={200}
@@ -294,13 +295,13 @@ export default function Checkout() {
                     </Pressable>
                   ))}
                 </View>
-                <Text style={styles.small}>Free gift wrap. You'll get a link to send so they can unwrap it on their phone.</Text>
+                <Text style={styles.small}>{t("Free gift wrap. You'll get a link to send so they can unwrap it on their phone.")}</Text>
               </Animated.View>
             )}
           </View>
 
           <View style={styles.card}>
-            <Text style={[styles.optTitle, { padding: 12 }]}>Payment Method</Text>
+            <Text style={[styles.optTitle, { padding: 12 }]}>{t("Payment Method")}</Text>
             {PAYMENTS.map((p) => {
               const on = payment === p.id;
               return (
@@ -324,16 +325,16 @@ export default function Checkout() {
           </View>
 
           <View style={[styles.card, { padding: 12, gap: 8 }]}>
-            <Text style={styles.optTitle}>Payment Details</Text>
-            <Line label="Merchandise Subtotal" value={peso(sum.subtotal + sum.bundleDiscount)} />
-            {sum.bundleDiscount > 0 && <Line label="Bundle Deals" value={`-${peso(sum.bundleDiscount)}`} accent />}
-            {sum.shopVoucherDiscount > 0 && <Line label="Shop Vouchers" value={`-${peso(sum.shopVoucherDiscount)}`} accent />}
-            <Line label="Shipping Subtotal" value={peso(sum.shippingTotal)} />
-            {sum.shippingDiscount > 0 && <Line label="Shipping Discount" value={`-${peso(sum.shippingDiscount)}`} accent />}
-            {sum.voucherDiscount > 0 && <Line label="Voucher Discount" value={`-${peso(sum.voucherDiscount)}`} accent />}
-            {sum.coinsUsed > 0 && <Line label="Coins Redeemed" value={`-${peso(sum.coinsUsed)}`} accent />}
+            <Text style={styles.optTitle}>{t("Payment Details")}</Text>
+            <Line label={t("Merchandise Subtotal")} value={peso(sum.subtotal + sum.bundleDiscount)} />
+            {sum.bundleDiscount > 0 && <Line label={t("Bundle Deals")} value={`-${peso(sum.bundleDiscount)}`} accent />}
+            {sum.shopVoucherDiscount > 0 && <Line label={t("Shop Vouchers")} value={`-${peso(sum.shopVoucherDiscount)}`} accent />}
+            <Line label={t("Shipping Subtotal")} value={peso(sum.shippingTotal)} />
+            {sum.shippingDiscount > 0 && <Line label={t("Shipping Discount")} value={`-${peso(sum.shippingDiscount)}`} accent />}
+            {sum.voucherDiscount > 0 && <Line label={t("Voucher Discount")} value={`-${peso(sum.voucherDiscount)}`} accent />}
+            {sum.coinsUsed > 0 && <Line label={t("Coins Redeemed")} value={`-${peso(sum.coinsUsed)}`} accent />}
             <View style={styles.totalRow}>
-              <Text style={{ fontSize: 15, color: C.text }}>Total Payment</Text>
+              <Text style={{ fontSize: 15, color: C.text }}>{t("Total Payment")}</Text>
               <Price value={sum.total} size={18} />
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
@@ -356,7 +357,7 @@ export default function Checkout() {
             {sum.saved > 0 && <Text style={{ fontSize: 11, color: C.primary }}>Saved {peso(sum.saved)}</Text>}
           </View>
           <Pressable onPress={place} style={styles.placeBtn}>
-            <Text style={styles.placeText}>Place Order</Text>
+            <Text style={styles.placeText}>{t("Place Order")}</Text>
           </Pressable>
         </Wrap>
       </View>
@@ -365,7 +366,7 @@ export default function Checkout() {
         <Animated.View entering={FadeIn} style={styles.processing}>
           <View style={styles.processingBox}>
             <ActivityIndicator size="large" color="#fff" />
-            <Text style={{ color: '#fff', marginTop: 12, textAlign: 'center' }}>Processing your pretend payment…</Text>
+            <Text style={{ color: '#fff', marginTop: 12, textAlign: 'center' }}>{t("Processing your pretend payment…")}</Text>
           </View>
         </Animated.View>
       )}

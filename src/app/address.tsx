@@ -6,6 +6,7 @@ import { success } from '../lib/haptics';
 import { Address, DEFAULT_ADDRESS, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const FIELDS: { key: keyof Address; label: string; placeholder: string }[] = [
   { key: 'name', label: 'Full Name', placeholder: 'Juan Dela Cruz' },
@@ -30,7 +31,7 @@ export default function AddressScreen() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="My Address" />
+      <Header title={t("My Address")} />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Wrap style={{ maxWidth: 640, padding: 12, gap: 12 }}>
           <Text style={styles.note}>
@@ -49,7 +50,7 @@ export default function AddressScreen() {
               />
             </View>
           ))}
-          <Button title="Save" onPress={save} />
+          <Button title={t("Save")} onPress={save} />
         </Wrap>
       </ScrollView>
     </View>

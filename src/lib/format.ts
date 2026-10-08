@@ -1,3 +1,5 @@
+import { t } from '../i18n';
+
 export function peso(n: number): string {
   const r = Math.round(n);
   const s = Math.abs(r)
@@ -13,7 +15,7 @@ export function compact(n: number): string {
 }
 
 export function soldLabel(n: number): string {
-  return `${compact(n)} sold`;
+  return t('{n} sold', { n: compact(n) });
 }
 
 export function pad2(n: number): string {

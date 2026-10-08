@@ -4,6 +4,7 @@ import Svg, { Circle, Line, Path } from 'react-native-svg';
 import { PricePoint } from '../data/extras';
 import { peso, shortDate } from '../lib/format';
 import { C, themed } from '../theme';
+import { t } from '../i18n';
 
 const H = 110;
 const PAD_X = 10;
@@ -64,7 +65,7 @@ export function PriceChart({ points }: { points: PricePoint[] }) {
       {w > 0 && (
         <View style={styles.labels} pointerEvents="none">
           <Text style={styles.label}>{shortDate(new Date(points[0].at))}</Text>
-          <Text style={styles.label}>Today</Text>
+          <Text style={styles.label}>{t("Today")}</Text>
         </View>
       )}
       {shown !== null && (

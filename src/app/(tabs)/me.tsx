@@ -17,6 +17,7 @@ import { ORDER_TABS, orderStatus, orderTab } from '../../lib/orders';
 import { CHECKIN_REWARDS, keptInWallet, streak, useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 const TAB_ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
   to_ship: 'cube-outline',
@@ -88,7 +89,7 @@ export default function Me() {
               <Text style={styles.name}>{address.name}</Text>
               <View style={styles.memberPill}>
                 <Ionicons name={tier.icon} size={13} color="#fff" />
-                <Text style={styles.memberText}>{tier.name} Member</Text>
+                <Text style={styles.memberText}>{t('{tier} Member', { tier: t(tier.name) })}</Text>
               </View>
             </View>
           </View>
@@ -97,12 +98,12 @@ export default function Me() {
 
       <Wrap>
         <View style={styles.walletCard}>
-          <Text style={styles.walletLabel}>Kept in your wallet</Text>
+          <Text style={styles.walletLabel}>{t("Kept in your wallet")}</Text>
           <Text style={styles.walletValue}>{peso(kept)}</Text>
           <Text style={styles.walletNote}>
             {orders.length === 0
-              ? 'Place your first pretend order to start counting.'
-              : `${items} item${items === 1 ? '' : 's'} "bought" • ${peso(saved)} in deals • ₱0 spent`}
+              ? t('Place your first pretend order to start counting.')
+              : t(items === 1 ? '{n} item "bought" • {saved} in deals • ₱0 spent' : '{n} items "bought" • {saved} in deals • ₱0 spent', { n: items, saved: peso(saved) })}
           </Text>
           {goal ? (
             <Pressable style={styles.goal} onPress={() => router.push('/goal')}>
@@ -127,25 +128,25 @@ export default function Me() {
           ) : (
             <Pressable onPress={() => router.push('/goal')} style={styles.goalCta}>
               <Ionicons name="flag-outline" size={14} color={C.primary} />
-              <Text style={{ color: C.primary, fontSize: 12, fontWeight: '600' }}>Set a savings goal for this money</Text>
+              <Text style={{ color: C.primary, fontSize: 12, fontWeight: '600' }}>{t("Set a savings goal for this money")}</Text>
             </Pressable>
           )}
         </View>
 
         <View style={styles.card}>
-          <Row title="My Purchases" value="View purchase history" onPress={() => router.push('/orders')} />
+          <Row title={t("My Purchases")} value={t('View purchase history')} onPress={() => router.push('/orders')} />
           <View style={styles.tabs}>
-            {ORDER_TABS.map((t) => (
-              <Pressable key={t.id} style={styles.tab} onPress={() => router.push(`/orders?tab=${t.id}`)}>
+            {ORDER_TABS.map((tab) => (
+              <Pressable key={tab.id} style={styles.tab} onPress={() => router.push(`/orders?tab=${tab.id}`)}>
                 <View>
-                  <Ionicons name={TAB_ICONS[t.id]} size={26} color={C.text} />
-                  {!!counts[t.id] && t.id !== 'completed' && t.id !== 'cancelled' && (
+                  <Ionicons name={TAB_ICONS[tab.id]} size={26} color={C.text} />
+                  {!!counts[tab.id] && tab.id !== 'completed' && tab.id !== 'cancelled' && (
                     <View style={styles.badge}>
-                      <Text style={styles.badgeText}>{counts[t.id]}</Text>
+                      <Text style={styles.badgeText}>{counts[tab.id]}</Text>
                     </View>
                   )}
                 </View>
-                <Text style={styles.tabLabel}>{t.label}</Text>
+                <Text style={styles.tabLabel}>{t(tab.label)}</Text>
               </Pressable>
             ))}
           </View>
@@ -154,9 +155,9 @@ export default function Me() {
         <View style={[styles.card, { padding: 14 }]}>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
             <Coin size={22} />
-            <Text style={{ flex: 1, marginLeft: 8, fontSize: 15, fontWeight: '600', color: C.text }}>{coins} Pabili Coins</Text>
+            <Text style={{ flex: 1, marginLeft: 8, fontSize: 15, fontWeight: '600', color: C.text }}>{t('{n} Pabili Coins', { n: coins })}</Text>
             <Ionicons name="flame" size={14} color={C.preferred} />
-            <Text style={{ fontSize: 12, color: C.muted, marginLeft: 2 }}>{run}-day streak</Text>
+            <Text style={{ fontSize: 12, color: C.muted, marginLeft: 2 }}>{t('{n}-day streak', { n: run })}</Text>
           </View>
           <View style={styles.days}>
             {CHECKIN_REWARDS.map((r, i) => {
@@ -166,7 +167,7 @@ export default function Me() {
                 <View key={i} style={[styles.day, done && styles.dayDone, isToday && !checkedToday && styles.dayToday]}>
                   <Text style={[styles.dayCoins, done && { color: '#fff' }]}>+{r}</Text>
                   {done ? <Ionicons name="checkmark-circle" size={18} color="#fff" /> : <Coin size={18} />}
-                  <Text style={[styles.dayLabel, done && { color: '#fff' }]}>{isToday ? 'Today' : `Day ${i + 1}`}</Text>
+                  <Text style={[styles.dayLabel, done && { color: '#fff' }]}>{isToday ? t('Today') : t('Day {n}', { n: i + 1 })}</Text>
                 </View>
               );
             })}
@@ -183,7 +184,7 @@ export default function Me() {
             style={[styles.checkBtn, checkedToday && { backgroundColor: C.faint }]}
           >
             <Text style={styles.checkText}>
-              {checkedToday ? 'Come back tomorrow for more coins' : `Check in today to get ${CHECKIN_REWARDS[day]} coins`}
+              {checkedToday ? t('Come back tomorrow for more coins') : t('Check in today to get {n} coins', { n: CHECKIN_REWARDS[day] })}
             </Text>
           </Pressable>
         </View>
@@ -209,29 +210,29 @@ export default function Me() {
               <View style={[styles.gameIcon, { backgroundColor: g.bg }]}>
                 <Ionicons name={g.icon} size={22} color="#fff" />
               </View>
-              <Text style={styles.gameLabel}>{g.label}</Text>
+              <Text style={styles.gameLabel}>{t(g.label)}</Text>
             </Pressable>
           ))}
         </View>
 
         <View style={styles.card}>
-          <Row icon="stats-chart-outline" title="My Pabili Wrapped" value="This month's recap" onPress={() => router.push('/wrapped')} />
-          <Row icon="bag-handle-outline" title="My Haul" value="Everything you've unboxed" onPress={() => router.push('/haul')} />
-          <Row icon="storefront-outline" title="Followed Shops" value={followed ? `${followed}` : undefined} onPress={() => router.push('/following')} />
-          <Row icon="heart-outline" title="My Likes" value={likes ? `${likes}` : undefined} onPress={() => router.push('/likes')} />
-          <Row icon="chatbubbles-outline" title="My Chats" onPress={() => router.push('/chats')} />
-          <Row icon="ticket-outline" title="My Vouchers" value={claimed ? `${claimed} claimed` : undefined} onPress={() => router.push('/vouchers')} />
-          <Row icon="location-outline" title="My Address" value={address.city} onPress={() => router.push('/address')} />
+          <Row icon="stats-chart-outline" title={t("My Pabili Wrapped")} value={t("This month's recap")} onPress={() => router.push('/wrapped')} />
+          <Row icon="bag-handle-outline" title={t("My Haul")} value={t("Everything you've unboxed")} onPress={() => router.push('/haul')} />
+          <Row icon="storefront-outline" title={t("Followed Shops")} value={followed ? `${followed}` : undefined} onPress={() => router.push('/following')} />
+          <Row icon="heart-outline" title={t("My Likes")} value={likes ? `${likes}` : undefined} onPress={() => router.push('/likes')} />
+          <Row icon="chatbubbles-outline" title={t("My Chats")} onPress={() => router.push('/chats')} />
+          <Row icon="ticket-outline" title={t("My Vouchers")} value={claimed ? t('{n} claimed', { n: claimed }) : undefined} onPress={() => router.push('/vouchers')} />
+          <Row icon="location-outline" title={t("My Address")} value={address.city} onPress={() => router.push('/address')} />
         </View>
         <View style={styles.card}>
           <Row
             icon="share-social-outline"
-            title="Share my savings"
+            title={t("Share my savings")}
             onPress={() => shareText(`I've "bought" ${items} things on Pabili and kept ${peso(kept)} in my wallet.`)}
           />
-          <Row icon="settings-outline" title="Settings" value="Sounds, cool-off, interests" onPress={() => router.push('/settings')} />
+          <Row icon="settings-outline" title={t("Settings")} value={t('Sounds, cool-off, interests')} onPress={() => router.push('/settings')} />
         </View>
-        <Text style={styles.footer}>Pabili • a pretend shop. Nothing here costs real money.</Text>
+        <Text style={styles.footer}>{t("Pabili • a pretend shop. Nothing here costs real money.")}</Text>
       </Wrap>
     </ScrollView>
   );

@@ -15,6 +15,7 @@ import { bump, success } from '../../lib/haptics';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 export default function ShopScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -62,14 +63,14 @@ export default function ShopScreen() {
                   if (on) toast(`Following ${shop.name}`, 'heart');
                 }}
               >
-                <Text style={[styles.followText, following && { color: '#fff' }]}>{following ? 'Following' : '+ Follow'}</Text>
+                <Text style={[styles.followText, following && { color: '#fff' }]}>{following ? t("Following") : t("+ Follow")}</Text>
               </Pressable>
             </LinearGradient>
 
             <View style={styles.panel}>
               <View style={styles.rating}>
                 <Text style={styles.score}>{shop.rating.toFixed(1)}</Text>
-                <Text style={styles.small}>shop rating</Text>
+                <Text style={styles.small}>{t("shop rating")}</Text>
               </View>
               <View style={{ flex: 1, gap: 3 }}>
                 {breakdown.map((pct, i) => (
@@ -98,7 +99,7 @@ export default function ShopScreen() {
               <Text style={{ flex: 1, color: C.text, fontSize: 13 }}>
                 <Text style={{ fontWeight: '800' }}>{peso(v.value)} off</Text> min. spend {peso(v.minSpend)}
               </Text>
-              <Text style={{ color: claimed ? C.muted : C.primary, fontWeight: '700', fontSize: 12 }}>{claimed ? 'Claimed' : 'Claim'}</Text>
+              <Text style={{ color: claimed ? C.muted : C.primary, fontWeight: '700', fontSize: 12 }}>{claimed ? t("Claimed") : t("Claim")}</Text>
             </Pressable>
 
             {cats.length > 1 && (

@@ -2,6 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Tabs } from 'expo-router';
 import { ColorValue } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { t } from '../../i18n';
 import { useNotifications } from '../../lib/useNotifications';
 import { cartCount, useShop } from '../../store/useShop';
 import { C } from '../../theme';
@@ -31,13 +32,13 @@ export default function TabLayout() {
         sceneStyle: { backgroundColor: C.bg },
       }}
     >
-      <Tabs.Screen name="index" options={{ title: 'Home', tabBarIcon: icon('home', 'home-outline') }} />
-      <Tabs.Screen name="live" options={{ title: 'Live', tabBarIcon: icon('videocam', 'videocam-outline') }} />
+      <Tabs.Screen name="index" options={{ title: t('Home'), tabBarIcon: icon('home', 'home-outline') }} />
+      <Tabs.Screen name="live" options={{ title: t('Live'), tabBarIcon: icon('videocam', 'videocam-outline') }} />
       <Tabs.Screen
         name="notifications"
         options={{
-          title: 'Notifications',
-          tabBarLabel: 'Alerts',
+          title: t('Notifications'),
+          tabBarLabel: t('Alerts'),
           tabBarIcon: icon('notifications', 'notifications-outline'),
           tabBarBadge: unread > 0 ? (unread > 99 ? '99+' : unread) : undefined,
           tabBarBadgeStyle: { backgroundColor: C.primary, fontSize: 10 },
@@ -46,13 +47,13 @@ export default function TabLayout() {
       <Tabs.Screen
         name="cart"
         options={{
-          title: 'Cart',
+          title: t('Cart'),
           tabBarIcon: icon('cart', 'cart-outline'),
           tabBarBadge: count > 0 ? (count > 99 ? '99+' : count) : undefined,
           tabBarBadgeStyle: { backgroundColor: C.primary, fontSize: 10 },
         }}
       />
-      <Tabs.Screen name="me" options={{ title: 'Me', tabBarIcon: icon('person', 'person-outline') }} />
+      <Tabs.Screen name="me" options={{ title: t('Me'), tabBarIcon: icon('person', 'person-outline') }} />
     </Tabs>
   );
 }

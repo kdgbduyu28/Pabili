@@ -9,6 +9,7 @@ import { success } from '../lib/haptics';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Vouchers() {
   const claimed = useShop((s) => s.claimed);
@@ -19,7 +20,7 @@ export default function Vouchers() {
   const shown = VOUCHERS.filter((v) => !v.hidden || claimed.includes(v.id));
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Voucher Center" cart />
+      <Header title={t("Voucher Center")} cart />
       <ScrollView>
         <Wrap style={{ padding: 12, gap: 10 }}>
           {shown.map((v) => {
@@ -40,14 +41,14 @@ export default function Vouchers() {
                 </View>
                 <View style={{ justifyContent: 'center', paddingRight: 12 }}>
                   {isUsed ? (
-                    <Text style={styles.sub}>Used</Text>
+                    <Text style={styles.sub}>{t("Used")}</Text>
                   ) : v.megaOnly && !live ? (
-                    <Button title="Mega Day" small variant="outline" onPress={() => router.push('/mega')} />
+                    <Button title={t("Mega Day")} small variant="outline" onPress={() => router.push('/mega')} />
                   ) : isClaimed ? (
-                    <Button title="Use" small variant="outline" onPress={() => router.navigate('/')} />
+                    <Button title={t("Use")} small variant="outline" onPress={() => router.navigate('/')} />
                   ) : (
                     <Button
-                      title="Claim"
+                      title={t("Claim")}
                       small
                       onPress={() => {
                         success();
@@ -60,7 +61,7 @@ export default function Vouchers() {
               </View>
             );
           })}
-          <Text style={styles.foot}>Vouchers apply automatically at checkout. Each one can be used once per claim.</Text>
+          <Text style={styles.foot}>{t("Vouchers apply automatically at checkout. Each one can be used once per claim.")}</Text>
         </Wrap>
       </ScrollView>
     </View>

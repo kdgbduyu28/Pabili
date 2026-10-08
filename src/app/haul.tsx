@@ -10,6 +10,7 @@ import { useMeasuredWidth } from '../lib/hooks';
 import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 function ownedFor(ms: number) {
   const mins = Math.floor(ms / 60000);
@@ -37,29 +38,29 @@ export default function Haul() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="My Haul" cart />
+      <Header title={t("My Haul")} cart />
       <ScrollView>
         <Wrap>
           <View style={styles.stats}>
             <View style={styles.stat}>
               <Text style={styles.statValue}>{pieces}</Text>
-              <Text style={styles.statLabel}>things owned</Text>
+              <Text style={styles.statLabel}>{t("things owned")}</Text>
             </View>
             <View style={styles.stat}>
               <Text style={styles.statValue}>{peso(value)}</Text>
-              <Text style={styles.statLabel}>haul value</Text>
+              <Text style={styles.statLabel}>{t("haul value")}</Text>
             </View>
             <View style={styles.stat}>
               <Text style={styles.statValue}>₱0</Text>
-              <Text style={styles.statLabel}>actually spent</Text>
+              <Text style={styles.statLabel}>{t("actually spent")}</Text>
             </View>
           </View>
           {items.length === 0 ? (
             <EmptyState
               icon="bag-handle-outline"
-              title="Your haul is empty"
-              subtitle="Unboxed orders land here. Go treat yourself (for free)."
-              action={<Button title="Start Shopping" onPress={() => router.navigate('/')} style={{ width: 200 }} />}
+              title={t("Your haul is empty")}
+              subtitle={t("Unboxed orders land here. Go treat yourself (for free).")}
+              action={<Button title={t("Start Shopping")} onPress={() => router.navigate('/')} style={{ width: 200 }} />}
             />
           ) : (
             <>
@@ -87,7 +88,7 @@ export default function Haul() {
               </View>
               <View style={{ padding: 12 }}>
                 <Button
-                  title="Share my haul"
+                  title={t("Share my haul")}
                   icon="share-social"
                   variant="outline"
                   onPress={() => shareText(`My Pabili haul: ${pieces} things worth ${peso(value)}, and I spent ₱0.`)}

@@ -36,6 +36,7 @@ import { useGrid, useMeasuredWidth, useNow } from '../../lib/hooks';
 import { Question, useShop } from '../../store/useShop';
 import { toast, useUi } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 type Mode = 'cart' | 'buy';
 
@@ -47,7 +48,7 @@ export default function ProductScreen() {
   if (!p) {
     return (
       <View style={{ flex: 1, justifyContent: 'center' }}>
-        <EmptyState icon="help-circle-outline" title="This product vanished" subtitle="It was never real anyway." />
+        <EmptyState icon="help-circle-outline" title={t("This product vanished")} subtitle={t("It was never real anyway.")} />
       </View>
     );
   }
@@ -161,7 +162,7 @@ function ProductDetail({ p }: { p: Product }) {
       {out && (
         <View style={[styles.soldOut, { width: imgSize, height: imgSize }]} pointerEvents="none">
           <View style={styles.soldOutBadge}>
-            <Text style={styles.soldOutText}>SOLD OUT</Text>
+            <Text style={styles.soldOutText}>{t("SOLD OUT")}</Text>
           </View>
         </View>
       )}
@@ -188,7 +189,7 @@ function ProductDetail({ p }: { p: Product }) {
       {flash && (
         <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.flashBar}>
           <Ionicons name="flash" size={16} color="#fff" />
-          <Text style={styles.flashBarTitle}>FLASH SALE</Text>
+          <Text style={styles.flashBarTitle}>{t("FLASH SALE")}</Text>
           <View style={{ flex: 1 }} />
           <Text style={styles.flashEnds}>ENDS IN</Text>
           <Countdown ms={slotStart(now) + SLOT_MS - now} />
@@ -226,7 +227,7 @@ function ProductDetail({ p }: { p: Product }) {
         <View style={styles.metaRow}>
           <Stars rating={p.rating} />
           <Text style={styles.meta}>
-            {p.rating.toFixed(1)} | {compact(p.ratingCount)} ratings | {soldLabel(p.sold)}
+            {p.rating.toFixed(1)} | {t('{n} ratings', { n: compact(p.ratingCount) })} | {soldLabel(p.sold)}
           </Text>
           <View style={{ flex: 1 }} />
           <Pressable
@@ -251,43 +252,43 @@ function ProductDetail({ p }: { p: Product }) {
             toast(`Shop voucher claimed: ${peso(sv.value)} off ${peso(sv.minSpend)}`, 'pricetag');
           }}
         >
-          <InfoRow icon="pricetags-outline" title="Shop Vouchers">
+          <InfoRow icon="pricetags-outline" title={t("Shop Vouchers")}>
             <Tag text={`${peso(sv.value)} off ${peso(sv.minSpend)}`} color={C.primary} border={C.primary} />
             <Text style={[styles.small, { color: shopClaimed ? C.muted : C.primary, fontWeight: '600' }]}>
-              {shopClaimed ? 'Claimed' : 'Tap to claim'}
+              {shopClaimed ? t("Claimed") : t("Tap to claim")}
             </Text>
           </InfoRow>
         </Pressable>
         {bundle && (
-          <InfoRow icon="layers-outline" title="Bundle Deal">
-            {bundle.map((t) => (
-              <Tag key={t.qty} text={`Buy ${t.qty}, save ${t.pct}%`} color="#fff" bg={C.preferred} />
+          <InfoRow icon="layers-outline" title={t("Bundle Deal")}>
+            {bundle.map((tier) => (
+              <Tag key={tier.qty} text={t('Buy {n}, save {pct}%', { n: tier.qty, pct: tier.pct })} color="#fff" bg={C.preferred} />
             ))}
           </InfoRow>
         )}
-        <InfoRow icon="car-outline" title={p.freeShipping ? 'Free Shipping' : `Shipping: ${peso(baseShipping(shop))}`}>
+        <InfoRow icon="car-outline" title={p.freeShipping ? t('Free Shipping') : t('Shipping: {fee}', { fee: peso(baseShipping(shop)) })}>
           <Text style={styles.small}>
-            Get by {deliveryWindow(d1, d2)} • from {shop.location}
+            {t('Get by {date} • from {place}', { date: deliveryWindow(d1, d2), place: shop.location })}
           </Text>
         </InfoRow>
         {preorder && (
-          <InfoRow icon="time-outline" title="Pre-order">
-            <Text style={styles.small}>Made to order: ships in 7–10 days after checkout</Text>
+          <InfoRow icon="time-outline" title={t("Pre-order")}>
+            <Text style={styles.small}>{t("Made to order: ships in 7–10 days after checkout")}</Text>
           </InfoRow>
         )}
-        <InfoRow icon="shield-checkmark-outline" title="Pabili Guarantee">
-          <Text style={styles.small}>{p.cod ? 'Cash on Delivery • ' : ''}15-day free returns • 100% pretend</Text>
+        <InfoRow icon="shield-checkmark-outline" title={t("Pabili Guarantee")}>
+          <Text style={styles.small}>{p.cod ? `${t('Cash on Delivery')} • ` : ''}{t('15-day free returns • 100% pretend')}</Text>
         </InfoRow>
         {chart && (
           <Pressable onPress={() => setChartOpen(true)}>
-            <InfoRow icon="resize-outline" title="Size Chart" chevron>
-              <Text style={styles.small}>Find your fit before you buy</Text>
+            <InfoRow icon="resize-outline" title={t("Size Chart")} chevron>
+              <Text style={styles.small}>{t("Find your fit before you buy")}</Text>
             </InfoRow>
           </Pressable>
         )}
         {p.variants.length > 0 && (
           <Pressable onPress={() => open('cart')}>
-            <InfoRow icon="color-palette-outline" title="Select Variation" chevron>
+            <InfoRow icon="color-palette-outline" title={t("Select Variation")} chevron>
               <Text style={styles.small} numberOfLines={1}>
                 {p.variants.map((g) => `${g.name} (${g.options.length})`).join(' • ')}
               </Text>
@@ -323,11 +324,11 @@ function ProductDetail({ p }: { p: Product }) {
                 {shop.location} • {shop.rating} rating • {compact(shop.followers)} followers
               </Text>
             </View>
-            <Button title="View Shop" variant="outline" small onPress={() => router.push(`/shop/${shop.id}`)} />
+            <Button title={t("View Shop")} variant="outline" small onPress={() => router.push(`/shop/${shop.id}`)} />
           </View>
 
           <View style={styles.block}>
-            <SectionTitle title="Frequently Bought Together" />
+            <SectionTitle title={t("Frequently Bought Together")} />
             <View style={styles.fbt}>
               {[p, ...fbt].map((x, i) => (
                 <View key={x.id} style={styles.fbtItem}>
@@ -341,10 +342,10 @@ function ProductDetail({ p }: { p: Product }) {
             </View>
             <View style={styles.fbtBar}>
               <Text style={{ flex: 1, fontSize: 13, color: C.text }}>
-                Total for 3: <Text style={{ color: C.primary, fontWeight: '700' }}>{peso([p, ...fbt].reduce((n, x) => n + unitPrice(x, {}, now).price, 0))}</Text>
+                {t('Total for 3:')} <Text style={{ color: C.primary, fontWeight: '700' }}>{peso([p, ...fbt].reduce((n, x) => n + unitPrice(x, {}, now).price, 0))}</Text>
               </Text>
               <Button
-                title="Add all 3 to cart"
+                title={t("Add all 3 to cart")}
                 small
                 onPress={(e) => {
                   for (const x of [p, ...fbt]) {
@@ -362,7 +363,7 @@ function ProductDetail({ p }: { p: Product }) {
 
           {more.length > 0 && (
             <View style={styles.block}>
-              <SectionTitle title={`More from ${shop.name}`} right="See all" onPress={() => router.push(`/shop/${shop.id}`)} />
+              <SectionTitle title={t('More from {shop}', { shop: shop.name })} right={t("See all")} onPress={() => router.push(`/shop/${shop.id}`)} />
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingHorizontal: 8, paddingBottom: 12 }}>
                 {more.map((x) => (
                   <ProductCard key={x.id} product={x} width={140} now={now} />
@@ -372,7 +373,7 @@ function ProductDetail({ p }: { p: Product }) {
           )}
 
           <View style={styles.block}>
-            <SectionTitle title="Price History · 30 days" />
+            <SectionTitle title={t("Price History · 30 days")} />
             <View style={{ paddingHorizontal: 12, paddingBottom: 14, gap: 8 }}>
               {lowestToday ? (
                 <Tag text="Lowest price in 30 days!" color="#fff" bg={C.success} />
@@ -386,7 +387,7 @@ function ProductDetail({ p }: { p: Product }) {
           </View>
 
           <View style={styles.block}>
-            <SectionTitle title="Product Description" />
+            <SectionTitle title={t("Product Description")} />
             <Text style={styles.desc}>{p.description}</Text>
           </View>
 
@@ -398,7 +399,7 @@ function ProductDetail({ p }: { p: Product }) {
                   <Ionicons name="person" size={16} color="#fff" />
                 </View>
                 <View style={{ flex: 1, gap: 3 }}>
-                  <Text style={{ fontSize: 12, color: C.text, fontWeight: '600' }}>You</Text>
+                  <Text style={{ fontSize: 12, color: C.text, fontWeight: '600' }}>{t("You")}</Text>
                   <Stars rating={r.rating} size={11} />
                   {r.variant ? <Text style={styles.small}>Variation: {r.variant}</Text> : null}
                   {r.tags.length > 0 && (
@@ -451,27 +452,27 @@ function ProductDetail({ p }: { p: Product }) {
                 value={question}
                 onChangeText={setQuestion}
                 onSubmitEditing={ask}
-                placeholder="Ask the seller a question"
+                placeholder={t("Ask the seller a question")}
                 placeholderTextColor={C.faint}
                 returnKeyType="send"
                 style={styles.askInput}
               />
-              <Button title="Ask" small onPress={ask} />
+              <Button title={t("Ask")} small onPress={ask} />
             </View>
           </View>
 
-          <SectionTitle title="YOU MAY ALSO LIKE" />
+          <SectionTitle title={t("YOU MAY ALSO LIKE")} />
           <ProductGrid products={related} keyPrefix="rel" />
         </Wrap>
       </ScrollView>
 
       <View style={[styles.topBar, { paddingTop: insets.top + 6 }]} pointerEvents="box-none">
         <Wrap style={styles.topBarRow}>
-          <Pressable onPress={back} style={styles.roundBtn} accessibilityLabel="Back">
+          <Pressable onPress={back} style={styles.roundBtn} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={22} color="#fff" />
           </Pressable>
           <View style={{ flex: 1 }} />
-          <Pressable onPress={() => router.push('/search')} style={styles.roundBtn} accessibilityLabel="Search">
+          <Pressable onPress={() => router.push('/search')} style={styles.roundBtn} accessibilityLabel={t("Search")}>
             <Ionicons name="search" size={20} color="#fff" />
           </Pressable>
           <View style={styles.roundBtn}>
@@ -484,7 +485,7 @@ function ProductDetail({ p }: { p: Product }) {
         <Wrap style={{ flexDirection: 'row', height: 56 }}>
           <Pressable style={styles.barBtn} onPress={() => router.push(`/chat/${shop.id}?product=${p.id}`)}>
             <Ionicons name="chatbubble-ellipses-outline" size={22} color={C.ship} />
-            <Text style={[styles.barBtnText, { color: C.ship }]}>Chat</Text>
+            <Text style={[styles.barBtnText, { color: C.ship }]}>{t("Chat")}</Text>
           </Pressable>
           <View style={styles.divider} />
           {out ? (
@@ -497,7 +498,7 @@ function ProductDetail({ p }: { p: Product }) {
               }}
             >
               <LinearGradient colors={alertOn ? ['#71717A', '#A1A1AA'] : C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.buyNow}>
-                <Text style={styles.buyNowText}>{alertOn ? 'Restock alert on' : 'Notify Me When Back'}</Text>
+                <Text style={styles.buyNowText}>{alertOn ? t("Restock alert on") : t("Notify Me When Back")}</Text>
                 {restock && (
                   <Text style={styles.buyNowSub}>
                     Restocks at {new Date(restock).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}
@@ -509,11 +510,11 @@ function ProductDetail({ p }: { p: Product }) {
             <>
               <Pressable style={styles.barBtn} onPress={() => open('cart')}>
                 <Ionicons name="cart-outline" size={22} color={C.ship} />
-                <Text style={[styles.barBtnText, { color: C.ship }]}>Add to Cart</Text>
+                <Text style={[styles.barBtnText, { color: C.ship }]}>{t("Add to Cart")}</Text>
               </Pressable>
               <Pressable style={{ flex: 2 }} onPress={() => open('buy')}>
                 <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.buyNow}>
-                  <Text style={styles.buyNowText}>{preorder ? 'Pre-order Now' : 'Buy Now'}</Text>
+                  <Text style={styles.buyNowText}>{preorder ? t("Pre-order Now") : t("Buy Now")}</Text>
                   {flash && <Text style={styles.buyNowSub}>{peso(lo)} flash price</Text>}
                 </LinearGradient>
               </Pressable>
@@ -561,14 +562,14 @@ function ProductDetail({ p }: { p: Product }) {
             </View>
           ))}
           <View style={styles.qtyRow}>
-            <Text style={styles.groupName}>Quantity</Text>
+            <Text style={styles.groupName}>{t("Quantity")}</Text>
             <QtyStepper value={qty} onChange={setQty} max={p.stock} />
           </View>
         </ScrollView>
         <View style={{ paddingHorizontal: 14, paddingTop: 8 }}>
           <Pressable onPress={confirm} style={({ pressed }) => [{ opacity: missing ? 0.5 : pressed ? 0.85 : 1 }]}>
             <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.confirm}>
-              <Text style={styles.buyNowText}>{mode === 'buy' ? 'Buy Now' : 'Add to Cart'}</Text>
+              <Text style={styles.buyNowText}>{mode === 'buy' ? t("Buy Now") : t("Add to Cart")}</Text>
             </LinearGradient>
           </Pressable>
         </View>
@@ -576,7 +577,7 @@ function ProductDetail({ p }: { p: Product }) {
       <Sheet open={chartOpen} onClose={() => setChartOpen(false)}>
         {chart && (
           <View style={{ padding: 16 }}>
-            <Text style={{ fontSize: 17, fontWeight: '700', color: C.text, marginBottom: 12 }}>Size Chart</Text>
+            <Text style={{ fontSize: 17, fontWeight: '700', color: C.text, marginBottom: 12 }}>{t("Size Chart")}</Text>
             <View style={styles.chartRow}>
               {chart.columns.map((c) => (
                 <Text key={c} style={[styles.chartCell, styles.chartHead]}>
@@ -593,7 +594,7 @@ function ProductDetail({ p }: { p: Product }) {
                 ))}
               </View>
             ))}
-            <Text style={[styles.small, { marginTop: 10 }]}>Measurements may vary by 1–2 cm. Pretend sizes always fit.</Text>
+            <Text style={[styles.small, { marginTop: 10 }]}>{t("Measurements may vary by 1–2 cm. Pretend sizes always fit.")}</Text>
           </View>
         )}
       </Sheet>

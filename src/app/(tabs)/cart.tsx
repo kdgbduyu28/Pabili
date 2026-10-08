@@ -16,6 +16,7 @@ import { useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 export default function Cart() {
   const insets = useSafeAreaInsets();
@@ -83,11 +84,11 @@ export default function Cart() {
       <View style={[styles.header, { paddingTop: insets.top }]}>
         <Wrap style={styles.headerRow}>
           <Text style={styles.headerTitle}>
-            Shopping Cart <Text style={{ color: C.muted, fontWeight: '400' }}>({cart.length})</Text>
+            {t('Shopping Cart')} <Text style={{ color: C.muted, fontWeight: '400' }}>({cart.length})</Text>
           </Text>
           {cart.length > 0 && (
             <Pressable hitSlop={10} onPress={() => setEditing((e) => !e)}>
-              <Text style={{ color: C.text, fontSize: 14 }}>{editing ? 'Done' : 'Edit'}</Text>
+              <Text style={{ color: C.text, fontSize: 14 }}>{editing ? t("Done") : t("Edit")}</Text>
             </Pressable>
           )}
         </Wrap>
@@ -99,9 +100,9 @@ export default function Cart() {
             <View style={styles.card}>
               <EmptyState
                 icon="cart-outline"
-                title="Your shopping cart is empty"
-                subtitle="Go on. Fill it up. It's free."
-                action={<Button title="Go Shopping Now" onPress={() => router.navigate('/')} style={{ width: 200 }} />}
+                title={t("Your shopping cart is empty")}
+                subtitle={t("Go on. Fill it up. It's free.")}
+                action={<Button title={t("Go Shopping Now")} onPress={() => router.navigate('/')} style={{ width: 200 }} />}
               />
             </View>
           ) : (
@@ -115,7 +116,7 @@ export default function Cart() {
                       : 'Cool-off done! Check out now for a +10 coin patience bonus.'}
                   </Text>
                   <Pressable onPress={changeMind} hitSlop={6}>
-                    <Text style={{ fontSize: 12, fontWeight: '700', color: C.primary }}>Changed my mind</Text>
+                    <Text style={{ fontSize: 12, fontWeight: '700', color: C.primary }}>{t("Changed my mind")}</Text>
                   </Pressable>
                 </View>
               )}
@@ -125,7 +126,7 @@ export default function Cart() {
                   Claim the FREESHIP voucher to get up to ₱80 off shipping
                 </Text>
                 <Pressable onPress={() => router.push('/vouchers')}>
-                  <Text style={{ color: C.ship, fontSize: 12, fontWeight: '700' }}>Claim ›</Text>
+                  <Text style={{ color: C.ship, fontSize: 12, fontWeight: '700' }}>{t("Claim ›")}</Text>
                 </Pressable>
               </View>
               {groups.map((g) => {
@@ -203,7 +204,7 @@ export default function Cart() {
               })}
             </>
           )}
-          <SectionTitle title="YOU MAY ALSO LIKE" />
+          <SectionTitle title={t("YOU MAY ALSO LIKE")} />
           <ProductGrid products={picks} keyPrefix="cart" />
         </Wrap>
       </ScrollView>
@@ -212,7 +213,7 @@ export default function Cart() {
         <View style={styles.bar}>
           <Wrap style={styles.barRow}>
             <Checkbox checked={allSelected} onPress={() => setSelected(cart.map((c) => c.key), !allSelected)} />
-            <Text style={{ fontSize: 13, color: C.text }}>All</Text>
+            <Text style={{ fontSize: 13, color: C.text }}>{t("All")}</Text>
             <View style={{ flex: 1 }} />
             {editing ? (
               <Button
@@ -232,10 +233,10 @@ export default function Cart() {
                   <Text style={{ fontSize: 13, color: C.text }}>
                     Total <Text style={{ color: C.primary, fontSize: 17, fontWeight: '700' }}>{peso(total)}</Text>
                   </Text>
-                  {saved > 0 && <Text style={{ fontSize: 11, color: C.primary }}>Saved {peso(saved)}</Text>}
+                  {saved > 0 && <Text style={{ fontSize: 11, color: C.primary }}>{t('Saved {amount}', { amount: peso(saved) })}</Text>}
                 </View>
                 <Pressable onPress={checkout} style={[styles.checkoutBtn, cooling && { backgroundColor: '#94A3B8' }]}>
-                  <Text style={styles.checkoutText}>{cooling ? `Wait ${coolLabel}` : `Check Out (${selected.length})`}</Text>
+                  <Text style={styles.checkoutText}>{cooling ? t('Wait {time}', { time: coolLabel }) : t('Check Out ({n})', { n: selected.length })}</Text>
                 </Pressable>
               </>
             )}
@@ -271,7 +272,7 @@ function FreeShipBar({ subtotal, reason, gap }: { subtotal: number; reason: Free
     return (
       <View style={styles.ship}>
         <Ionicons name="car" size={14} color={C.ship} />
-        <Text style={styles.shipText}>{reason === 'mega' ? 'Mega Day: free shipping on everything' : 'Free shipping on this shop'}</Text>
+        <Text style={styles.shipText}>{reason === 'mega' ? 'Mega Day: free shipping on everything' : t("Free shipping on this shop")}</Text>
       </View>
     );
   }
@@ -289,7 +290,7 @@ function FreeShipBar({ subtotal, reason, gap }: { subtotal: number; reason: Free
       </View>
       {!reason && (
         <Pressable onPress={() => router.navigate('/')} hitSlop={6}>
-          <Text style={[styles.shipText, { fontWeight: '700' }]}>Add more ›</Text>
+          <Text style={[styles.shipText, { fontWeight: '700' }]}>{t("Add more ›")}</Text>
         </Pressable>
       )}
     </View>

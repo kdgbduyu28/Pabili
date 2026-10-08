@@ -26,6 +26,7 @@ import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
 import { toast, useUi } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const CLIP_MS = 8000;
 
@@ -68,10 +69,10 @@ export default function Feed() {
       </ScrollView>
 
       <View style={[styles.top, { paddingTop: insets.top + 6 }]} pointerEvents="box-none">
-        <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+        <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
           <Ionicons name="arrow-back" size={26} color="#fff" />
         </Pressable>
-        <Text style={styles.topTitle}>For You</Text>
+        <Text style={styles.topTitle}>{t("For You")}</Text>
         <CartButton />
       </View>
 
@@ -102,7 +103,7 @@ type PageProps = { clip: Clip; active: boolean; height: number; width: number; o
 const ClipPage = memo(function ClipPage({ clip, active, height, width, onComments }: PageProps) {
   const insets = useSafeAreaInsets();
   const liked = useShop((s) => s.feedLikes.includes(clip.id));
-  const t = useSharedValue(0);
+  const phase = useSharedValue(0);
   const progress = useSharedValue(0);
   const heart = useSharedValue(0);
   const p = clip.product;
@@ -111,19 +112,19 @@ const ClipPage = memo(function ClipPage({ clip, active, height, width, onComment
 
   useEffect(() => {
     if (!active) {
-      cancelAnimation(t);
+      cancelAnimation(phase);
       cancelAnimation(progress);
       progress.value = 0;
       return;
     }
-    t.value = 0;
-    t.value = withRepeat(withTiming(1, { duration: 2400, easing: Easing.inOut(Easing.sin) }), -1, true);
+    phase.value = 0;
+    phase.value = withRepeat(withTiming(1, { duration: 2400, easing: Easing.inOut(Easing.sin) }), -1, true);
     progress.value = 0;
     progress.value = withRepeat(withTiming(1, { duration: CLIP_MS, easing: Easing.linear }), -1, false);
-  }, [active, t, progress]);
+  }, [active, phase, progress]);
 
   const hero = useAnimatedStyle(() => {
-    const v = t.value;
+    const v = phase.value;
     switch (clip.scene) {
       case 'spin':
         return { transform: [{ rotate: `${(v - 0.5) * 50}deg` }, { scale: 1 + v * 0.08 }] };
@@ -171,7 +172,7 @@ const ClipPage = memo(function ClipPage({ clip, active, height, width, onComment
         </View>
         <RailButton icon={liked ? 'heart' : 'heart-outline'} color={liked ? C.primary : '#fff'} label={compact(clip.likes + (liked ? 1 : 0))} onPress={like} />
         <RailButton icon="chatbubble-ellipses" label={compact(clip.comments)} onPress={onComments} />
-        <RailButton icon="arrow-redo" label="Share" onPress={() => shareText(`Look what I found on Pabili: ${p.name} for ${peso(price)}`)} />
+        <RailButton icon="arrow-redo" label={t("Share")} onPress={() => shareText(`Look what I found on Pabili: ${p.name} for ${peso(price)}`)} />
       </View>
 
       <View style={[styles.bottom, { paddingBottom: insets.bottom + 16 }]}>
@@ -189,7 +190,7 @@ const ClipPage = memo(function ClipPage({ clip, active, height, width, onComment
           </View>
           <Pressable onPress={buy} style={styles.buy}>
             <Ionicons name="cart" size={16} color="#fff" />
-            <Text style={styles.buyText}>Buy</Text>
+            <Text style={styles.buyText}>{t("Buy")}</Text>
           </Pressable>
         </Pressable>
         <View style={styles.track}>

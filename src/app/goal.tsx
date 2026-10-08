@@ -7,6 +7,7 @@ import { success, tap } from '../lib/haptics';
 import { keptInWallet, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const PRESETS: { name: string; amount: number }[] = [
   { name: 'Weekend trip', amount: 5000 },
@@ -36,7 +37,7 @@ export default function Goal() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Savings Goal" />
+      <Header title={t("Savings Goal")} />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Wrap style={{ maxWidth: 640, padding: 12, gap: 14 }}>
           <Text style={styles.note}>
@@ -59,11 +60,11 @@ export default function Goal() {
             ))}
           </View>
           <View style={styles.field}>
-            <Text style={styles.label}>Saving for</Text>
-            <TextInput value={name} onChangeText={setName} placeholder="e.g. New phone" placeholderTextColor={C.faint} style={styles.input} />
+            <Text style={styles.label}>{t("Saving for")}</Text>
+            <TextInput value={name} onChangeText={setName} placeholder={t("e.g. New phone")} placeholderTextColor={C.faint} style={styles.input} />
           </View>
           <View style={styles.field}>
-            <Text style={styles.label}>Target amount (₱)</Text>
+            <Text style={styles.label}>{t("Target amount (₱)")}</Text>
             <TextInput
               value={amount}
               onChangeText={(t) => setAmount(t.replace(/\D/g, ''))}
@@ -73,10 +74,10 @@ export default function Goal() {
               style={styles.input}
             />
           </View>
-          <Button title="Save Goal" onPress={save} />
+          <Button title={t("Save Goal")} onPress={save} />
           {goal && (
             <Button
-              title="Remove goal"
+              title={t("Remove goal")}
               variant="outline"
               onPress={() => {
                 useShop.getState().setGoal(null);

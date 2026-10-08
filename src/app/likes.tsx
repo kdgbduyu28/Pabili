@@ -6,13 +6,14 @@ import { Header, Wrap } from '../components/Page';
 import { ProductGrid } from '../components/ProductGrid';
 import { Product, getProduct } from '../data/catalog';
 import { useShop } from '../store/useShop';
+import { t } from '../i18n';
 
 export default function Likes() {
   const likes = useShop((s) => s.likes);
   const products = useMemo(() => likes.map(getProduct).filter((p): p is Product => !!p), [likes]);
   return (
     <View style={{ flex: 1 }}>
-      <Header title="My Likes" cart />
+      <Header title={t("My Likes")} cart />
       <ScrollView>
         <Wrap>
           {products.length ? (
@@ -20,9 +21,9 @@ export default function Likes() {
           ) : (
             <EmptyState
               icon="heart-outline"
-              title="No likes yet"
-              subtitle="Tap the heart on any product to save it here."
-              action={<Button title="Discover products" onPress={() => router.navigate('/')} style={{ width: 200 }} />}
+              title={t("No likes yet")}
+              subtitle={t("Tap the heart on any product to save it here.")}
+              action={<Button title={t("Discover products")} onPress={() => router.navigate('/')} style={{ width: 200 }} />}
             />
           )}
         </Wrap>

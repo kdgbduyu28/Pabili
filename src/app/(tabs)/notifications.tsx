@@ -13,6 +13,7 @@ import { NotifKind } from '../../lib/notifications';
 import { useNotifications } from '../../lib/useNotifications';
 import { useShop } from '../../store/useShop';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 const FILTERS: { id: NotifKind | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -40,8 +41,8 @@ export default function Notifications() {
     <View style={{ flex: 1 }}>
       <View style={[styles.header, { paddingTop: insets.top }]}>
         <Wrap style={styles.headerRow}>
-          <Text style={styles.title}>Notifications</Text>
-          <Pressable hitSlop={8} onPress={() => router.push('/chats')} accessibilityLabel="Chats" style={{ marginRight: 14 }}>
+          <Text style={styles.title}>{t("Notifications")}</Text>
+          <Pressable hitSlop={8} onPress={() => router.push('/chats')} accessibilityLabel={t("Chats")} style={{ marginRight: 14 }}>
             <Ionicons name="chatbubbles-outline" size={24} color={C.primary} />
           </Pressable>
           <CartButton color={C.primary} />
@@ -49,7 +50,7 @@ export default function Notifications() {
         <Wrap style={styles.filters}>
           {FILTERS.map((f) => (
             <Pressable key={f.id} onPress={() => setFilter(f.id)} style={[styles.chip, filter === f.id && styles.chipOn]}>
-              <Text style={[styles.chipText, filter === f.id && { color: '#fff' }]}>{f.label}</Text>
+              <Text style={[styles.chipText, filter === f.id && { color: '#fff' }]}>{t(f.label)}</Text>
             </Pressable>
           ))}
         </Wrap>
@@ -57,7 +58,7 @@ export default function Notifications() {
       <ScrollView>
         <Wrap>
           {shown.length === 0 ? (
-            <EmptyState icon="notifications-outline" title="Nothing here yet" subtitle="Order updates, price drops and coin rewards will show up here." />
+            <EmptyState icon="notifications-outline" title={t("Nothing here yet")} subtitle={t("Order updates, price drops and coin rewards will show up here.")} />
           ) : (
             shown.map((n) => {
               const unread = n.at > visitSeenAt.current;

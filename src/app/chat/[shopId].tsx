@@ -14,6 +14,7 @@ import { peso } from '../../lib/format';
 import { tap } from '../../lib/haptics';
 import { ChatMsg, useShop } from '../../store/useShop';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 const EMPTY: ChatMsg[] = [];
 
@@ -33,7 +34,7 @@ export default function Chat() {
     return () => clearTimeout(t);
   }, [messages.length, typing]);
 
-  if (!shop) return <Header title="Chat" />;
+  if (!shop) return <Header title={t("Chat")} />;
 
   const send = (body: string, pid?: string) => {
     const t = body.trim();
@@ -93,7 +94,7 @@ export default function Chat() {
           })}
           {typing && (
             <Animated.View entering={FadeIn} style={[styles.bubble, styles.theirs, { alignSelf: 'flex-start' }]}>
-              <Text style={[styles.text, { color: C.muted }]}>typing…</Text>
+              <Text style={[styles.text, { color: C.muted }]}>{t("typing…")}</Text>
             </Animated.View>
           )}
         </Wrap>
@@ -107,7 +108,7 @@ export default function Chat() {
               <Text style={{ flex: 1, fontSize: 12, color: C.text }} numberOfLines={1}>
                 Ask about: {asked.name}
               </Text>
-              <Text style={{ color: C.primary, fontWeight: '700', fontSize: 12 }}>Send</Text>
+              <Text style={{ color: C.primary, fontWeight: '700', fontSize: 12 }}>{t("Send")}</Text>
             </Pressable>
           )}
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 6 }} keyboardShouldPersistTaps="handled">
@@ -122,12 +123,12 @@ export default function Chat() {
               value={text}
               onChangeText={setText}
               onSubmitEditing={() => send(text)}
-              placeholder="Type a message"
+              placeholder={t("Type a message")}
               placeholderTextColor={C.faint}
               returnKeyType="send"
               style={styles.input}
             />
-            <Pressable onPress={() => send(text)} style={styles.sendBtn} accessibilityLabel="Send">
+            <Pressable onPress={() => send(text)} style={styles.sendBtn} accessibilityLabel={t("Send")}>
               <Ionicons name="send" size={18} color="#fff" />
             </Pressable>
           </View>

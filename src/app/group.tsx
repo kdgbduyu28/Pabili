@@ -14,6 +14,7 @@ import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const WINDOW_MS = 24 * 3600 * 1000;
 
@@ -57,7 +58,7 @@ export default function Group() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Group Buy" cart />
+      <Header title={t("Group Buy")} cart />
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}>
         <Wrap style={{ maxWidth: 720 }}>
           {active && product ? (
@@ -93,12 +94,12 @@ export default function Group() {
               <Text style={[styles.small, { textAlign: 'center' }]}>
                 {full ? 'Group complete! Check out at the group price.' : `${active.size - joined.length} more needed. Strangers join on their own, or invite friends to speed it up.`}
               </Text>
-              {full ? <Button title={`Check out for ${peso(active.price)}`} icon="cart" onPress={checkout} /> : <Button title="Invite friends" icon="share-social" onPress={invite} />}
+              {full ? <Button title={`Check out for ${peso(active.price)}`} icon="cart" onPress={checkout} /> : <Button title={t("Invite friends")} icon="share-social" onPress={invite} />}
             </View>
           ) : (
             <View style={[styles.card, { alignItems: 'center' }]}>
               <Ionicons name="people" size={34} color={C.primary} />
-              <Text style={styles.cardTitle}>Shop together, pay less</Text>
+              <Text style={styles.cardTitle}>{t("Shop together, pay less")}</Text>
               <Text style={[styles.small, { textAlign: 'center' }]}>
                 Start a group and fill every seat within 24 hours to unlock the group price. {group?.claimedAt ? 'Your last group order is on its way!' : ''}
               </Text>
@@ -120,7 +121,7 @@ export default function Group() {
                   {d.size}-person group · {compact(d.joined)} joined today
                 </Text>
               </View>
-              <Button title="Start" small icon="people" disabled={!!active} onPress={() => start(d)} />
+              <Button title={t("Start")} small icon="people" disabled={!!active} onPress={() => start(d)} />
             </View>
           ))}
         </Wrap>

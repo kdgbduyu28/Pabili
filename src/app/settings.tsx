@@ -10,8 +10,15 @@ import { play } from '../lib/sound';
 import { ThemePref, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { Lang, t } from '../i18n';
 
 const COOL_OFF_OPTIONS = [5, 10, 30, 60];
+
+// Each language is named in itself, so it's findable whichever one is active.
+const LANGS: { id: Lang; label: string }[] = [
+  { id: 'en', label: 'English' },
+  { id: 'fil', label: 'Filipino' },
+];
 
 const THEMES: { id: ThemePref; label: string; icon: keyof typeof Ionicons.glyphMap }[] = [
   { id: 'system', label: 'System', icon: 'phone-portrait-outline' },
@@ -43,25 +50,46 @@ export default function Settings() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Settings" />
+      <Header title={t("Settings")} />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Wrap style={{ maxWidth: 720 }}>
           <View style={[styles.card, { padding: 14, gap: 10 }]}>
-            <Text style={styles.title}>Appearance</Text>
+            <Text style={styles.title}>{t("Appearance")}</Text>
             <View style={styles.segments}>
-              {THEMES.map((t) => {
-                const on = settings.theme === t.id || (!settings.theme && t.id === 'system');
+              {THEMES.map((opt) => {
+                const on = settings.theme === opt.id || (!settings.theme && opt.id === 'system');
                 return (
                   <Pressable
-                    key={t.id}
+                    key={opt.id}
                     onPress={() => {
                       tap();
-                      setSettings({ theme: t.id });
+                      setSettings({ theme: opt.id });
                     }}
                     style={[styles.segment, on && styles.segmentOn]}
                   >
-                    <Ionicons name={t.icon} size={16} color={on ? C.primary : C.muted} />
-                    <Text style={[styles.optionText, on && { color: C.primary, fontWeight: '700' }]}>{t.label}</Text>
+                    <Ionicons name={opt.icon} size={16} color={on ? C.primary : C.muted} />
+                    <Text style={[styles.optionText, on && { color: C.primary, fontWeight: '700' }]}>{t(opt.label)}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+
+          <View style={[styles.card, { padding: 14, gap: 10 }]}>
+            <Text style={styles.title}>{t('Language')}</Text>
+            <View style={styles.segments}>
+              {LANGS.map((l) => {
+                const on = (settings.lang ?? 'en') === l.id;
+                return (
+                  <Pressable
+                    key={l.id}
+                    onPress={() => {
+                      tap();
+                      setSettings({ lang: l.id });
+                    }}
+                    style={[styles.segment, on && styles.segmentOn]}
+                  >
+                    <Text style={[styles.optionText, on && { color: C.primary, fontWeight: '700' }]}>{l.label}</Text>
                   </Pressable>
                 );
               })}
@@ -69,7 +97,7 @@ export default function Settings() {
           </View>
 
           <View style={styles.card}>
-            <Row title="Sound effects" sub="Cha-ching on checkout, coin clinks, box pops">
+            <Row title={t("Sound effects")} sub={t('Cha-ching on checkout, coin clinks, box pops')}>
               <Switch
                 value={settings.sound}
                 onValueChange={(sound) => {
@@ -81,11 +109,11 @@ export default function Settings() {
               />
             </Row>
             <Row
-              title="Notifications"
+              title={t("Notifications")}
               sub={
                 NOTIFICATIONS_SUPPORTED
-                  ? 'Parcel arrivals, restocks, group buys and a daily coin reminder'
-                  : 'Available in the iPhone and Android apps'
+                  ? t('Parcel arrivals, restocks, group buys and a daily coin reminder')
+                  : t('Available in the iPhone and Android apps')
               }
             >
               <Switch
@@ -102,7 +130,7 @@ export default function Settings() {
                 thumbColor="#fff"
               />
             </Row>
-            <Row title="Cool-off mode" sub="Items must sit in your cart for a while before you can check out. Wait it out to earn a patience bonus.">
+            <Row title={t("Cool-off mode")} sub={t('Items must sit in your cart for a while before you can check out. Wait it out to earn a patience bonus.')}>
               <Switch
                 value={settings.coolOff}
                 onValueChange={(coolOff) => {
@@ -132,11 +160,11 @@ export default function Settings() {
           </View>
 
           <View style={[styles.card, { padding: 14, gap: 12 }]}>
-            <Text style={styles.title}>My interests</Text>
-            <Text style={styles.sub}>Your For You feed on Home leans toward these.</Text>
+            <Text style={styles.title}>{t("My interests")}</Text>
+            <Text style={styles.sub}>{t("Your For You feed on Home leans toward these.")}</Text>
             <InterestPicker value={picked} onChange={setPicked} />
             <Button
-              title="Save interests"
+              title={t("Save interests")}
               onPress={() => {
                 useShop.getState().setInterests(picked);
                 toast('Interests saved');
@@ -145,7 +173,7 @@ export default function Settings() {
           </View>
 
           <View style={[styles.card, { padding: 14 }]}>
-            <Button title="Reset all data" variant="outline" icon="refresh-outline" onPress={reset} />
+            <Button title={t("Reset all data")} variant="outline" icon="refresh-outline" onPress={reset} />
           </View>
         </Wrap>
       </ScrollView>

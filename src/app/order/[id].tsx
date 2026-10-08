@@ -24,6 +24,7 @@ import { canReturn, isLate, orderStatus, routeProgress, timeline } from '../../l
 import { COINS_PER_REVIEW, Order, keptInWallet, useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 export default function OrderScreen() {
   const { id, celebrate } = useLocalSearchParams<{ id: string; celebrate?: string }>();
@@ -33,7 +34,7 @@ export default function OrderScreen() {
     return (
       <View style={{ flex: 1 }}>
         <Header title="Order" />
-        <EmptyState icon="cube-outline" title="Order not found" />
+        <EmptyState icon="cube-outline" title={t("Order not found")} />
       </View>
     );
   }
@@ -63,14 +64,14 @@ function Celebrate({ order, onDone }: { order: Order; onDone: () => void }) {
             <Ionicons name="checkmark" size={64} color={C.primary} />
           </Animated.View>
           <Animated.Text entering={FadeInDown.delay(200)} style={styles.bigTitle}>
-            Order placed!
+            {t("Order placed!")}
           </Animated.Text>
           <Animated.Text entering={FadeInDown.delay(300)} style={styles.sub}>
             {items} item{items > 1 ? 's' : ''} on the way from {order.shops.length} shop{order.shops.length > 1 ? 's' : ''}
           </Animated.Text>
 
           <Animated.View entering={FadeInDown.delay(450)} style={styles.wallet}>
-            <Text style={styles.walletLabel}>Stayed in your wallet</Text>
+            <Text style={styles.walletLabel}>{t("Stayed in your wallet")}</Text>
             <Text style={styles.walletValue}>{peso(order.total)}</Text>
             <Text style={styles.walletNote}>
               That's {peso(lifetime)} not spent since you started using Pabili.
@@ -83,10 +84,10 @@ function Celebrate({ order, onDone }: { order: Order; onDone: () => void }) {
 
           <Animated.View entering={FadeInDown.delay(600)} style={{ width: '100%', gap: 10, marginTop: 24 }}>
             <Pressable style={styles.whiteBtn} onPress={onDone}>
-              <Text style={styles.whiteBtnText}>Track Order</Text>
+              <Text style={styles.whiteBtnText}>{t("Track Order")}</Text>
             </Pressable>
             <Pressable style={styles.ghostBtn} onPress={() => router.dismissTo('/')}>
-              <Text style={styles.ghostBtnText}>Continue Shopping</Text>
+              <Text style={styles.ghostBtnText}>{t("Continue Shopping")}</Text>
             </Pressable>
           </Animated.View>
         </Wrap>
@@ -144,13 +145,13 @@ function OrderDetail({ order }: { order: Order }) {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Order Details" />
+      <Header title={t("Order Details")} />
       <ScrollView contentContainerStyle={{ paddingBottom: 90 + insets.bottom }}>
         <Wrap>
           <LinearGradient colors={status === 'cancelled' || status === 'returned' ? ['#71717A', '#A1A1AA'] : C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.statusBanner}>
             <View style={{ flex: 1 }}>
-              <Text style={styles.statusTitle}>{b.title}</Text>
-              <Text style={styles.statusSub}>{b.sub}</Text>
+              <Text style={styles.statusTitle}>{t(b.title)}</Text>
+              <Text style={styles.statusSub}>{t(b.sub)}</Text>
             </View>
             <Ionicons name={b.icon} size={44} color="#fff" />
           </LinearGradient>
@@ -167,13 +168,13 @@ function OrderDetail({ order }: { order: Order }) {
 
           {route && (
             <View style={styles.card}>
-              <Text style={[styles.cardTitle, { marginBottom: 8 }]}>Live Tracking</Text>
+              <Text style={[styles.cardTitle, { marginBottom: 8 }]}>{t("Live Tracking")}</Text>
               <ParcelMap orderId={order.id} {...route} />
             </View>
           )}
 
           <View style={styles.card}>
-            <Text style={styles.cardTitle}>Shipping Information</Text>
+            <Text style={styles.cardTitle}>{t("Shipping Information")}</Text>
             <Text style={styles.small}>Pabili Xpress • Tracking no. {order.id.slice(2)}PH</Text>
             <View style={{ marginTop: 12 }}>
               {steps.map((s, i) => (
@@ -201,7 +202,7 @@ function OrderDetail({ order }: { order: Order }) {
                 <Text style={styles.giftTo}>A gift for {order.gift.to}</Text>
                 {!!order.gift.message && <Text style={styles.giftMsg}>“{order.gift.message}”</Text>}
                 <Button
-                  title="Send the gift link"
+                  title={t("Send the gift link")}
                   small
                   icon="share-social"
                   onPress={() => shareText(`${order.address.name.split(' ')[0]} sent you a gift on Pabili! Tap to unwrap:`, giftLink(order) ?? undefined)}
@@ -213,7 +214,7 @@ function OrderDetail({ order }: { order: Order }) {
           <View style={[styles.card, { flexDirection: 'row', gap: 10 }]}>
             <Ionicons name="location-outline" size={18} color={C.primary} />
             <View style={{ flex: 1, gap: 2 }}>
-              <Text style={styles.cardTitle}>Delivery Address</Text>
+              <Text style={styles.cardTitle}>{t("Delivery Address")}</Text>
               <Text style={{ fontSize: 13, color: C.text }}>
                 {order.address.name} {order.address.phone}
               </Text>
@@ -257,26 +258,26 @@ function OrderDetail({ order }: { order: Order }) {
           })}
 
           <View style={[styles.card, { gap: 8 }]}>
-            <Detail label="Merchandise Subtotal" value={peso(order.subtotal + bundleDiscount)} />
-            {bundleDiscount > 0 && <Detail label="Bundle Deal" value={`-${peso(bundleDiscount)}`} />}
-            {shopVoucherDiscount > 0 && <Detail label="Shop Vouchers" value={`-${peso(shopVoucherDiscount)}`} />}
-            <Detail label="Shipping Fee" value={peso(order.shippingTotal)} />
-            {order.shippingDiscount > 0 && <Detail label="Shipping Discount" value={`-${peso(order.shippingDiscount)}`} />}
+            <Detail label={t("Merchandise Subtotal")} value={peso(order.subtotal + bundleDiscount)} />
+            {bundleDiscount > 0 && <Detail label={t("Bundle Deal")} value={`-${peso(bundleDiscount)}`} />}
+            {shopVoucherDiscount > 0 && <Detail label={t("Shop Vouchers")} value={`-${peso(shopVoucherDiscount)}`} />}
+            <Detail label={t("Shipping Fee")} value={peso(order.shippingTotal)} />
+            {order.shippingDiscount > 0 && <Detail label={t("Shipping Discount")} value={`-${peso(order.shippingDiscount)}`} />}
             {order.voucherDiscount > 0 && <Detail label={`Voucher (${voucher?.id ?? ''})`} value={`-${peso(order.voucherDiscount)}`} />}
-            {order.coinsUsed > 0 && <Detail label="Coins Redeemed" value={`-${peso(order.coinsUsed)}`} />}
+            {order.coinsUsed > 0 && <Detail label={t("Coins Redeemed")} value={`-${peso(order.coinsUsed)}`} />}
             <View style={styles.totalRow}>
-              <Text style={{ fontSize: 14, color: C.text }}>Order Total</Text>
+              <Text style={{ fontSize: 14, color: C.text }}>{t("Order Total")}</Text>
               <Price value={order.total} size={17} />
             </View>
           </View>
 
           <View style={[styles.card, { gap: 6 }]}>
-            <Detail label="Order ID" value={order.id} />
-            <Detail label="Payment Method" value={order.payment} />
-            <Detail label="Order Time" value={dateTime(order.createdAt)} />
-            {order.receivedAt && <Detail label="Completed" value={dateTime(order.receivedAt)} />}
-            {order.cancelledAt && <Detail label="Cancelled" value={dateTime(order.cancelledAt)} />}
-            {order.returnedAt && <Detail label="Returned" value={dateTime(order.returnedAt)} />}
+            <Detail label={t("Order ID")} value={order.id} />
+            <Detail label={t("Payment Method")} value={order.payment} />
+            <Detail label={t("Order Time")} value={dateTime(order.createdAt)} />
+            {order.receivedAt && <Detail label={t("Completed")} value={dateTime(order.receivedAt)} />}
+            {order.cancelledAt && <Detail label={t("Cancelled")} value={dateTime(order.cancelledAt)} />}
+            {order.returnedAt && <Detail label={t("Returned")} value={dateTime(order.returnedAt)} />}
           </View>
         </Wrap>
       </ScrollView>
@@ -285,7 +286,7 @@ function OrderDetail({ order }: { order: Order }) {
         <Wrap style={{ flexDirection: 'row', gap: 10, paddingHorizontal: 12 }}>
           {status === 'to_ship' && (
             <Button
-              title="Cancel Order"
+              title={t("Cancel Order")}
               variant="outline"
               style={{ flex: 1 }}
               onPress={() => {
@@ -295,24 +296,24 @@ function OrderDetail({ order }: { order: Order }) {
             />
           )}
           {status === 'delivered' && (
-            <Button title="Unbox Parcel" icon="gift" style={{ flex: 1 }} onPress={() => router.push(`/unbox/${order.id}`)} />
+            <Button title={t("Unbox Parcel")} icon="gift" style={{ flex: 1 }} onPress={() => router.push(`/unbox/${order.id}`)} />
           )}
           {status === 'completed' && canReturn(order, now) && (
-            <Button title="Return/Refund" variant="outline" style={{ flex: 1 }} onPress={() => setReturning(true)} />
+            <Button title={t("Return/Refund")} variant="outline" style={{ flex: 1 }} onPress={() => setReturning(true)} />
           )}
           {status === 'completed' && unrated > 0 && (
             <Button title={`Rate (+${unrated * COINS_PER_REVIEW})`} style={{ flex: 1 }} onPress={() => router.push(`/rate/${order.id}`)} />
           )}
           {(status === 'to_receive' || status === 'cancelled' || status === 'returned' || (status === 'completed' && unrated === 0)) && (
-            <Button title="Buy Again" style={{ flex: 1 }} onPress={buyAgain} />
+            <Button title={t("Buy Again")} style={{ flex: 1 }} onPress={buyAgain} />
           )}
         </Wrap>
       </View>
 
       <Sheet open={returning} onClose={() => setReturning(false)}>
         <View style={{ padding: 16, gap: 4 }}>
-          <Text style={styles.sheetTitle}>Return/Refund</Text>
-          <Text style={styles.small}>Free returns within 15 days (Pabili time: 15 minutes). Your refund is ₱0, as always.</Text>
+          <Text style={styles.sheetTitle}>{t("Return/Refund")}</Text>
+          <Text style={styles.small}>{t("Free returns within 15 days (Pabili time: 15 minutes). Your refund is ₱0, as always.")}</Text>
         </View>
         {RETURN_REASONS.map((r) => (
           <Pressable key={r} style={styles.reason} onPress={() => setReason(r)}>
@@ -322,7 +323,7 @@ function OrderDetail({ order }: { order: Order }) {
         ))}
         <View style={{ padding: 16 }}>
           <Button
-            title="Submit Return"
+            title={t("Submit Return")}
             onPress={() => {
               returnOrder(order.id, reason);
               setReturning(false);

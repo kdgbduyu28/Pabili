@@ -14,6 +14,7 @@ import { play } from '../lib/sound';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 type Prize = { label: string; coins?: number; voucher?: string; weight: number; color: string };
 
@@ -105,7 +106,7 @@ export default function Spin() {
     <LinearGradient colors={['#4C1D95', '#BE185D', '#F43F5E']} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingTop: insets.top, paddingBottom: insets.bottom + 24 }}>
         <Wrap style={styles.top}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </Pressable>
           <View style={{ flex: 1 }} />
@@ -115,7 +116,7 @@ export default function Spin() {
           </View>
         </Wrap>
         <Wrap style={{ alignItems: 'center', paddingHorizontal: 16 }}>
-          <Text style={styles.title}>Spin & Win</Text>
+          <Text style={styles.title}>{t("Spin & Win")}</Text>
           <Text style={styles.sub}>
             {freeLeft > 0 ? `${freeLeft} free spin${freeLeft > 1 ? 's' : ''} left today` : `Extra spins cost ${EXTRA_SPIN_COST} coins`}
           </Text>
@@ -147,7 +148,7 @@ export default function Spin() {
                 <Circle cx={SIZE / 2} cy={SIZE / 2} r={34} fill="#fff" stroke="#FACC15" strokeWidth={4} />
               </Svg>
             </Animated.View>
-            <Pressable onPress={spin} disabled={spinning} style={styles.hub} accessibilityLabel="Spin">
+            <Pressable onPress={spin} disabled={spinning} style={styles.hub} accessibilityLabel={t("Spin")}>
               <Text style={styles.hubText}>{spinning ? '...' : 'SPIN'}</Text>
             </Pressable>
           </View>

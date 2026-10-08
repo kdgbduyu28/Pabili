@@ -6,6 +6,7 @@ import { dateTime } from '../lib/format';
 import { useMeasuredWidth } from '../lib/hooks';
 import { useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Achievements() {
   const unlocked = useShop((s) => s.achievements);
@@ -17,7 +18,7 @@ export default function Achievements() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Achievements" />
+      <Header title={t("Achievements")} />
       <ScrollView>
         <Wrap>
           <View style={styles.summary}>

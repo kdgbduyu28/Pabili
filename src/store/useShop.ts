@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { variantLabel } from '../data/catalog';
+import type { Lang } from '../i18n';
 import { CheckoutSummary, Line } from '../lib/checkout';
 import { todayKey } from '../lib/format';
 
@@ -97,7 +98,7 @@ export type Resisted = { productId: string; amount: number; at: number };
 
 export type ThemePref = 'system' | 'light' | 'dark';
 
-export type Settings = { sound: boolean; coolOff: boolean; coolOffMins: number; theme: ThemePref; notifications: boolean };
+export type Settings = { sound: boolean; coolOff: boolean; coolOffMins: number; theme: ThemePref; notifications: boolean; lang: Lang };
 
 type State = {
   cart: CartItem[];
@@ -215,7 +216,7 @@ const initial = {
   interests: null as string[] | null,
   achievements: {} as Record<string, number>,
   resisted: [] as Resisted[],
-  settings: { sound: true, coolOff: false, coolOffMins: 10, theme: 'system', notifications: true } as Settings,
+  settings: { sound: true, coolOff: false, coolOffMins: 10, theme: 'system', notifications: true, lang: 'en' } as Settings,
   feedLikes: [] as string[],
   stats: {} as Record<string, number>,
   draft: null,

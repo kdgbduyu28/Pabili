@@ -14,6 +14,7 @@ import { play } from '../lib/sound';
 import { Farm, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const WATERS_PER_DAY = 3;
 const WATER_POINTS = 10;
@@ -117,10 +118,10 @@ export default function Garden() {
     <LinearGradient colors={['#BAE6FD', '#E0F2FE', '#DCFCE7']} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingTop: insets.top, paddingBottom: insets.bottom + 24 }}>
         <Wrap style={styles.top}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={24} color={C.text} />
           </Pressable>
-          <Text style={styles.title}>Pabili Garden</Text>
+          <Text style={styles.title}>{t("Pabili Garden")}</Text>
           <View style={styles.coinPill}>
             <Coin size={16} />
             <Text style={{ fontWeight: '700', color: C.text }}>{coins}</Text>
@@ -161,17 +162,17 @@ export default function Garden() {
           </View>
 
           {ready ? (
-            <Button title="Harvest reward" icon="gift" onPress={harvest} style={{ width: '100%', maxWidth: 360, marginTop: 16 }} />
+            <Button title={t("Harvest reward")} icon="gift" onPress={harvest} style={{ width: '100%', maxWidth: 360, marginTop: 16 }} />
           ) : (
             <View style={styles.actions}>
               <Pressable onPress={water} disabled={left === 0} style={[styles.action, left === 0 && { opacity: 0.5 }]}>
                 <Ionicons name="water" size={26} color="#0EA5E9" />
-                <Text style={styles.actionTitle}>Water</Text>
+                <Text style={styles.actionTitle}>{t("Water")}</Text>
                 <Text style={styles.actionSub}>{left > 0 ? `${left} free left today` : 'Come back tomorrow'}</Text>
               </Pressable>
               <Pressable onPress={fertilize} style={styles.action}>
                 <Ionicons name="flask" size={26} color="#A855F7" />
-                <Text style={styles.actionTitle}>Fertilize</Text>
+                <Text style={styles.actionTitle}>{t("Fertilize")}</Text>
                 <Text style={styles.actionSub}>+{FERTILIZER_POINTS} for {FERTILIZER_COST} coins</Text>
               </Pressable>
             </View>
@@ -182,7 +183,7 @@ export default function Garden() {
               <Ionicons name="gift" size={34} color={C.primary} />
               <Text style={styles.prizeTitle}>You harvested {prize.label}!</Text>
               <Text style={styles.actionSub}>A new {PLANTS[farm.plant % PLANTS.length].toLowerCase()} seed is planted.</Text>
-              {prize.voucher && <Button title="See my vouchers" small variant="outline" onPress={() => router.push('/vouchers')} />}
+              {prize.voucher && <Button title={t("See my vouchers")} small variant="outline" onPress={() => router.push('/vouchers')} />}
             </Animated.View>
           )}
 

@@ -15,6 +15,7 @@ import { tap } from '../lib/haptics';
 import { useNow } from '../lib/hooks';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Deals() {
   const insets = useSafeAreaInsets();
@@ -30,11 +31,11 @@ export default function Deals() {
     <View style={{ flex: 1 }}>
       <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ paddingTop: insets.top }}>
         <Wrap style={styles.headRow}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back" style={{ marginRight: 10 }}>
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")} style={{ marginRight: 10 }}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </Pressable>
           <Ionicons name="flash" size={22} color="#fff" />
-          <Text style={styles.headTitle}>FLASH DEALS</Text>
+          <Text style={styles.headTitle}>{t("FLASH DEALS")}</Text>
           <View style={{ flex: 1 }} />
           <CartButton />
         </Wrap>
@@ -55,7 +56,7 @@ export default function Deals() {
                   <Text style={[styles.slotTime, on && { color: C.primary }]}>
                     {pad2(s.getHours())}:00
                   </Text>
-                  <Text style={[styles.slotLabel, on && { color: C.primary }]}>{o === 0 ? 'Ongoing' : 'Coming Soon'}</Text>
+                  <Text style={[styles.slotLabel, on && { color: C.primary }]}>{o === 0 ? t("Ongoing") : t("Coming Soon")}</Text>
                 </Pressable>
               );
             })}
@@ -66,7 +67,7 @@ export default function Deals() {
       <ScrollView>
         <Wrap>
           <View style={styles.timer}>
-            <Text style={{ color: C.text, fontSize: 13 }}>{live ? 'Ends in' : 'Starts in'}</Text>
+            <Text style={{ color: C.text, fontSize: 13 }}>{live ? t("Ends in") : t("Starts in")}</Text>
             <Countdown ms={live ? current + SLOT_MS - now : start - now} />
           </View>
           {deals.map((d) => {
@@ -110,7 +111,7 @@ export default function Deals() {
                     </View>
                     {live ? (
                       <Pressable style={styles.buy} onPress={() => router.push(`/product/${d.product.id}`)}>
-                        <Text style={styles.buyText}>Buy Now</Text>
+                        <Text style={styles.buyText}>{t("Buy Now")}</Text>
                       </Pressable>
                     ) : (
                       <Pressable
@@ -121,7 +122,7 @@ export default function Deals() {
                           if (!remind) toast("Reminder set. We'll pretend to notify you.", 'alarm');
                         }}
                       >
-                        <Text style={[styles.buyText, !remind && { color: C.primary }]}>{remind ? 'Reminded' : 'Remind Me'}</Text>
+                        <Text style={[styles.buyText, !remind && { color: C.primary }]}>{remind ? t("Reminded") : t("Remind Me")}</Text>
                       </Pressable>
                     )}
                   </View>

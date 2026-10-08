@@ -15,6 +15,7 @@ import { parseGift } from '../lib/gift';
 import { bump, success } from '../lib/haptics';
 import { play } from '../lib/sound';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function GiftPage() {
   const { d } = useLocalSearchParams<{ d?: string }>();
@@ -27,8 +28,8 @@ export default function GiftPage() {
   if (!gift) {
     return (
       <View style={{ flex: 1 }}>
-        <Header title="Gift" />
-        <EmptyState icon="gift-outline" title="This gift link looks broken" subtitle="Ask the sender to share it again." />
+        <Header title={t("Gift")} />
+        <EmptyState icon="gift-outline" title={t("This gift link looks broken")} subtitle={t("Ask the sender to share it again.")} />
       </View>
     );
   }
@@ -54,7 +55,7 @@ export default function GiftPage() {
           <Text style={styles.sub}>For {gift.t}</Text>
 
           {!open ? (
-            <Pressable onPress={unwrap} accessibilityLabel="Unwrap gift" style={{ marginTop: 24, alignItems: 'center', gap: 14 }}>
+            <Pressable onPress={unwrap} accessibilityLabel={t("Unwrap gift")} style={{ marginTop: 24, alignItems: 'center', gap: 14 }}>
               <Animated.View style={style}>
                 <LinearGradient colors={wrap.colors} style={styles.box}>
                   <View style={[styles.ribbonV, { backgroundColor: wrap.ribbon }]} />
@@ -62,7 +63,7 @@ export default function GiftPage() {
                   <Ionicons name="sparkles" size={30} color={wrap.ribbon} style={{ position: 'absolute', top: -18 }} />
                 </LinearGradient>
               </Animated.View>
-              <Text style={styles.tap}>Tap to unwrap</Text>
+              <Text style={styles.tap}>{t("Tap to unwrap")}</Text>
             </Pressable>
           ) : (
             <>
@@ -83,9 +84,9 @@ export default function GiftPage() {
                   </Animated.View>
                 ))}
               </View>
-              <Text style={styles.note}>Pabili gifts are pretend: nothing ships, nobody pays, and the thought still counts.</Text>
+              <Text style={styles.note}>{t("Pabili gifts are pretend: nothing ships, nobody pays, and the thought still counts.")}</Text>
               <Pressable style={styles.cta} onPress={() => router.replace('/')}>
-                <Text style={styles.ctaText}>Shop on Pabili</Text>
+                <Text style={styles.ctaText}>{t("Shop on Pabili")}</Text>
               </Pressable>
             </>
           )}

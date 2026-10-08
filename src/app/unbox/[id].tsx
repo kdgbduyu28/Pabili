@@ -26,6 +26,7 @@ import { deliveredAt, orderStatus } from '../../lib/orders';
 import { play } from '../../lib/sound';
 import { COINS_PER_REVIEW, useShop } from '../../store/useShop';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 const TAPS = 3;
 
@@ -54,8 +55,8 @@ export default function Unbox() {
   if (!order) {
     return (
       <View style={{ flex: 1 }}>
-        <Header title="Unbox" />
-        <EmptyState icon="cube-outline" title="Order not found" />
+        <Header title={t("Unbox")} />
+        <EmptyState icon="cube-outline" title={t("Order not found")} />
       </View>
     );
   }
@@ -69,10 +70,10 @@ export default function Unbox() {
     const mins = Math.max(1, Math.ceil((deliveredAt(order) - now) / 60000));
     return (
       <View style={{ flex: 1 }}>
-        <Header title="Unbox" />
+        <Header title={t("Unbox")} />
         <EmptyState
           icon="bicycle-outline"
-          title="Your parcel is still on the way"
+          title={t("Your parcel is still on the way")}
           subtitle={`It should arrive in about ${mins} minute${mins > 1 ? 's' : ''}. We'll notify you.`}
         />
       </View>
@@ -107,20 +108,20 @@ export default function Unbox() {
     <LinearGradient colors={['#2A1A3F', '#4C1D95', '#BE185D']} style={{ flex: 1 }}>
       <View style={{ paddingTop: insets.top }}>
         <Wrap style={styles.top}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="close" size={28} color="#fff" />
           </Pressable>
         </Wrap>
       </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1, alignItems: 'center', paddingBottom: insets.bottom + 24 }}>
         <Wrap style={{ maxWidth: 520, alignItems: 'center', paddingHorizontal: 20 }}>
-          <Text style={styles.title}>{open ? 'Your haul is here!' : 'Your parcel has arrived'}</Text>
+          <Text style={styles.title}>{open ? t("Your haul is here!") : t("Your parcel has arrived")}</Text>
           <Text style={styles.sub}>
             {open ? `${items.length} item${items.length > 1 ? 's' : ''} from order ${order.id}` : `Tap the box ${TAPS - taps} more time${TAPS - taps === 1 ? '' : 's'} to open it`}
           </Text>
 
           {!alreadyOpen && (
-            <Pressable onPress={tapBox} accessibilityLabel="Open parcel" style={{ marginTop: 32, height: 230, justifyContent: 'flex-end' }}>
+            <Pressable onPress={tapBox} accessibilityLabel={t("Open parcel")} style={{ marginTop: 32, height: 230, justifyContent: 'flex-end' }}>
               <Animated.View style={[styles.lid, lidStyle, wrap && { backgroundColor: wrap.colors[1], borderColor: wrap.colors[0] }]}>
                 <View style={styles.tapeV} />
               </Animated.View>
@@ -170,7 +171,7 @@ export default function Unbox() {
                 <Text style={styles.whiteBtnText}>Rate & earn {items.length * COINS_PER_REVIEW} coins</Text>
               </Pressable>
               <Pressable style={styles.ghostBtn} onPress={() => router.replace(`/order/${order.id}`)}>
-                <Text style={styles.ghostBtnText}>View order</Text>
+                <Text style={styles.ghostBtnText}>{t("View order")}</Text>
               </Pressable>
             </Animated.View>
           )}

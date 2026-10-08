@@ -19,6 +19,7 @@ import { useMeasuredWidth, useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 const PAGE = 20;
 
@@ -70,10 +71,10 @@ export default function Home() {
           <RecentlyViewed />
           <FollowedRow />
           <View style={styles.discoverHead}>
-            <Text style={styles.discoverText}>{interests?.length ? 'FOR YOU' : 'DAILY DISCOVER'}</Text>
+            <Text style={styles.discoverText}>{interests?.length ? t("FOR YOU") : t("DAILY DISCOVER")}</Text>
           </View>
           <ProductGrid products={feed.slice(0, shown)} keyPrefix="feed" />
-          {shown >= feed.length && <Text style={styles.end}>You've seen it all. Your wallet thanks you.</Text>}
+          {shown >= feed.length && <Text style={styles.end}>{t("You've seen it all. Your wallet thanks you.")}</Text>}
         </Wrap>
       </ScrollView>
     </View>
@@ -110,10 +111,10 @@ function Banners() {
           <Pressable key={b.title} onPress={() => router.push(b.href as Href)}>
             <LinearGradient colors={b.colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={[styles.banner, { width: w, height: h }]}>
               <View style={{ flex: 1 }}>
-                <Text style={styles.bannerTitle}>{b.title}</Text>
-                <Text style={styles.bannerSub}>{b.subtitle}</Text>
+                <Text style={styles.bannerTitle}>{t(b.title)}</Text>
+                <Text style={styles.bannerSub}>{t(b.subtitle)}</Text>
                 <View style={styles.bannerCta}>
-                  <Text style={styles.bannerCtaText}>Shop now</Text>
+                  <Text style={styles.bannerCtaText}>{t("Shop now")}</Text>
                 </View>
               </View>
               <Ionicons name={b.icon} size={h * 0.5} color="rgba(255,255,255,0.92)" />
@@ -140,7 +141,7 @@ function QuickActions() {
     { icon: 'storefront', label: 'Pabili Mall', onPress: () => router.push('/search?filter=mall') },
     {
       icon: 'coin',
-      label: checkedIn ? 'Checked in' : 'Daily Coins',
+      label: checkedIn ? t("Checked in") : t("Daily Coins"),
       onPress: () => {
         const got = checkIn();
         if (got) {
@@ -168,7 +169,7 @@ function QuickActions() {
             {it.icon === 'coin' ? <Coin size={24} /> : <Ionicons name={it.icon} size={22} color={C.primary} />}
           </View>
           <Text style={styles.quickLabel} numberOfLines={2}>
-            {it.label}
+            {t(it.label)}
           </Text>
         </Pressable>
       ))}
@@ -181,7 +182,7 @@ function Categories() {
   for (let i = 0; i < CATEGORIES.length; i += 2) cols.push(CATEGORIES.slice(i, i + 2));
   return (
     <View style={styles.card}>
-      <SectionTitle title="CATEGORIES" />
+      <SectionTitle title={t("CATEGORIES")} />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 4, paddingBottom: 8 }}>
         {cols.map((col) => (
           <View key={col[0].id}>
@@ -191,7 +192,7 @@ function Categories() {
                   <Ionicons name={c.icon} size={26} color={C.primary} />
                 </View>
                 <Text style={styles.catLabel} numberOfLines={2}>
-                  {c.name}
+                  {t(c.name)}
                 </Text>
               </Pressable>
             ))}
@@ -213,8 +214,8 @@ function MegaStrip() {
       <LinearGradient colors={['#7C3AED', '#F43F5E']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.mega}>
         <Text style={styles.megaLabel}>{mega.label}</Text>
         <View style={{ flex: 1 }}>
-          <Text style={styles.megaTitle}>{mega.live ? 'MEGA SALE IS LIVE' : 'MEGA SALE'}</Text>
-          <Text style={styles.megaSub}>{mega.live ? 'Free shipping + 2x coins today' : 'Vouchers drop at midnight'}</Text>
+          <Text style={styles.megaTitle}>{mega.live ? t("MEGA SALE IS LIVE") : t("MEGA SALE")}</Text>
+          <Text style={styles.megaSub}>{mega.live ? t("Free shipping + 2x coins today") : t("Vouchers drop at midnight")}</Text>
         </View>
         <View style={{ alignItems: 'flex-end', gap: 3 }}>
           <Text style={styles.megaSub}>{mega.live ? 'Ends in' : days > 0 ? `In ${days}d` : 'Starts in'}</Text>
@@ -238,7 +239,7 @@ function FollowedRow() {
   if (!products.length) return null;
   return (
     <View style={styles.card}>
-      <SectionTitle title="FROM SHOPS YOU FOLLOW" right="See all" onPress={() => router.push('/following')} />
+      <SectionTitle title={t("FROM SHOPS YOU FOLLOW")} right={t("See all")} onPress={() => router.push('/following')} />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingHorizontal: 8, paddingBottom: 12 }}>
         {products.map((p) => (
           <ProductCard key={p.id} product={p} width={130} now={now} />
@@ -255,7 +256,7 @@ function RecentlyViewed() {
   if (products.length < 2) return null;
   return (
     <View style={styles.card}>
-      <SectionTitle title="RECENTLY VIEWED" />
+      <SectionTitle title={t("RECENTLY VIEWED")} />
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingHorizontal: 8, paddingBottom: 12 }}>
         {products.map((p) => (
           <ProductCard key={p.id} product={p} width={130} now={now} />
@@ -274,11 +275,11 @@ function FlashStrip() {
       <Pressable style={styles.flashHead} onPress={() => router.push('/deals')}>
         <View style={styles.flashTitleRow}>
           <Ionicons name="flash" size={18} color={C.primary} />
-          <Text style={styles.flashTitle}>FLASH SALE</Text>
+          <Text style={styles.flashTitle}>{t("FLASH SALE")}</Text>
         </View>
         <Countdown ms={start + SLOT_MS - now} />
         <View style={{ flex: 1 }} />
-        <Text style={{ color: C.muted, fontSize: 13 }}>See all ›</Text>
+        <Text style={{ color: C.muted, fontSize: 13 }}>{t("See all ›")}</Text>
       </Pressable>
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 8, paddingBottom: 12, gap: 8 }}>
         {deals.map((d) => {

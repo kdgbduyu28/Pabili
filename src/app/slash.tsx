@@ -19,6 +19,7 @@ import { play } from '../lib/sound';
 import { SlashCut, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const WINDOW_MS = 24 * 3600 * 1000;
 /** Invites needed before a friend lands the final slash. */
@@ -90,11 +91,11 @@ export default function Slash() {
     <View style={{ flex: 1 }}>
       <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ paddingTop: insets.top }}>
         <Wrap style={styles.top}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </Pressable>
           <Ionicons name="cut" size={20} color="#fff" style={{ marginLeft: 12 }} />
-          <Text style={styles.headTitle}>Slash It!</Text>
+          <Text style={styles.headTitle}>{t("Slash It!")}</Text>
         </Wrap>
       </LinearGradient>
 
@@ -113,11 +114,11 @@ export default function Slash() {
                       Started at <Text style={{ textDecorationLine: 'line-through' }}>{peso(active.start)}</Text>
                     </Text>
                     <View style={{ flexDirection: 'row', alignItems: 'baseline', gap: 6 }}>
-                      <Text style={styles.small}>Now</Text>
+                      <Text style={styles.small}>{t("Now")}</Text>
                       <Price value={remaining} size={24} />
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
-                      <Text style={styles.small}>Ends in</Text>
+                      <Text style={styles.small}>{t("Ends in")}</Text>
                       <Countdown ms={active.startedAt + WINDOW_MS - now} />
                     </View>
                   </View>
@@ -134,14 +135,14 @@ export default function Slash() {
                   {remaining === 0 ? 'Slashed to ₱0! Claim it for free.' : `${peso(active.start - remaining)} slashed · ${peso(remaining)} to go`}
                 </Text>
                 {remaining === 0 ? (
-                  <Button title="Claim for FREE" icon="gift" onPress={claim} />
+                  <Button title={t("Claim for FREE")} icon="gift" onPress={claim} />
                 ) : (
                   <Button title={pending ? 'Friends are slashing…' : 'Invite friends to slash'} icon="share-social" onPress={invite} />
                 )}
               </View>
 
               <View style={styles.card}>
-                <Text style={styles.cardTitle}>Slash history</Text>
+                <Text style={styles.cardTitle}>{t("Slash history")}</Text>
                 {active.cuts
                   .filter((c) => c.at <= now)
                   .reverse()
@@ -162,11 +163,11 @@ export default function Slash() {
           ) : (
             <>
               <View style={[styles.card, { alignItems: 'center' }]}>
-                <Text style={styles.cardTitle}>Get it for ₱0</Text>
+                <Text style={styles.cardTitle}>{t("Get it for ₱0")}</Text>
                 <Text style={[styles.small, { textAlign: 'center' }]}>
                   Pick an item and slash the price. Invite friends to slash more. Hit ₱0 within 24 hours and it's yours, shipping included.
                 </Text>
-                {slash?.claimedAt && <Text style={{ color: C.success, fontWeight: '600', marginTop: 4 }}>Your last slash prize is on its way!</Text>}
+                {slash?.claimedAt && <Text style={{ color: C.success, fontWeight: '600', marginTop: 4 }}>{t("Your last slash prize is on its way!")}</Text>}
               </View>
               {picks.map((p) => (
                 <View key={p.id} style={[styles.card, { flexDirection: 'row', alignItems: 'center', gap: 12 }]}>
@@ -179,7 +180,7 @@ export default function Slash() {
                       <Text style={{ textDecorationLine: 'line-through' }}>{peso(p.price)}</Text> → <Text style={{ color: C.primary, fontWeight: '700' }}>₱0</Text>
                     </Text>
                   </View>
-                  <Button title="Slash" small icon="cut" onPress={() => start(p.id)} />
+                  <Button title={t("Slash")} small icon="cut" onPress={() => start(p.id)} />
                 </View>
               ))}
             </>

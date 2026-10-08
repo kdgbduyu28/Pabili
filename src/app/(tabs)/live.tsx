@@ -13,6 +13,7 @@ import { STREAMS, currentItem, livePrice, viewers } from '../../data/live';
 import { compact, peso } from '../../lib/format';
 import { useMeasuredWidth, useNow } from '../../lib/hooks';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 export default function LiveList() {
   const insets = useSafeAreaInsets();
@@ -30,7 +31,7 @@ export default function LiveList() {
             {(['live', 'videos'] as const).map((m) => (
               <Pressable key={m} onPress={() => setMode(m)} style={[styles.segment, mode === m && styles.segmentOn]}>
                 <Ionicons name={m === 'live' ? 'videocam' : 'play-circle'} size={16} color={mode === m ? '#fff' : C.text} />
-                <Text style={[styles.segmentText, mode === m && { color: '#fff' }]}>{m === 'live' ? 'Live' : 'Videos'}</Text>
+                <Text style={[styles.segmentText, mode === m && { color: '#fff' }]}>{m === 'live' ? t("Live") : t("Videos")}</Text>
               </Pressable>
             ))}
           </View>

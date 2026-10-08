@@ -12,6 +12,7 @@ import { bump, success } from '../lib/haptics';
 import { play } from '../lib/sound';
 import { useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export const SHAKES_PER_DAY = 3;
 const THRESHOLD = 1.8; // in g; a deliberate shake, not a walk
@@ -74,17 +75,17 @@ export default function Shake() {
   return (
     <LinearGradient colors={['#0F766E', '#14B8A6', '#FB7A3C']} style={{ flex: 1, paddingTop: insets.top }}>
       <Wrap style={styles.top}>
-        <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+        <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </Pressable>
       </Wrap>
       <Wrap style={{ flex: 1, alignItems: 'center', paddingHorizontal: 20 }}>
-        <Text style={styles.title}>Shake It!</Text>
+        <Text style={styles.title}>{t("Shake It!")}</Text>
         <Text style={styles.sub}>
           {left > 0 ? `${sensor ? 'Shake your phone' : 'Tap the gift'} to win coins or vouchers · ${left} left today` : 'No shakes left today. Come back tomorrow!'}
         </Text>
 
-        <Pressable onPress={shake} disabled={left === 0} style={{ marginTop: 40 }} accessibilityLabel="Shake">
+        <Pressable onPress={shake} disabled={left === 0} style={{ marginTop: 40 }} accessibilityLabel={t("Shake")}>
           <Animated.View style={[styles.gift, box, left === 0 && { opacity: 0.5 }]}>
             <Ionicons name="gift" size={120} color="#fff" />
           </Animated.View>

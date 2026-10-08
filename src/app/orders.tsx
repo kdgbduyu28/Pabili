@@ -9,6 +9,7 @@ import { useNow } from '../lib/hooks';
 import { ORDER_TABS, OrderTab, STATUS_LABEL, orderStatus, orderTab } from '../lib/orders';
 import { useShop } from '../store/useShop';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Orders() {
   const params = useLocalSearchParams<{ tab?: string }>();
@@ -22,12 +23,12 @@ export default function Orders() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="My Purchases" cart />
+      <Header title={t("My Purchases")} cart />
       <View style={{ backgroundColor: C.card }}>
         <Wrap style={styles.tabs}>
-          {ORDER_TABS.map((t) => (
-            <Pressable key={t.id} style={[styles.tab, tab === t.id && styles.tabOn]} onPress={() => setTab(t.id)}>
-              <Text style={[styles.tabText, tab === t.id && { color: C.primary, fontWeight: '600' }]}>{t.label}</Text>
+          {ORDER_TABS.map((opt) => (
+            <Pressable key={opt.id} style={[styles.tab, tab === opt.id && styles.tabOn]} onPress={() => setTab(opt.id)}>
+              <Text style={[styles.tabText, tab === opt.id && { color: C.primary, fontWeight: '600' }]}>{t(opt.label)}</Text>
             </Pressable>
           ))}
         </Wrap>
@@ -37,9 +38,9 @@ export default function Orders() {
           {list.length === 0 ? (
             <EmptyState
               icon="receipt-outline"
-              title="No orders yet"
-              subtitle="Your pretend purchases will show up here."
-              action={<Button title="Start Shopping" onPress={() => router.navigate('/')} style={{ width: 200 }} />}
+              title={t("No orders yet")}
+              subtitle={t("Your pretend purchases will show up here.")}
+              action={<Button title={t("Start Shopping")} onPress={() => router.navigate('/')} style={{ width: 200 }} />}
             />
           ) : (
             list.map((o) => {
@@ -70,19 +71,19 @@ export default function Orders() {
                   </View>
                   {more > 0 && <Text style={[styles.small, { textAlign: 'center', paddingBottom: 8 }]}>View {more} more item{more > 1 ? 's' : ''}</Text>}
                   <View style={styles.total}>
-                    <Text style={styles.small}>Order Total:</Text>
+                    <Text style={styles.small}>{t("Order Total:")}</Text>
                     <Price value={o.total} size={15} />
                   </View>
                   {status === 'delivered' && (
                     <View style={styles.ctaRow}>
-                      <Text style={[styles.small, { flex: 1, color: C.ship }]}>Parcel delivered. Open it to complete your order.</Text>
-                      <Button title="Unbox" icon="gift" small onPress={() => router.push(`/unbox/${o.id}`)} />
+                      <Text style={[styles.small, { flex: 1, color: C.ship }]}>{t("Parcel delivered. Open it to complete your order.")}</Text>
+                      <Button title={t("Unbox")} icon="gift" small onPress={() => router.push(`/unbox/${o.id}`)} />
                     </View>
                   )}
                   {status === 'completed' && hasUnrated(o) && (
                     <View style={styles.ctaRow}>
-                      <Text style={[styles.small, { flex: 1, color: C.coin }]}>Rate your items to earn coins</Text>
-                      <Button title="Rate" small onPress={() => router.push(`/rate/${o.id}`)} />
+                      <Text style={[styles.small, { flex: 1, color: C.coin }]}>{t("Rate your items to earn coins")}</Text>
+                      <Button title={t("Rate")} small onPress={() => router.push(`/rate/${o.id}`)} />
                     </View>
                   )}
                 </Pressable>

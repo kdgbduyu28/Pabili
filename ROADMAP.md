@@ -1,15 +1,20 @@
 # Pabili roadmap
 
-Planned work, roughly in priority order. Pabili stays pretend: no real payments, nothing ships.
+Pabili stays pretend: no real payments, nothing ships.
 
-## Planned
+## Done
 
-- **Dark mode.** Follow the phone's light/dark setting, with a manual override in Settings. Colors live in `src/theme.ts`, so this means adding a dark palette there and switching screens from fixed colors (white cards, gray backgrounds) to theme tokens. Product images, gradients and the brand rose→orange should be checked for contrast on dark surfaces.
-- **Push notifications** (`expo-notifications`): "Your parcel is here, tap to unbox!", restock alerts and daily coin reminders while the app is closed.
-- **App icon, splash screen and store assets**, then EAS builds for iOS and Android.
-- **Installable web app (PWA)**: add-to-home-screen from pabili.pages.dev.
-- **Filipino / English** language toggle.
-- **Tests for the checkout math** (vouchers, bundles, shop vouchers, shipping, coins) so new features don't quietly break totals.
+- **Dark mode.** Follows the phone's setting, with System/Light/Dark in Settings. Colors come from the light and dark palettes in `src/theme.ts`; style sheets use `themed()`.
+- **Phone notifications** (local, no server): parcel arrivals, restock alerts, completed group buys, Slash It wins and a daily coin reminder. Tapping one opens the right screen. On/off in Settings.
+- **App icon, splash screen and store assets**, plus `eas.json` with development, preview (installable APK) and production profiles. Icon source lives in `design/*.svg`.
+- **Installable web app**: manifest, home-screen icons and theme color, so pabili.pages.dev can be added to a phone's home screen.
+- **Filipino / English** toggle in Settings. Text is translated with `t()` from `src/i18n`, keyed by the English wording; anything without a Filipino entry in `src/i18n/fil.ts` stays in English.
+- **Tests** for the checkout math and the notification schedule (`npm test`).
+
+## Next
+
+- **Run the EAS builds.** This needs your Expo account: `npx eas-cli@latest login`, then `npx eas-cli@latest build --profile preview --platform android` for an installable APK, or `--profile development` for a dev build. App Store and Play Store submissions also need developer accounts.
+- **Finish the Filipino copy.** Main screens are translated; toasts, notification text, game screens and some labels with numbers in them are still English.
 
 ## Later (needs a backend)
 
@@ -20,4 +25,4 @@ Planned work, roughly in priority order. Pabili stays pretend: no real payments,
 
 - Sound effects actually playing on each platform.
 - Voice search (web Speech API) and Search by Photo.
-- Everything on a real iPhone and Android device.
+- Notifications and everything else on a real iPhone and Android device.

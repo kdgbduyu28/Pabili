@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { C, MAX_WIDTH, themed } from '../theme';
+import { t } from '../i18n';
 
 /**
  * Bottom sheet rendered in the screen's own tree instead of a native Modal, so the
@@ -14,7 +15,7 @@ export function Sheet({ open, onClose, children }: { open: boolean; onClose: () 
   return (
     <View style={StyleSheet.absoluteFill}>
       <Animated.View entering={FadeIn.duration(180)} exiting={FadeOut.duration(150)} style={styles.backdrop}>
-        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel="Close" />
+        <Pressable style={StyleSheet.absoluteFill} onPress={onClose} accessibilityLabel={t("Close")} />
       </Animated.View>
       <View style={styles.dock} pointerEvents="box-none">
         <Animated.View

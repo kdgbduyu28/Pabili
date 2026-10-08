@@ -9,6 +9,7 @@ import { soldLabel } from '../lib/format';
 import { C, R, themed } from '../theme';
 import { Price, Tag } from './bits';
 import { ProductImage } from './ProductImage';
+import { t } from '../i18n';
 
 type Props = { product: Product; width: number; now: number };
 
@@ -25,7 +26,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, now }:
       {soldOut(p, now) && (
         <View style={[styles.soldOut, { width, height: width }]}>
           <View style={styles.soldOutBadge}>
-            <Text style={styles.soldOutText}>SOLD OUT</Text>
+            <Text style={styles.soldOutText}>{t("SOLD OUT")}</Text>
           </View>
         </View>
       )}

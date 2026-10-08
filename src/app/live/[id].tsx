@@ -25,6 +25,7 @@ import { useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast, useUi } from '../../store/useUi';
 import { C, R, themed } from '../../theme';
+import { t } from '../../i18n';
 
 const MAX_COMMENTS = 7;
 const VOUCHER_EVERY = 40_000;
@@ -35,8 +36,8 @@ export default function LiveRoom() {
   if (!stream) {
     return (
       <View style={{ flex: 1 }}>
-        <Header title="Live" />
-        <EmptyState icon="videocam-off-outline" title="This live has ended" />
+        <Header title={t("Live")} />
+        <EmptyState icon="videocam-off-outline" title={t("This live has ended")} />
       </View>
     );
   }
@@ -123,7 +124,7 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
               }}
               style={[styles.follow, following && { backgroundColor: 'rgba(255,255,255,0.25)' }]}
             >
-              <Text style={styles.followText}>{following ? 'Following' : 'Follow'}</Text>
+              <Text style={styles.followText}>{following ? t("Following") : t("Follow")}</Text>
             </Pressable>
           </View>
           <View style={{ flexGrow: 1 }} />
@@ -137,7 +138,7 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
           <View style={styles.round}>
             <CartButton size={20} />
           </View>
-          <Pressable onPress={back} hitSlop={8} style={styles.round} accessibilityLabel="Close">
+          <Pressable onPress={back} hitSlop={8} style={styles.round} accessibilityLabel={t("Close")}>
             <Ionicons name="close" size={22} color="#fff" />
           </Pressable>
         </Wrap>
@@ -154,7 +155,7 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
             <Ionicons name="ticket" size={22} color={C.primary} />
             <View style={{ flex: 1 }}>
               <Text style={{ fontWeight: '800', color: C.text }}>₱30 Live Voucher</Text>
-              <Text style={{ fontSize: 11, color: C.muted }}>Only for viewers right now · Min. spend ₱199</Text>
+              <Text style={{ fontSize: 11, color: C.muted }}>{t("Only for viewers right now · Min. spend ₱199")}</Text>
             </View>
             <Pressable
               onPress={() => {
@@ -164,7 +165,7 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
               }}
               style={styles.claim}
             >
-              <Text style={styles.claimText}>Claim</Text>
+              <Text style={styles.claimText}>{t("Claim")}</Text>
             </Pressable>
           </Animated.View>
         )}
@@ -195,7 +196,7 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
             </Text>
           </View>
           <Pressable onPress={mine} style={styles.mine}>
-            <Text style={styles.mineText}>Mine!</Text>
+            <Text style={styles.mineText}>{t("Mine!")}</Text>
           </Pressable>
         </Pressable>
 
@@ -204,12 +205,12 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
             value={text}
             onChangeText={setText}
             onSubmitEditing={send}
-            placeholder="Say something…"
+            placeholder={t("Say something…")}
             placeholderTextColor="rgba(255,255,255,0.7)"
             returnKeyType="send"
             style={styles.input}
           />
-          <Pressable onPress={heart} style={styles.heartBtn} accessibilityLabel="Send a heart">
+          <Pressable onPress={heart} style={styles.heartBtn} accessibilityLabel={t("Send a heart")}>
             <Ionicons name="heart" size={22} color="#fff" />
           </Pressable>
         </View>

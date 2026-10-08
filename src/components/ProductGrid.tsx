@@ -5,6 +5,7 @@ import { unitPrice } from '../data/promos';
 import { GRID_GAP, GRID_PAD, gridFor, useMeasuredWidth, useNow } from '../lib/hooks';
 import { C, themed } from '../theme';
 import { ProductCard } from './ProductCard';
+import { t } from '../i18n';
 
 /** Plain wrapped grid. Lives inside a parent ScrollView so it can sit under other sections. */
 export function ProductGrid({ products, keyPrefix = '' }: { products: Product[]; keyPrefix?: string }) {
@@ -37,22 +38,22 @@ export function SortBar({ sort, onChange }: { sort: Sort; onChange: (s: Sort) =>
     { id: 'relevance', label: 'Relevance' },
     { id: 'latest', label: 'Latest' },
     { id: 'sales', label: 'Top Sales' },
-    { id: 'price', label: sort === 'price_desc' ? 'Price ↓' : 'Price ↑' },
+    { id: 'price', label: sort === 'price_desc' ? t("Price ↓") : t("Price ↑") },
   ];
   return (
     <View style={styles.sortBar}>
-      {tabs.map((t) => {
-        const active = t.id === 'price' ? sort.startsWith('price') : sort === t.id;
+      {tabs.map((opt) => {
+        const active = opt.id === 'price' ? sort.startsWith('price') : sort === opt.id;
         return (
           <Pressable
-            key={t.id}
+            key={opt.id}
             style={[styles.sortTab, active && styles.sortActive]}
             onPress={() => {
-              if (t.id === 'price') onChange(sort === 'price_asc' ? 'price_desc' : 'price_asc');
-              else onChange(t.id);
+              if (opt.id === 'price') onChange(sort === 'price_asc' ? 'price_desc' : 'price_asc');
+              else onChange(opt.id);
             }}
           >
-            <Text style={[styles.sortText, active && { color: C.primary, fontWeight: '600' }]}>{t.label}</Text>
+            <Text style={[styles.sortText, active && { color: C.primary, fontWeight: '600' }]}>{t(opt.label)}</Text>
           </Pressable>
         );
       })}

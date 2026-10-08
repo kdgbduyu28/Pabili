@@ -15,6 +15,7 @@ import { useNow } from '../lib/hooks';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const PERKS: { icon: IconName; title: string; sub: string }[] = [
   { icon: 'car', title: 'Free shipping', sub: 'On every order, every shop' },
@@ -38,7 +39,7 @@ export default function Mega() {
     <ScrollView>
       <LinearGradient colors={['#7C3AED', '#F43F5E', '#FB7A3C']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={{ paddingTop: insets.top }}>
         <Wrap style={styles.top}>
-          <Pressable onPress={back} hitSlop={10} accessibilityLabel="Back">
+          <Pressable onPress={back} hitSlop={10} accessibilityLabel={t("Back")}>
             <Ionicons name="arrow-back" size={24} color="#fff" />
           </Pressable>
           <View style={{ flex: 1 }} />
@@ -46,10 +47,10 @@ export default function Mega() {
         </Wrap>
         <Wrap style={styles.hero}>
           <Text style={styles.label}>{mega.label}</Text>
-          <Text style={styles.heroTitle}>MEGA SALE</Text>
+          <Text style={styles.heroTitle}>{t("MEGA SALE")}</Text>
           <View style={styles.statusPill}>
             <View style={[styles.liveDot, !mega.live && { backgroundColor: '#FDE68A' }]} />
-            <Text style={styles.statusText}>{mega.live ? 'LIVE NOW · ends in' : 'Starts in'}</Text>
+            <Text style={styles.statusText}>{mega.live ? 'LIVE NOW · ends in' : t("Starts in")}</Text>
           </View>
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, marginTop: 8 }}>
             {days > 0 && (
@@ -69,14 +70,14 @@ export default function Mega() {
               <View style={styles.perkIcon}>
                 <Ionicons name={p.icon} size={20} color={C.primary} />
               </View>
-              <Text style={styles.perkTitle}>{p.title}</Text>
-              <Text style={styles.perkSub}>{p.sub}</Text>
+              <Text style={styles.perkTitle}>{t(p.title)}</Text>
+              <Text style={styles.perkSub}>{t(p.sub)}</Text>
             </View>
           ))}
         </View>
 
         <View style={styles.card}>
-          <SectionTitle title="MEGA VOUCHERS" />
+          <SectionTitle title={t("MEGA VOUCHERS")} />
           <View style={{ paddingHorizontal: 12, paddingBottom: 12, gap: 10 }}>
             {megaVouchers.map((v) => {
               const has = claimed.includes(v.id);
@@ -89,7 +90,7 @@ export default function Mega() {
                   </View>
                   {mega.live ? (
                     <Button
-                      title={has ? 'Claimed' : 'Claim'}
+                      title={has ? t("Claimed") : t("Claim")}
                       small
                       disabled={has}
                       onPress={() => {
@@ -99,7 +100,7 @@ export default function Mega() {
                       }}
                     />
                   ) : (
-                    <Text style={styles.drops}>Drops 12:00 AM</Text>
+                    <Text style={styles.drops}>{t("Drops 12:00 AM")}</Text>
                   )}
                 </View>
               );
@@ -121,7 +122,7 @@ export default function Mega() {
         </View>
 
         <View style={styles.picksHead}>
-          <Text style={styles.picksTitle}>MEGA PICKS</Text>
+          <Text style={styles.picksTitle}>{t("MEGA PICKS")}</Text>
           <Text style={styles.picksSub}>{mega.live ? `Extra ${MEGA_EXTRA_PCT}% off already applied` : `Add to cart now. Extra ${MEGA_EXTRA_PCT}% off on ${mega.label}`}</Text>
         </View>
         <ProductGrid products={picks} keyPrefix="mega" />

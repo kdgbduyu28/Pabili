@@ -17,6 +17,7 @@ import { play } from '../lib/sound';
 import { useShop } from '../store/useShop';
 import { toast, useUi } from '../store/useUi';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function CoinsShop() {
   const insets = useSafeAreaInsets();
@@ -61,20 +62,20 @@ export default function CoinsShop() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Coins Shop" cart />
+      <Header title={t("Coins Shop")} cart />
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 24 }}>
         <Wrap>
           <LinearGradient colors={['#F59E0B', '#FB7A3C']} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.hero}>
             <Coin size={44} />
             <View style={{ flex: 1 }}>
-              <Text style={styles.heroLabel}>Your Pabili Coins</Text>
+              <Text style={styles.heroLabel}>{t("Your Pabili Coins")}</Text>
               <Text style={styles.heroValue}>{coins}</Text>
             </View>
-            <Button title="Earn more" small variant="outline" onPress={() => router.push('/garden')} />
+            <Button title={t("Earn more")} small variant="outline" onPress={() => router.push('/garden')} />
           </LinearGradient>
 
           <View style={styles.card}>
-            <SectionTitle title="₱1 DEALS TODAY" />
+            <SectionTitle title={t("₱1 DEALS TODAY")} />
             <Text style={styles.sub}>Spend {PESO_DEAL_COST} coins, pay ₱1. One of each per day.</Text>
             <View style={styles.deals}>
               {deals.map((p) => {
@@ -96,7 +97,7 @@ export default function CoinsShop() {
           </View>
 
           <View style={styles.card}>
-            <SectionTitle title="REDEEM" />
+            <SectionTitle title={t("REDEEM")} />
             {COIN_ITEMS.map((item) => (
               <View key={item.id} style={styles.row}>
                 <View style={styles.rowIcon}>

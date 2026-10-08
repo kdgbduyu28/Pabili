@@ -9,21 +9,22 @@ import { compact } from '../lib/format';
 import { useNow } from '../lib/hooks';
 import { useShop } from '../store/useShop';
 import { C, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Following() {
   const followed = useShop((s) => s.followed);
   const now = useNow(30_000);
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Followed Shops" cart />
+      <Header title={t("Followed Shops")} cart />
       <ScrollView>
         <Wrap>
           {followed.length === 0 ? (
             <EmptyState
               icon="storefront-outline"
-              title="You're not following any shops"
-              subtitle="Follow shops to see their newest items here."
-              action={<Button title="Find shops" onPress={() => router.navigate('/')} style={{ width: 180 }} />}
+              title={t("You're not following any shops")}
+              subtitle={t("Follow shops to see their newest items here.")}
+              action={<Button title={t("Find shops")} onPress={() => router.navigate('/')} style={{ width: 180 }} />}
             />
           ) : (
             followed.map((id) => {
@@ -42,7 +43,7 @@ export default function Following() {
                         {compact(shop.followers + 1)} followers · newest items
                       </Text>
                     </View>
-                    <Text style={styles.visit}>Visit ›</Text>
+                    <Text style={styles.visit}>{t("Visit ›")}</Text>
                   </Pressable>
                   <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ gap: 8, paddingHorizontal: 8, paddingBottom: 12 }}>
                     {items.map((p) => (

@@ -7,6 +7,7 @@ import { getShop } from '../data/catalog';
 import { dateTime } from '../lib/format';
 import { useShop } from '../store/useShop';
 import { C, themed } from '../theme';
+import { t } from '../i18n';
 
 export default function Chats() {
   const chats = useShop((s) => s.chats);
@@ -18,11 +19,11 @@ export default function Chats() {
 
   return (
     <View style={{ flex: 1 }}>
-      <Header title="Chats" />
+      <Header title={t("Chats")} />
       <ScrollView>
         <Wrap>
           {threads.length === 0 ? (
-            <EmptyState icon="chatbubbles-outline" title="No chats yet" subtitle='Tap "Chat" on any product to message the seller.' />
+            <EmptyState icon="chatbubbles-outline" title={t("No chats yet")} subtitle='Tap "Chat" on any product to message the seller.' />
           ) : (
             threads.map(({ shop, last }) => (
               <Pressable key={shop.id} style={styles.row} onPress={() => router.push(`/chat/${shop.id}`)}>
