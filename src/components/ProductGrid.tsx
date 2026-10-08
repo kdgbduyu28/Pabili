@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Product } from '../data/catalog';
 import { unitPrice } from '../data/promos';
 import { GRID_GAP, GRID_PAD, gridFor, useMeasuredWidth, useNow } from '../lib/hooks';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 import { ProductCard } from './ProductCard';
 
 /** Plain wrapped grid. Lives inside a parent ScrollView so it can sit under other sections. */
@@ -66,10 +66,10 @@ export function useSorted(products: Product[]) {
   return { sort, setSort, sorted };
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: GRID_GAP, padding: GRID_PAD },
   sortBar: { flexDirection: 'row', backgroundColor: C.card, borderBottomWidth: 1, borderColor: C.line },
   sortTab: { flex: 1, alignItems: 'center', paddingVertical: 12, borderBottomWidth: 2, borderColor: 'transparent' },
   sortActive: { borderColor: C.primary },
   sortText: { fontSize: 13, color: C.text },
-});
+}));

@@ -13,7 +13,7 @@ import { unitPrice } from '../../data/promos';
 import { peso } from '../../lib/format';
 import { tap } from '../../lib/haptics';
 import { ChatMsg, useShop } from '../../store/useShop';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 const EMPTY: ChatMsg[] = [];
 
@@ -137,7 +137,7 @@ export default function Chat() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   intro: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: C.card, borderRadius: R.md, padding: 10, marginBottom: 6 },
   small: { fontSize: 11, color: C.muted },
   row: { flexDirection: 'row' },
@@ -147,8 +147,8 @@ const styles = StyleSheet.create({
   text: { fontSize: 14, color: C.text, lineHeight: 19 },
   productMsg: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.card, borderRadius: R.md, padding: 8, width: 260, borderWidth: 1, borderColor: C.line },
   composer: { backgroundColor: C.card, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line, paddingTop: 8, paddingHorizontal: 12 },
-  ask: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#FAFAFA', borderRadius: R.sm, padding: 6, borderWidth: 1, borderColor: C.line },
+  ask: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.subtle, borderRadius: R.sm, padding: 6, borderWidth: 1, borderColor: C.line },
   quick: { borderWidth: 1, borderColor: C.primary, borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6 },
-  input: { flex: 1, height: 40, borderRadius: 20, backgroundColor: '#F4F4F5', paddingHorizontal: 16, fontSize: 14, color: C.text },
+  input: { flex: 1, height: 40, borderRadius: 20, backgroundColor: C.surface, paddingHorizontal: 16, fontSize: 14, color: C.text },
   sendBtn: { width: 40, height: 40, borderRadius: 20, backgroundColor: C.primary, alignItems: 'center', justifyContent: 'center' },
-});
+}));

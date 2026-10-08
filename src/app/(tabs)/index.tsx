@@ -18,7 +18,7 @@ import { tap, success } from '../../lib/haptics';
 import { useMeasuredWidth, useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 const PAGE = 20;
 
@@ -314,7 +314,7 @@ function FlashStrip() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   card: { backgroundColor: C.card, marginBottom: 8 },
   banner: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20 },
   bannerTitle: { color: '#fff', fontSize: 22, fontWeight: '800' },
@@ -336,14 +336,14 @@ const styles = StyleSheet.create({
   },
   quickLabel: { fontSize: 11, color: C.text, textAlign: 'center', paddingHorizontal: 2 },
   cat: { width: 84, alignItems: 'center', paddingVertical: 6, gap: 4 },
-  catIcon: { width: 54, height: 54, borderRadius: 27, backgroundColor: '#FAFAFA', borderWidth: 1, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
+  catIcon: { width: 54, height: 54, borderRadius: 27, backgroundColor: C.subtle, borderWidth: 1, borderColor: C.line, alignItems: 'center', justifyContent: 'center' },
   catLabel: { fontSize: 11, color: C.text, textAlign: 'center', minHeight: 28 },
   flashHead: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12 },
   flashTitleRow: { flexDirection: 'row', alignItems: 'center', gap: 2 },
   flashTitle: { color: C.primary, fontWeight: '900', fontSize: 16, fontStyle: 'italic' },
   flashOff: { position: 'absolute', top: 0, right: 0, backgroundColor: '#FFE5E9', paddingHorizontal: 5, paddingVertical: 2, borderBottomLeftRadius: 6 },
   flashOffText: { color: C.primary, fontWeight: '700', fontSize: 11 },
-  bar: { height: 16, borderRadius: 8, backgroundColor: '#FFD0D8', marginTop: 4, justifyContent: 'center', overflow: 'hidden' },
+  bar: { height: 16, borderRadius: 8, backgroundColor: C.primarySoft, marginTop: 4, justifyContent: 'center', overflow: 'hidden' },
   barText: { color: '#fff', fontSize: 9, fontWeight: '800', textAlign: 'center' },
   mega: { flexDirection: 'row', alignItems: 'center', gap: 12, borderRadius: R.md, paddingHorizontal: 14, paddingVertical: 10 },
   megaLabel: { color: '#fff', fontSize: 30, fontWeight: '900', fontStyle: 'italic' },
@@ -352,5 +352,5 @@ const styles = StyleSheet.create({
   discoverHead: { backgroundColor: C.card, borderBottomWidth: 3, borderColor: C.primary, paddingVertical: 12, alignItems: 'center' },
   discoverText: { color: C.primary, fontWeight: '700', letterSpacing: 0.5 },
   end: { textAlign: 'center', color: C.muted, paddingVertical: 24 },
-});
+}));
 

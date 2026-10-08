@@ -6,7 +6,7 @@ import { Header, Wrap } from '../components/Page';
 import { getShop } from '../data/catalog';
 import { dateTime } from '../lib/format';
 import { useShop } from '../store/useShop';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 
 export default function Chats() {
   const chats = useShop((s) => s.chats);
@@ -44,9 +44,9 @@ export default function Chats() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   name: { fontSize: 14, fontWeight: '600', color: C.text },
   last: { fontSize: 13, color: C.muted },
   time: { fontSize: 10, color: C.faint, alignSelf: 'flex-start' },
-});
+}));

@@ -14,7 +14,7 @@ import { success, tap } from '../lib/haptics';
 import { useNow } from '../lib/hooks';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const PERKS: { icon: IconName; title: string; sub: string }[] = [
   { icon: 'car', title: 'Free shipping', sub: 'On every order, every shop' },
@@ -130,7 +130,7 @@ export default function Mega() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 14 },
   hero: { alignItems: 'center', paddingBottom: 28, paddingTop: 4 },
   label: { color: '#fff', fontSize: 64, fontWeight: '900', fontStyle: 'italic', letterSpacing: -2, lineHeight: 70 },
@@ -146,9 +146,9 @@ const styles = StyleSheet.create({
   perkTitle: { fontSize: 12, fontWeight: '700', color: C.text, textAlign: 'center' },
   perkSub: { fontSize: 10, color: C.muted, textAlign: 'center' },
   card: { backgroundColor: C.card, marginBottom: 8 },
-  voucher: { flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 1, borderColor: '#FBCFE8', backgroundColor: '#FFF5F7', borderRadius: R.md, padding: 12 },
+  voucher: { flexDirection: 'row', alignItems: 'center', gap: 12, borderWidth: 1, borderColor: C.line, backgroundColor: C.primarySoft, borderRadius: R.md, padding: 12 },
   drops: { fontSize: 11, fontWeight: '700', color: C.preferred },
   picksHead: { backgroundColor: C.card, alignItems: 'center', paddingVertical: 12, borderBottomWidth: 3, borderColor: C.primary },
   picksTitle: { color: C.primary, fontWeight: '900', letterSpacing: 1 },
   picksSub: { color: C.muted, fontSize: 12, marginTop: 2 },
-});
+}));

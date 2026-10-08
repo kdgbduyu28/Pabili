@@ -8,7 +8,7 @@ import { useNow } from '../lib/hooks';
 import { success } from '../lib/haptics';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export default function Vouchers() {
   const claimed = useShop((s) => s.claimed);
@@ -67,7 +67,7 @@ export default function Vouchers() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   voucher: { flexDirection: 'row', backgroundColor: C.card, borderRadius: R.sm, overflow: 'hidden', minHeight: 92 },
   stub: { width: 92, backgroundColor: C.primary, alignItems: 'center', justifyContent: 'center', gap: 4 },
   stubText: { color: '#fff', fontSize: 10, fontWeight: '800', letterSpacing: 0.5 },
@@ -76,4 +76,4 @@ const styles = StyleSheet.create({
   title: { fontSize: 16, fontWeight: '700', color: C.text },
   sub: { fontSize: 12, color: C.muted },
   foot: { fontSize: 11, color: C.faint, textAlign: 'center', marginTop: 8 },
-});
+}));

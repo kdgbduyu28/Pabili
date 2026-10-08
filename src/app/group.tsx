@@ -13,7 +13,7 @@ import { useNow } from '../lib/hooks';
 import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const WINDOW_MS = 24 * 3600 * 1000;
 
@@ -129,7 +129,7 @@ export default function Group() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   card: { backgroundColor: C.card, padding: 14, marginTop: 8, gap: 12 },
   cardTitle: { fontSize: 15, fontWeight: '700', color: C.text },
   small: { fontSize: 12, color: C.muted },
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
   seatText: { color: '#fff', fontWeight: '800' },
   seatName: { fontSize: 10, color: C.muted },
   dealRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-});
+}));

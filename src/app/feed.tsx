@@ -25,7 +25,7 @@ import { bump, tap } from '../lib/haptics';
 import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
 import { toast, useUi } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const CLIP_MS = 8000;
 
@@ -209,7 +209,7 @@ function RailButton({ icon, label, onPress, color = '#fff' }: { icon: keyof type
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { position: 'absolute', left: 0, right: 0, top: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 16 },
   topTitle: { color: '#fff', fontWeight: '800', fontSize: 16 },
   bigHeart: { position: 'absolute' },
@@ -219,10 +219,10 @@ const styles = StyleSheet.create({
   bottom: { position: 'absolute', left: 0, right: 0, bottom: 0, paddingHorizontal: 14, gap: 8, paddingRight: 80 },
   handle: { color: '#fff', fontWeight: '800', fontSize: 15 },
   caption: { color: '#fff', fontSize: 13, lineHeight: 18 },
-  chip: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: 'rgba(255,255,255,0.95)', borderRadius: R.md, padding: 6, maxWidth: 380 },
+  chip: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.card, borderRadius: R.md, padding: 6, maxWidth: 380 },
   buy: { flexDirection: 'row', alignItems: 'center', gap: 4, backgroundColor: C.primary, borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 8 },
   buyText: { color: '#fff', fontWeight: '800', fontSize: 13 },
   track: { height: 2, backgroundColor: 'rgba(255,255,255,0.3)', borderRadius: 1, marginTop: 6, marginRight: -66 },
   fill: { height: 2, backgroundColor: '#fff', borderRadius: 1 },
   cAvatar: { width: 30, height: 30, borderRadius: 15, backgroundColor: C.faint, alignItems: 'center', justifyContent: 'center' },
-});
+}));

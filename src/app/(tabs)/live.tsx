@@ -12,7 +12,7 @@ import { CLIPS } from '../../data/extras';
 import { STREAMS, currentItem, livePrice, viewers } from '../../data/live';
 import { compact, peso } from '../../lib/format';
 import { useMeasuredWidth, useNow } from '../../lib/hooks';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 export default function LiveList() {
   const insets = useSafeAreaInsets();
@@ -103,10 +103,10 @@ export default function LiveList() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   header: { backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   headerRow: { height: 52, flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 14 },
-  segments: { flexDirection: 'row', backgroundColor: '#F4F4F5', borderRadius: R.pill, padding: 3 },
+  segments: { flexDirection: 'row', backgroundColor: C.surface, borderRadius: R.pill, padding: 3 },
   segment: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 14, paddingVertical: 6, borderRadius: R.pill },
   segmentOn: { backgroundColor: C.primary },
   segmentText: { fontSize: 13, fontWeight: '600', color: C.text },
@@ -126,4 +126,4 @@ const styles = StyleSheet.create({
   pinnedPrice: { color: C.primary, fontWeight: '800', fontSize: 12 },
   streamTitle: { fontSize: 13, color: C.text, lineHeight: 17 },
   host: { fontSize: 11, color: C.muted },
-});
+}));

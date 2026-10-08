@@ -17,7 +17,7 @@ import { success, tap } from '../lib/haptics';
 import { WRAPS } from '../data/extras';
 import { play } from '../lib/sound';
 import { Gift, useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const PAYMENTS: { id: string; icon: IconName; name: string; note: string }[] = [
   { id: 'pretend', icon: 'sparkles', name: 'Pretend Pay', note: 'Recommended • Always approved' },
@@ -403,16 +403,16 @@ function AirmailStripe() {
 }
 
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   address: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: C.card, padding: 14 },
   card: { backgroundColor: C.card, marginBottom: 8 },
   small: { fontSize: 12, color: C.muted },
   shopRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12 },
-  item: { flexDirection: 'row', gap: 10, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#FAFAFA' },
+  item: { flexDirection: 'row', gap: 10, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: C.subtle },
   orig: { fontSize: 11, color: C.faint, textDecorationLine: 'line-through', marginLeft: 6 },
   msgRow: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 10, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   msgInput: { flex: 1, textAlign: 'right', fontSize: 13, color: C.text, paddingVertical: 4 },
-  shipping: { flexDirection: 'row', backgroundColor: '#F0FBF9', borderColor: '#B8E6DF', borderWidth: 1, margin: 12, padding: 10, borderRadius: R.sm },
+  shipping: { flexDirection: 'row', backgroundColor: C.shipBg, borderColor: C.line, borderWidth: 1, margin: 12, padding: 10, borderRadius: R.sm },
   strike: { fontSize: 11, color: C.faint, textDecorationLine: 'line-through' },
   subtotal: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingBottom: 12 },
   optRow: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
@@ -434,4 +434,4 @@ const styles = StyleSheet.create({
   placeText: { color: '#fff', fontWeight: '700', fontSize: 15 },
   processing: { ...StyleSheet.absoluteFill, backgroundColor: 'rgba(0,0,0,0.35)', alignItems: 'center', justifyContent: 'center' },
   processingBox: { backgroundColor: 'rgba(20,20,20,0.85)', borderRadius: 12, padding: 24, width: 220, alignItems: 'center' },
-});
+}));

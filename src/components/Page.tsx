@@ -4,7 +4,7 @@ import { router } from 'expo-router';
 import { ReactNode } from 'react';
 import { LayoutChangeEvent, Pressable, StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { C, MAX_WIDTH } from '../theme';
+import { C, MAX_WIDTH, themed } from '../theme';
 import { CartButton } from './CartButton';
 
 /** Centers content and caps its width so desktop web doesn't stretch edge to edge. */
@@ -63,7 +63,7 @@ export function SearchHeader({ placeholder, showBack }: { placeholder?: string; 
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   wrap: { width: '100%', maxWidth: MAX_WIDTH, alignSelf: 'center' },
   header: { backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   headerRow: { flexDirection: 'row', alignItems: 'center', height: 52, paddingHorizontal: 12, gap: 12 },
@@ -75,10 +75,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    backgroundColor: '#fff',
+    backgroundColor: C.card,
     borderRadius: 4,
     paddingHorizontal: 10,
     height: 38,
   },
   searchText: { color: C.primary, fontSize: 14, flex: 1, opacity: 0.85 },
-});
+}));

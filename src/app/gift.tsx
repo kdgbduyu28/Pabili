@@ -14,7 +14,7 @@ import { getWrap } from '../data/extras';
 import { parseGift } from '../lib/gift';
 import { bump, success } from '../lib/haptics';
 import { play } from '../lib/sound';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export default function GiftPage() {
   const { d } = useLocalSearchParams<{ d?: string }>();
@@ -96,20 +96,20 @@ export default function GiftPage() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   title: { fontSize: 26, fontWeight: '900', color: C.text, textAlign: 'center' },
   sub: { fontSize: 15, color: C.muted },
   box: { width: 200, height: 170, borderRadius: 14, alignItems: 'center', justifyContent: 'center' },
   ribbonV: { position: 'absolute', width: 28, top: 0, bottom: 0 },
   ribbonH: { position: 'absolute', height: 28, left: 0, right: 0 },
   tap: { color: C.primary, fontWeight: '700' },
-  card: { backgroundColor: '#fff', borderRadius: R.lg, padding: 18, alignItems: 'center', gap: 8, width: '100%', marginTop: 16 },
+  card: { backgroundColor: C.card, borderRadius: R.lg, padding: 18, alignItems: 'center', gap: 8, width: '100%', marginTop: 16 },
   msg: { fontSize: 16, color: C.text, fontStyle: 'italic', textAlign: 'center' },
   from: { color: C.muted, fontSize: 13 },
   items: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginTop: 12 },
-  item: { width: 110, alignItems: 'center', gap: 6, backgroundColor: '#fff', borderRadius: R.lg, padding: 10 },
+  item: { width: 110, alignItems: 'center', gap: 6, backgroundColor: C.card, borderRadius: R.lg, padding: 10 },
   itemName: { fontSize: 12, color: C.text, textAlign: 'center' },
   note: { fontSize: 11, color: C.muted, textAlign: 'center', marginTop: 12 },
   cta: { backgroundColor: C.primary, borderRadius: R.md, paddingHorizontal: 28, paddingVertical: 12, marginTop: 10 },
   ctaText: { color: '#fff', fontWeight: '800', fontSize: 15 },
-});
+}));

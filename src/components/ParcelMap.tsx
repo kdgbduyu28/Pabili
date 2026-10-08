@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import { hash, rng } from '../data/catalog';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const H = 190;
 
@@ -101,11 +101,11 @@ export function ParcelMap({ orderId, progress, etaMs, outForDelivery }: { orderI
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   wrap: { gap: 8 },
   pin: { position: 'absolute', width: 28, height: 28, borderRadius: 14, backgroundColor: C.primary, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#fff' },
   rider: { position: 'absolute', width: 32, height: 32, borderRadius: 16, backgroundColor: C.ship, alignItems: 'center', justifyContent: 'center', borderWidth: 2, borderColor: '#fff' },
   label: { position: 'absolute', fontSize: 10, color: C.muted, fontWeight: '600' },
   eta: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   etaText: { fontSize: 12, color: C.ship, fontWeight: '600', flex: 1 },
-});
+}));

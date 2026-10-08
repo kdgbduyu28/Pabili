@@ -18,7 +18,7 @@ import { shareText } from '../lib/share';
 import { play } from '../lib/sound';
 import { SlashCut, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const WINDOW_MS = 24 * 3600 * 1000;
 /** Invites needed before a friend lands the final slash. */
@@ -190,15 +190,15 @@ export default function Slash() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { flexDirection: 'row', alignItems: 'center', height: 52, paddingHorizontal: 14 },
   headTitle: { color: '#fff', fontWeight: '900', fontSize: 20, marginLeft: 6 },
   card: { backgroundColor: C.card, padding: 14, marginTop: 8, gap: 12 },
   cardTitle: { fontSize: 15, fontWeight: '700', color: C.text },
   small: { fontSize: 12, color: C.muted },
-  track: { height: 12, borderRadius: 6, backgroundColor: '#FFE4E6', overflow: 'hidden' },
+  track: { height: 12, borderRadius: 6, backgroundColor: C.primarySoft, overflow: 'hidden' },
   fill: { height: 12, borderRadius: 6 },
   cut: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   avatar: { width: 32, height: 32, borderRadius: 16, backgroundColor: C.preferred, alignItems: 'center', justifyContent: 'center' },
   avatarText: { color: '#fff', fontWeight: '800', fontSize: 11 },
-});
+}));

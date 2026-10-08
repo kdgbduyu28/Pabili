@@ -14,7 +14,7 @@ import { pad2, peso } from '../lib/format';
 import { tap } from '../lib/haptics';
 import { useNow } from '../lib/hooks';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export default function Deals() {
   const insets = useSafeAreaInsets();
@@ -135,11 +135,11 @@ export default function Deals() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   headRow: { flexDirection: 'row', alignItems: 'center', gap: 4, height: 52, paddingHorizontal: 14 },
   headTitle: { color: '#fff', fontWeight: '900', fontStyle: 'italic', fontSize: 20 },
   slot: { width: 96, alignItems: 'center', paddingVertical: 8 },
-  slotOn: { backgroundColor: '#fff', borderTopLeftRadius: 6, borderTopRightRadius: 6 },
+  slotOn: { backgroundColor: C.bg, borderTopLeftRadius: 6, borderTopRightRadius: 6 },
   slotTime: { color: '#fff', fontSize: 18, fontWeight: '700' },
   slotLabel: { color: '#fff', fontSize: 11 },
   timer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: C.card, paddingVertical: 10, marginBottom: 8 },
@@ -149,10 +149,10 @@ const styles = StyleSheet.create({
   title: { fontSize: 14, lineHeight: 19, color: C.text },
   mystery: { color: C.primary, fontSize: 18, fontWeight: '600' },
   orig: { fontSize: 12, color: C.faint, textDecorationLine: 'line-through' },
-  bar: { height: 18, borderRadius: 9, backgroundColor: '#FFD0D8', justifyContent: 'center', overflow: 'hidden' },
+  bar: { height: 18, borderRadius: 9, backgroundColor: C.primarySoft, justifyContent: 'center', overflow: 'hidden' },
   barText: { color: '#fff', fontSize: 10, fontWeight: '800', textAlign: 'center' },
   buy: { backgroundColor: C.primary, borderRadius: R.sm, paddingHorizontal: 14, paddingVertical: 7 },
-  remind: { backgroundColor: '#fff', borderWidth: 1, borderColor: C.primary },
+  remind: { backgroundColor: C.card, borderWidth: 1, borderColor: C.primary },
   reminded: { backgroundColor: C.faint },
   buyText: { color: '#fff', fontWeight: '700', fontSize: 13 },
-});
+}));

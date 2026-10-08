@@ -1,5 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient';
 import { StyleProp, StyleSheet, Text, ViewStyle } from 'react-native';
+import { themed } from '../theme';
 
 type Props = {
   emoji: string;
@@ -33,6 +34,6 @@ export function ProductImage({ emoji, gradient, size, radius = 0, angle = 0, sty
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   box: { alignItems: 'center', justifyContent: 'center', overflow: 'hidden' },
-});
+}));

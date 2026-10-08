@@ -24,7 +24,7 @@ import { bump, success, tap } from '../../lib/haptics';
 import { useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast, useUi } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 const MAX_COMMENTS = 7;
 const VOUCHER_EVERY = 40_000;
@@ -262,7 +262,7 @@ function Heart({ seed, onDone }: { seed: number; onDone: () => void }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   speaking: { color: '#fff', opacity: 0.8, marginTop: 18, fontSize: 13, textAlign: 'center', paddingHorizontal: 30 },
   ring: { position: 'absolute', width: 150, height: 150, borderRadius: 75, borderWidth: 3, borderColor: '#fff' },
   speaker: { width: 150, height: 150, borderRadius: 75, backgroundColor: 'rgba(255,255,255,0.2)', borderWidth: 3, borderColor: '#fff', alignItems: 'center', justifyContent: 'center' },
@@ -280,14 +280,14 @@ const styles = StyleSheet.create({
   viewersText: { color: '#fff', fontSize: 11, fontWeight: '700' },
   round: { width: 34, height: 34, borderRadius: 17, backgroundColor: 'rgba(0,0,0,0.3)', alignItems: 'center', justifyContent: 'center' },
   streamTitle: { color: '#fff', fontWeight: '700', fontSize: 14 },
-  voucher: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#FFF5F7', borderRadius: R.md, padding: 10, alignSelf: 'flex-start', maxWidth: 380, width: '100%' },
+  voucher: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: C.card, borderRadius: R.md, padding: 10, alignSelf: 'flex-start', maxWidth: 380, width: '100%' },
   claim: { backgroundColor: C.primary, borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 6 },
   claimText: { color: '#fff', fontWeight: '700', fontSize: 12 },
   comments: { gap: 4, maxWidth: 320 },
   comment: { backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: 12, paddingHorizontal: 10, paddingVertical: 5, alignSelf: 'flex-start' },
   commentName: { color: '#FECDD3', fontWeight: '700' },
   commentText: { color: '#fff', fontSize: 12 },
-  pinned: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#fff', borderRadius: R.md, padding: 8 },
+  pinned: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: C.card, borderRadius: R.md, padding: 8 },
   strike: { fontSize: 11, color: C.faint, textDecorationLine: 'line-through' },
   mine: { backgroundColor: C.primary, borderRadius: R.md, paddingHorizontal: 16, paddingVertical: 12 },
   mineText: { color: '#fff', fontWeight: '900', fontSize: 15 },
@@ -295,4 +295,4 @@ const styles = StyleSheet.create({
   input: { flex: 1, height: 40, borderRadius: 20, backgroundColor: 'rgba(0,0,0,0.3)', paddingHorizontal: 16, color: '#fff', fontSize: 14 },
   heartBtn: { width: 40, height: 40, borderRadius: 20, backgroundColor: C.primary, alignItems: 'center', justifyContent: 'center' },
   heartLane: { position: 'absolute', right: 24, bottom: 70, width: 60, height: 300 },
-});
+}));

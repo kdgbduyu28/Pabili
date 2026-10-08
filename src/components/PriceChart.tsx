@@ -3,7 +3,7 @@ import { GestureResponderEvent, LayoutChangeEvent, StyleSheet, Text, View } from
 import Svg, { Circle, Line, Path } from 'react-native-svg';
 import { PricePoint } from '../data/extras';
 import { peso, shortDate } from '../lib/format';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 
 const H = 110;
 const PAD_X = 10;
@@ -77,10 +77,10 @@ export function PriceChart({ points }: { points: PricePoint[] }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   labels: { flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: PAD_X },
   label: { fontSize: 10, color: C.faint },
   tip: { position: 'absolute', top: 0, width: 110, backgroundColor: C.text, borderRadius: 6, paddingVertical: 4, alignItems: 'center' },
   tipDate: { color: '#D4D4D8', fontSize: 10 },
   tipPrice: { color: '#fff', fontSize: 13, fontWeight: '700' },
-});
+}));

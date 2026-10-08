@@ -16,7 +16,7 @@ import { IconName } from '../../components/Icon';
 import { ORDER_TABS, orderStatus, orderTab } from '../../lib/orders';
 import { CHECKIN_REWARDS, keptInWallet, streak, useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 const TAB_ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
   to_ship: 'cube-outline',
@@ -237,7 +237,7 @@ export default function Me() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { paddingHorizontal: 16, paddingBottom: 48 },
   topRow: { flexDirection: 'row', height: 44, alignItems: 'center' },
   profile: { flexDirection: 'row', alignItems: 'center', gap: 14 },
@@ -269,18 +269,18 @@ const styles = StyleSheet.create({
   badge: { position: 'absolute', top: -4, right: -10, backgroundColor: C.primary, borderRadius: 9, minWidth: 18, height: 18, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 4 },
   badgeText: { color: '#fff', fontSize: 10, fontWeight: '700' },
   days: { flexDirection: 'row', gap: 6 },
-  day: { flex: 1, alignItems: 'center', backgroundColor: '#FFF7E6', borderRadius: R.md, paddingVertical: 8, gap: 2 },
-  dayDone: { backgroundColor: C.coin },
+  day: { flex: 1, alignItems: 'center', backgroundColor: C.coinSoft, borderRadius: R.md, paddingVertical: 8, gap: 2 },
+  dayDone: { backgroundColor: '#B45309' },
   dayToday: { borderWidth: 1.5, borderColor: C.coin },
-  dayCoins: { fontSize: 11, fontWeight: '700', color: C.coin },
+  dayCoins: { fontSize: 11, fontWeight: '700', color: C.coinText },
   dayLabel: { fontSize: 9, color: C.muted },
-  checkBtn: { backgroundColor: C.coin, borderRadius: R.md, paddingVertical: 11, alignItems: 'center', marginTop: 12 },
+  checkBtn: { backgroundColor: '#B45309', borderRadius: R.md, paddingVertical: 11, alignItems: 'center', marginTop: 12 },
   checkText: { color: '#fff', fontWeight: '700', fontSize: 13 },
   goal: { width: '100%', marginTop: 12, gap: 6 },
   goalHead: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   goalName: { flex: 1, fontSize: 12, fontWeight: '600', color: C.text },
   goalPct: { fontSize: 11, color: C.muted },
-  goalTrack: { height: 8, borderRadius: 4, backgroundColor: '#FFE4E6', overflow: 'hidden' },
+  goalTrack: { height: 8, borderRadius: 4, backgroundColor: C.primarySoft, overflow: 'hidden' },
   goalFill: { height: 8, borderRadius: 4 },
   goalCta: { flexDirection: 'row', alignItems: 'center', gap: 4, marginTop: 10 },
   trophies: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14, paddingVertical: 12 },
@@ -291,4 +291,4 @@ const styles = StyleSheet.create({
   gameIcon: { width: 46, height: 46, borderRadius: 16, alignItems: 'center', justifyContent: 'center' },
   gameLabel: { fontSize: 11, color: C.text },
   footer: { textAlign: 'center', color: C.faint, fontSize: 11, paddingVertical: 20 },
-});
+}));

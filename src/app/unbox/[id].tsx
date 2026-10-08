@@ -25,7 +25,7 @@ import { useNow } from '../../lib/hooks';
 import { deliveredAt, orderStatus } from '../../lib/orders';
 import { play } from '../../lib/sound';
 import { COINS_PER_REVIEW, useShop } from '../../store/useShop';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 const TAPS = 3;
 
@@ -183,7 +183,7 @@ export default function Unbox() {
 
 const BOX_W = 220;
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { height: 48, justifyContent: 'center', paddingHorizontal: 14 },
   title: { color: '#fff', fontSize: 26, fontWeight: '800', marginTop: 12, textAlign: 'center' },
   sub: { color: '#fff', opacity: 0.85, marginTop: 6, textAlign: 'center' },
@@ -213,8 +213,9 @@ const styles = StyleSheet.create({
   tapeV: { position: 'absolute', top: 0, bottom: 0, width: 36, backgroundColor: 'rgba(244,63,94,0.75)' },
   label: { backgroundColor: '#fff', borderRadius: 4, paddingHorizontal: 10, paddingVertical: 6, transform: [{ rotate: '-4deg' }], marginLeft: 70 },
   labelTitle: { fontSize: 9, fontWeight: '900', color: C.primary, letterSpacing: 1 },
-  labelText: { fontSize: 9, color: C.text },
-  giftNote: { backgroundColor: '#fff', borderRadius: R.lg, padding: 14, alignItems: 'center', gap: 4, marginTop: 20, width: '100%' },
+  // A paper shipping label: dark ink in both themes.
+  labelText: { fontSize: 9, color: '#1F2328' },
+  giftNote: { backgroundColor: C.card, borderRadius: R.lg, padding: 14, alignItems: 'center', gap: 4, marginTop: 20, width: '100%' },
   giftTo: { fontWeight: '800', color: C.text },
   giftMsg: { color: C.muted, fontStyle: 'italic', textAlign: 'center' },
   items: { flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: 12, marginTop: 28 },
@@ -225,4 +226,4 @@ const styles = StyleSheet.create({
   whiteBtnText: { color: C.primary, fontWeight: '700', fontSize: 16 },
   ghostBtn: { borderColor: '#fff', borderWidth: 1.5, borderRadius: R.md, height: 48, alignItems: 'center', justifyContent: 'center' },
   ghostBtnText: { color: '#fff', fontWeight: '700', fontSize: 16 },
-});
+}));

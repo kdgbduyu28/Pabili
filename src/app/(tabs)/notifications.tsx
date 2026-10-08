@@ -12,7 +12,7 @@ import { dateTime } from '../../lib/format';
 import { NotifKind } from '../../lib/notifications';
 import { useNotifications } from '../../lib/useNotifications';
 import { useShop } from '../../store/useShop';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 const FILTERS: { id: NotifKind | 'all'; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -89,19 +89,19 @@ export default function Notifications() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   header: { backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   headerRow: { height: 52, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14 },
   title: { flex: 1, fontSize: 18, fontWeight: '600', color: C.text },
   filters: { flexDirection: 'row', gap: 8, paddingHorizontal: 14, paddingBottom: 10 },
-  chip: { borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: '#F4F4F5' },
+  chip: { borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 6, backgroundColor: C.surface },
   chipOn: { backgroundColor: C.primary },
   chipText: { fontSize: 13, color: C.text },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 12, backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
-  unread: { backgroundColor: '#FFF7F8' },
+  unread: { backgroundColor: C.primarySoft },
   icon: { width: 40, height: 40, borderRadius: 20, alignItems: 'center', justifyContent: 'center' },
   rowTitle: { fontSize: 14, fontWeight: '600', color: C.text },
   body: { fontSize: 12, color: C.muted, lineHeight: 17 },
   time: { fontSize: 11, color: C.faint },
   dot: { position: 'absolute', top: 12, right: 10, width: 8, height: 8, borderRadius: 4, backgroundColor: C.primary },
-});
+}));

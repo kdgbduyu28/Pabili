@@ -23,7 +23,7 @@ import { useNow } from '../../lib/hooks';
 import { canReturn, isLate, orderStatus, routeProgress, timeline } from '../../lib/orders';
 import { COINS_PER_REVIEW, Order, keptInWallet, useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 export default function OrderScreen() {
   const { id, celebrate } = useLocalSearchParams<{ id: string; celebrate?: string }>();
@@ -158,10 +158,10 @@ function OrderDetail({ order }: { order: Order }) {
           {isLate(order) && steps.some((s) => s.title === 'Delivery delayed') && (
             <Pressable style={styles.late} onPress={() => router.push('/vouchers')}>
               <Ionicons name="time-outline" size={18} color={C.preferred} />
-              <Text style={{ flex: 1, fontSize: 12, color: '#9A3412' }}>
+              <Text style={{ flex: 1, fontSize: 12, color: C.coinText }}>
                 This parcel ran late, so we added a ₱50 voucher (LATE50) to your account.
               </Text>
-              <Ionicons name="chevron-forward" size={14} color="#9A3412" />
+              <Ionicons name="chevron-forward" size={14} color={C.coinText} />
             </Pressable>
           )}
 
@@ -349,7 +349,7 @@ function Detail({ label, value }: { label: string; value: string }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   check: { width: 112, height: 112, borderRadius: 56, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
   bigTitle: { color: '#fff', fontSize: 30, fontWeight: '800', marginTop: 20 },
   sub: { color: '#fff', opacity: 0.9, marginTop: 6, fontSize: 14 },
@@ -372,19 +372,19 @@ const styles = StyleSheet.create({
   small: { fontSize: 12, color: C.muted },
   step: { flexDirection: 'row', gap: 10 },
   stepDot: { width: 10, height: 10, borderRadius: 5, backgroundColor: '#D4D4D8', marginTop: 4 },
-  stepLine: { width: 1, flex: 1, backgroundColor: '#E4E4E7', marginVertical: 2 },
+  stepLine: { width: 1, flex: 1, backgroundColor: C.line, marginVertical: 2 },
   stepTitle: { fontSize: 13, color: C.text },
   shopRow: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingHorizontal: 12, paddingBottom: 8 },
-  item: { flexDirection: 'row', gap: 10, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: '#FAFAFA' },
+  item: { flexDirection: 'row', gap: 10, paddingHorizontal: 12, paddingVertical: 8, backgroundColor: C.subtle },
   strike: { fontSize: 11, color: C.faint, textDecorationLine: 'line-through', marginRight: 6 },
   giftCard: { marginBottom: 8, padding: 16, alignItems: 'center' },
   giftRibbon: { position: 'absolute', top: 0, bottom: 0, width: 18 },
-  giftNote: { backgroundColor: '#fff', borderRadius: R.md, padding: 14, gap: 6, alignItems: 'center', width: '100%', maxWidth: 360 },
+  giftNote: { backgroundColor: C.card, borderRadius: R.md, padding: 14, gap: 6, alignItems: 'center', width: '100%', maxWidth: 360 },
   giftTo: { fontSize: 15, fontWeight: '800', color: C.text },
   giftMsg: { fontSize: 13, color: C.muted, fontStyle: 'italic', textAlign: 'center' },
-  late: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#FFF7ED', padding: 12, marginBottom: 8 },
+  late: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.coinSoft, padding: 12, marginBottom: 8 },
   sheetTitle: { fontSize: 17, fontWeight: '700', color: C.text },
   reason: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 13, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   totalRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line, paddingTop: 8 },
   bar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: C.card, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line, paddingTop: 8 },
-});
+}));

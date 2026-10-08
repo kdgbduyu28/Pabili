@@ -35,7 +35,7 @@ import { bump, success, tap, warn } from '../../lib/haptics';
 import { useGrid, useMeasuredWidth, useNow } from '../../lib/hooks';
 import { Question, useShop } from '../../store/useShop';
 import { toast, useUi } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 type Mode = 'cart' | 'buy';
 
@@ -624,7 +624,7 @@ function InfoRow({
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   block: { backgroundColor: C.card, marginBottom: 8 },
   counter: { position: 'absolute', right: 12, bottom: 12, backgroundColor: 'rgba(0,0,0,0.35)', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 2 },
   counterText: { color: '#fff', fontSize: 12 },
@@ -651,7 +651,7 @@ const styles = StyleSheet.create({
   topBarRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12 },
   roundBtn: { width: 38, height: 38, borderRadius: 19, backgroundColor: 'rgba(0,0,0,0.32)', alignItems: 'center', justifyContent: 'center' },
   bottomBar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: C.card, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line },
-  barBtn: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 2, backgroundColor: '#F0FBF9' },
+  barBtn: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: 2, backgroundColor: C.shipBg },
   barBtnText: { fontSize: 11 },
   divider: { width: StyleSheet.hairlineWidth, backgroundColor: C.line },
   buyNow: { flex: 1, alignItems: 'center', justifyContent: 'center' },
@@ -660,8 +660,8 @@ const styles = StyleSheet.create({
   sheetHead: { flexDirection: 'row', gap: 12, padding: 14, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line, marginBottom: 12 },
   groupName: { fontSize: 14, color: C.text, marginBottom: 8 },
   options: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  option: { borderWidth: 1, borderColor: '#F0F0F2', backgroundColor: '#F7F7F8', borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 7 },
-  optionOn: { borderColor: C.primary, backgroundColor: '#FFF5F6' },
+  option: { borderWidth: 1, borderColor: C.line, backgroundColor: C.surface, borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 7 },
+  optionOn: { borderColor: C.primary, backgroundColor: C.primarySoft },
   optionText: { fontSize: 13, color: C.text },
   fbt: { flexDirection: 'row', paddingHorizontal: 12, gap: 6 },
   fbtItem: { flexDirection: 'row', alignItems: 'flex-start', gap: 6 },
@@ -670,7 +670,7 @@ const styles = StyleSheet.create({
   fbtBar: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12 },
   chartRow: { flexDirection: 'row', borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   chartCell: { flex: 1, paddingVertical: 8, fontSize: 13, color: C.text, textAlign: 'center' },
-  chartHead: { fontWeight: '700', backgroundColor: '#FAFAFA', color: C.muted, fontSize: 12 },
+  chartHead: { fontWeight: '700', backgroundColor: C.subtle, color: C.muted, fontSize: 12 },
   soldOut: { position: 'absolute', zIndex: 2, backgroundColor: 'rgba(255,255,255,0.45)', alignItems: 'center', justifyContent: 'center' },
   soldOutBadge: { width: 120, height: 120, borderRadius: 60, backgroundColor: 'rgba(0,0,0,0.6)', alignItems: 'center', justifyContent: 'center' },
   soldOutText: { color: '#fff', fontWeight: '900', fontSize: 16, letterSpacing: 1 },
@@ -679,7 +679,7 @@ const styles = StyleSheet.create({
   aText: { fontSize: 13, color: C.text },
   qBadge: { color: C.primary, fontWeight: '900' },
   askRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line },
-  askInput: { flex: 1, height: 36, backgroundColor: '#F4F4F5', borderRadius: 18, paddingHorizontal: 14, fontSize: 13, color: C.text },
+  askInput: { flex: 1, height: 36, backgroundColor: C.surface, borderRadius: 18, paddingHorizontal: 14, fontSize: 13, color: C.text },
   qtyRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 8 },
   confirm: { height: 46, borderRadius: R.sm, alignItems: 'center', justifyContent: 'center' },
-});
+}));

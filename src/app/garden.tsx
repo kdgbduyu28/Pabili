@@ -13,7 +13,7 @@ import { bump, success, tap } from '../lib/haptics';
 import { play } from '../lib/sound';
 import { Farm, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const WATERS_PER_DAY = 3;
 const WATER_POINTS = 10;
@@ -195,10 +195,10 @@ export default function Garden() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { flexDirection: 'row', alignItems: 'center', gap: 12, height: 52, paddingHorizontal: 14 },
   title: { flex: 1, fontSize: 18, fontWeight: '800', color: C.text },
-  coinPill: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: '#fff', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 4 },
+  coinPill: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: C.card, borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 4 },
   plantName: { fontSize: 24, fontWeight: '900', color: '#14532D', marginTop: 8 },
   stage: { color: '#166534', marginTop: 2 },
   scene: { width: '100%', maxWidth: 360, height: 280, alignItems: 'center', justifyContent: 'flex-end', marginTop: 12 },
@@ -211,10 +211,10 @@ const styles = StyleSheet.create({
   fill: { height: 12, borderRadius: 6, backgroundColor: '#22C55E' },
   progressText: { fontSize: 12, color: '#166534', textAlign: 'center' },
   actions: { flexDirection: 'row', gap: 12, width: '100%', maxWidth: 360, marginTop: 16 },
-  action: { flex: 1, backgroundColor: '#fff', borderRadius: R.lg, padding: 14, alignItems: 'center', gap: 4 },
+  action: { flex: 1, backgroundColor: C.card, borderRadius: R.lg, padding: 14, alignItems: 'center', gap: 4 },
   actionTitle: { fontWeight: '800', color: C.text },
   actionSub: { fontSize: 11, color: C.muted, textAlign: 'center' },
-  prize: { backgroundColor: '#fff', borderRadius: R.lg, padding: 16, alignItems: 'center', gap: 6, marginTop: 16, width: '100%', maxWidth: 360 },
+  prize: { backgroundColor: C.card, borderRadius: R.lg, padding: 16, alignItems: 'center', gap: 6, marginTop: 16, width: '100%', maxWidth: 360 },
   prizeTitle: { fontSize: 16, fontWeight: '800', color: C.text, textAlign: 'center' },
   how: { fontSize: 11, color: '#166534', textAlign: 'center', marginTop: 18, paddingHorizontal: 20 },
-});
+}));

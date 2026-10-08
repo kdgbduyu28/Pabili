@@ -5,7 +5,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring } from 'react-native-reanimated';
 import { cartCount, useShop } from '../store/useShop';
 import { Point, useUi } from '../store/useUi';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 
 export function CartButton({ color = '#fff', size = 24 }: { color?: string; size?: number }) {
   const count = useShop(cartCount);
@@ -49,7 +49,7 @@ export function CartButton({ color = '#fff', size = 24 }: { color?: string; size
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   badge: {
     position: 'absolute',
     top: -6,
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   badgeText: { color: C.primary, fontSize: 10, fontWeight: '800' },
-});
+}));

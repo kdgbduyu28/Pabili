@@ -16,7 +16,7 @@ import { useNow } from '../lib/hooks';
 import { play } from '../lib/sound';
 import { useShop } from '../store/useShop';
 import { toast, useUi } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export default function CoinsShop() {
   const insets = useSafeAreaInsets();
@@ -116,7 +116,7 @@ export default function CoinsShop() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   hero: { flexDirection: 'row', alignItems: 'center', gap: 14, padding: 18, marginBottom: 8 },
   heroLabel: { color: '#fff', fontSize: 12, opacity: 0.9 },
   heroValue: { color: '#fff', fontSize: 32, fontWeight: '900' },
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 10, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   rowIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: C.primarySoft, alignItems: 'center', justifyContent: 'center' },
   rowTitle: { fontSize: 14, fontWeight: '600', color: C.text, paddingHorizontal: 0 },
-});
+}));

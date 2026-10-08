@@ -13,7 +13,7 @@ import { todayKey } from '../lib/format';
 import { play } from '../lib/sound';
 import { useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 type Prize = { label: string; coins?: number; voucher?: string; weight: number; color: string };
 
@@ -178,7 +178,7 @@ export default function Spin() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { flexDirection: 'row', alignItems: 'center', height: 48, paddingHorizontal: 14 },
   coinPill: { flexDirection: 'row', alignItems: 'center', gap: 6, backgroundColor: 'rgba(0,0,0,0.25)', borderRadius: R.pill, paddingHorizontal: 10, paddingVertical: 4 },
   coinText: { color: '#fff', fontWeight: '700' },
@@ -187,10 +187,10 @@ const styles = StyleSheet.create({
   pointer: { position: 'absolute', top: 0, zIndex: 2 },
   hub: { position: 'absolute', top: 20 + SIZE / 2 - 34, left: SIZE / 2 - 34, width: 68, height: 68, borderRadius: 34, alignItems: 'center', justifyContent: 'center' },
   hubText: { color: C.primary, fontWeight: '900', fontSize: 15 },
-  result: { backgroundColor: '#fff', borderRadius: R.lg, padding: 16, alignItems: 'center', gap: 6, marginTop: 20, width: '100%', maxWidth: 360 },
+  result: { backgroundColor: C.card, borderRadius: R.lg, padding: 16, alignItems: 'center', gap: 6, marginTop: 20, width: '100%', maxWidth: 360 },
   resultTitle: { fontSize: 18, fontWeight: '800', color: C.text },
   resultSub: { fontSize: 12, color: C.muted, textAlign: 'center' },
   spinBtn: { backgroundColor: '#FACC15', borderRadius: R.pill, paddingHorizontal: 40, paddingVertical: 14, marginTop: 24 },
   spinBtnText: { color: '#7C2D12', fontWeight: '900', fontSize: 16 },
   note: { color: '#fff', opacity: 0.7, fontSize: 11, marginTop: 14, textAlign: 'center' },
-});
+}));

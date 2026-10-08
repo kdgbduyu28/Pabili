@@ -1,7 +1,7 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { StyleSheet, Text, View } from 'react-native';
 import { Shop } from '../data/catalog';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 
 export type IconName = keyof typeof Ionicons.glyphMap;
 
@@ -21,7 +21,8 @@ export function Coin({ size = 18 }: { size?: number }) {
   );
 }
 
-const SHOP_COLORS = ['#F43F5E', '#FB7A3C', '#0D9488', '#7C3AED', '#2563EB', '#DB2777', '#CA8A04', '#16A34A'];
+// All dark enough for white initials.
+const SHOP_COLORS = ['#E11D48', '#C2410C', '#0F766E', '#7C3AED', '#2563EB', '#DB2777', '#A16207', '#15803D'];
 
 /** Shop logo: initials on a color picked from the shop id. */
 export function ShopAvatar({ shop, size = 52 }: { shop: Shop; size?: number }) {
@@ -46,7 +47,7 @@ export function ShopAvatar({ shop, size = 52 }: { shop: Shop; size?: number }) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   coin: { backgroundColor: '#FBBF24', borderColor: '#D97706', alignItems: 'center', justifyContent: 'center' },
   coinText: { color: '#92400E', fontWeight: '900', textAlign: 'center' },
   avatar: { alignItems: 'center', justifyContent: 'center' },
@@ -60,4 +61,4 @@ const styles = StyleSheet.create({
     borderColor: '#fff',
     padding: 1,
   },
-});
+}));

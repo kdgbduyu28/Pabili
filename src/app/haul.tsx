@@ -9,7 +9,7 @@ import { peso } from '../lib/format';
 import { useMeasuredWidth } from '../lib/hooks';
 import { shareText } from '../lib/share';
 import { useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 function ownedFor(ms: number) {
   const mins = Math.floor(ms / 60000);
@@ -101,7 +101,7 @@ export default function Haul() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   stats: { flexDirection: 'row', backgroundColor: C.card, paddingVertical: 16, marginBottom: 8 },
   stat: { flex: 1, alignItems: 'center', gap: 2 },
   statValue: { fontSize: 18, fontWeight: '800', color: C.primary },
@@ -111,4 +111,4 @@ const styles = StyleSheet.create({
   qtyText: { color: '#fff', fontSize: 11, fontWeight: '700' },
   name: { fontSize: 12, color: C.text, marginTop: 4 },
   meta: { fontSize: 10, color: C.muted },
-});
+}));

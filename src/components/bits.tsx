@@ -5,7 +5,7 @@ import { ActivityIndicator, GestureResponderEvent, Pressable, StyleProp, StyleSh
 import { Shop } from '../data/catalog';
 import { peso } from '../lib/format';
 import { tap } from '../lib/haptics';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export function ShopTag({ shop, style }: { shop: Shop; style?: StyleProp<ViewStyle> }) {
   if (shop.mall) return <Tag text="Mall" color="#fff" bg={C.mall} style={style} />;
@@ -245,10 +245,10 @@ export function SectionTitle({ title, right, onPress }: { title: string; right?:
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   tag: { borderRadius: 2, paddingHorizontal: 4, paddingVertical: 1, borderWidth: StyleSheet.hairlineWidth, alignSelf: 'flex-start' },
   tagText: { fontSize: 10, fontWeight: '700' },
-  check: { borderWidth: 1.5, borderColor: '#C4C4CC', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' },
+  check: { borderWidth: 1.5, borderColor: '#C4C4CC', alignItems: 'center', justifyContent: 'center', backgroundColor: C.card },
   stepper: { flexDirection: 'row', borderWidth: 1, borderColor: C.line, borderRadius: R.sm, alignItems: 'center' },
   stepBtn: { width: 30, height: 28, alignItems: 'center', justifyContent: 'center' },
   stepVal: {
@@ -262,7 +262,7 @@ const styles = StyleSheet.create({
     lineHeight: 28,
   },
   btn: { borderRadius: R.sm, overflow: 'hidden' },
-  btnOutline: { borderWidth: 1, borderColor: C.primary, backgroundColor: '#fff' },
+  btnOutline: { borderWidth: 1, borderColor: C.primary, backgroundColor: C.card },
   btnGrad: { borderRadius: R.sm },
   btnInner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 16, minHeight: 44 },
   btnSmall: { minHeight: 32, paddingHorizontal: 12 },
@@ -277,4 +277,4 @@ const styles = StyleSheet.create({
   emptySub: { fontSize: 13, color: C.muted, textAlign: 'center', marginBottom: 8 },
   sectionTitle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 12, paddingVertical: 12 },
   sectionText: { fontSize: 15, fontWeight: '700', color: C.text, letterSpacing: 0.3 },
-});
+}));

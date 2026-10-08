@@ -26,7 +26,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: C.muted,
         // The default 48px web bar clips label descenders; leave room for icon,
         // label and the home-indicator area.
-        tabBarStyle: { height: 62 + insets.bottom, paddingBottom: insets.bottom },
+        tabBarStyle: { height: 62 + insets.bottom, paddingBottom: insets.bottom, backgroundColor: C.card, borderTopColor: C.line },
         tabBarLabelStyle: { fontSize: 11, lineHeight: 14 },
         sceneStyle: { backgroundColor: C.bg },
       }}

@@ -1,3 +1,4 @@
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
 import { Alert, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { Button } from '../components/bits';
@@ -5,11 +6,17 @@ import { InterestPicker } from '../components/InterestPicker';
 import { Header, Wrap } from '../components/Page';
 import { tap, warn } from '../lib/haptics';
 import { play } from '../lib/sound';
-import { useShop } from '../store/useShop';
+import { ThemePref, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const COOL_OFF_OPTIONS = [5, 10, 30, 60];
+
+const THEMES: { id: ThemePref; label: string; icon: keyof typeof Ionicons.glyphMap }[] = [
+  { id: 'system', label: 'System', icon: 'phone-portrait-outline' },
+  { id: 'light', label: 'Light', icon: 'sunny-outline' },
+  { id: 'dark', label: 'Dark', icon: 'moon-outline' },
+];
 
 export default function Settings() {
   const settings = useShop((s) => s.settings);
@@ -38,6 +45,28 @@ export default function Settings() {
       <Header title="Settings" />
       <ScrollView keyboardShouldPersistTaps="handled">
         <Wrap style={{ maxWidth: 720 }}>
+          <View style={[styles.card, { padding: 14, gap: 10 }]}>
+            <Text style={styles.title}>Appearance</Text>
+            <View style={styles.segments}>
+              {THEMES.map((t) => {
+                const on = settings.theme === t.id || (!settings.theme && t.id === 'system');
+                return (
+                  <Pressable
+                    key={t.id}
+                    onPress={() => {
+                      tap();
+                      setSettings({ theme: t.id });
+                    }}
+                    style={[styles.segment, on && styles.segmentOn]}
+                  >
+                    <Ionicons name={t.icon} size={16} color={on ? C.primary : C.muted} />
+                    <Text style={[styles.optionText, on && { color: C.primary, fontWeight: '700' }]}>{t.label}</Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+
           <View style={styles.card}>
             <Row title="Sound effects" sub="Cha-ching on checkout, coin clinks, box pops">
               <Switch
@@ -113,13 +142,16 @@ function Row({ title, sub, children }: { title: string; sub: string; children: R
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   card: { backgroundColor: C.card, marginTop: 8 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 14, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   title: { fontSize: 14, fontWeight: '600', color: C.text },
   sub: { fontSize: 12, color: C.muted, lineHeight: 17 },
   options: { flexDirection: 'row', gap: 8, padding: 14 },
+  segments: { flexDirection: 'row', gap: 8 },
+  segment: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, borderWidth: 1, borderColor: C.line, borderRadius: R.md, paddingVertical: 10 },
+  segmentOn: { borderColor: C.primary, backgroundColor: C.primarySoft },
   option: { borderWidth: 1, borderColor: C.line, borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 6 },
   optionOn: { borderColor: C.primary, backgroundColor: C.primarySoft },
   optionText: { fontSize: 13, color: C.text },
-});
+}));

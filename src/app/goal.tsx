@@ -6,7 +6,7 @@ import { peso } from '../lib/format';
 import { success, tap } from '../lib/haptics';
 import { keptInWallet, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const PRESETS: { name: string; amount: number }[] = [
   { name: 'Weekend trip', amount: 5000 },
@@ -90,7 +90,7 @@ export default function Goal() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   note: { fontSize: 13, color: C.muted, lineHeight: 19 },
   presets: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   preset: { flexGrow: 1, minWidth: 140, backgroundColor: C.card, borderRadius: R.md, padding: 12, borderWidth: 1, borderColor: C.card },
@@ -100,4 +100,4 @@ const styles = StyleSheet.create({
   field: { backgroundColor: C.card, borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 8 },
   label: { fontSize: 11, color: C.muted },
   input: { fontSize: 15, color: C.text, paddingVertical: 6 },
-});
+}));

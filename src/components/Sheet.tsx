@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import Animated, { FadeIn, FadeOut, SlideInDown, SlideOutDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { C, MAX_WIDTH } from '../theme';
+import { C, MAX_WIDTH, themed } from '../theme';
 
 /**
  * Bottom sheet rendered in the screen's own tree instead of a native Modal, so the
@@ -29,7 +29,7 @@ export function Sheet({ open, onClose, children }: { open: boolean; onClose: () 
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   backdrop: { ...StyleSheet.absoluteFill, backgroundColor: C.overlay },
   dock: { ...StyleSheet.absoluteFill, justifyContent: 'flex-end', alignItems: 'center' },
   panel: {
@@ -40,4 +40,4 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 12,
     maxHeight: '85%',
   },
-});
+}));

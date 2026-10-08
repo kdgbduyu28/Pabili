@@ -13,7 +13,7 @@ import { tap } from '../lib/haptics';
 import { shareText } from '../lib/share';
 import { computeWrapped } from '../lib/wrapped';
 import { useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const SLIDE_MS = 5000;
 
@@ -204,7 +204,7 @@ export default function WrappedScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   bars: { flexDirection: 'row', gap: 4, paddingHorizontal: 12 },
   bar: { flex: 1, height: 3, borderRadius: 2, backgroundColor: 'rgba(255,255,255,0.35)', overflow: 'hidden' },
   barFill: { height: 3, backgroundColor: '#fff' },
@@ -218,4 +218,4 @@ const styles = StyleSheet.create({
   shareLayer: { position: 'absolute', left: 0, right: 0, alignItems: 'center' },
   share: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fff', borderRadius: R.pill, paddingHorizontal: 20, paddingVertical: 12 },
   shareText: { color: C.primary, fontWeight: '800' },
-});
+}));

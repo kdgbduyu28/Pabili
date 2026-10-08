@@ -8,7 +8,7 @@ import { PRODUCTS, getShop } from '../data/catalog';
 import { compact } from '../lib/format';
 import { useNow } from '../lib/hooks';
 import { useShop } from '../store/useShop';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 
 export default function Following() {
   const followed = useShop((s) => s.followed);
@@ -59,10 +59,10 @@ export default function Following() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   card: { backgroundColor: C.card, marginTop: 8 },
   head: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12 },
   name: { fontSize: 14, fontWeight: '700', color: C.text },
   meta: { fontSize: 11, color: C.muted },
   visit: { color: C.primary, fontWeight: '600', fontSize: 13 },
-});
+}));

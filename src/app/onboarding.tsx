@@ -8,7 +8,7 @@ import { InterestPicker } from '../components/InterestPicker';
 import { Wrap } from '../components/Page';
 import { success } from '../lib/haptics';
 import { useShop } from '../store/useShop';
-import { C } from '../theme';
+import { C, themed } from '../theme';
 
 export default function Onboarding() {
   const insets = useSafeAreaInsets();
@@ -21,7 +21,7 @@ export default function Onboarding() {
   };
 
   return (
-    <LinearGradient colors={['#FFF1F3', '#FFFFFF']} style={{ flex: 1 }}>
+    <LinearGradient colors={[C.primarySoft, C.bg]} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingTop: insets.top + 32, paddingBottom: insets.bottom + 120 }}>
         <Wrap style={{ maxWidth: 560, paddingHorizontal: 20, gap: 8, alignItems: 'center' }}>
           <Text style={styles.brand}>Pabili</Text>
@@ -41,9 +41,9 @@ export default function Onboarding() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   brand: { color: C.primary, fontSize: 34, fontWeight: '900', fontStyle: 'italic' },
   title: { fontSize: 22, fontWeight: '800', color: C.text, textAlign: 'center' },
   sub: { fontSize: 14, color: C.muted, textAlign: 'center', lineHeight: 20 },
-  bar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(255,255,255,0.96)', paddingTop: 12 },
-});
+  bar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: C.card, paddingTop: 12 },
+}));

@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { CATEGORIES } from '../data/catalog';
 import { tap } from '../lib/haptics';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export function InterestPicker({ value, onChange }: { value: string[]; onChange: (ids: string[]) => void }) {
   return (
@@ -30,10 +30,10 @@ export function InterestPicker({ value, onChange }: { value: string[]; onChange:
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, justifyContent: 'center' },
   item: { width: 100, height: 96, borderRadius: R.lg, backgroundColor: C.card, alignItems: 'center', justifyContent: 'center', gap: 6, padding: 8 },
   itemOn: { backgroundColor: C.primary },
   label: { fontSize: 11, color: C.text, textAlign: 'center' },
   check: { position: 'absolute', top: 6, right: 6 },
-});
+}));

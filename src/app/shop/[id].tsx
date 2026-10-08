@@ -14,7 +14,7 @@ import { compact, peso } from '../../lib/format';
 import { bump, success } from '../../lib/haptics';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 export default function ShopScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -117,7 +117,7 @@ export default function ShopScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   banner: { flexDirection: 'row', alignItems: 'center', gap: 12, padding: 16 },
   name: { color: '#fff', fontSize: 16, fontWeight: '700' },
   meta: { color: '#E4E4E7', fontSize: 11 },
@@ -129,12 +129,12 @@ const styles = StyleSheet.create({
   small: { fontSize: 11, color: C.muted },
   barRow: { flexDirection: 'row', alignItems: 'center', gap: 4 },
   barLabel: { fontSize: 10, color: C.muted, width: 8 },
-  barTrack: { flex: 1, height: 6, borderRadius: 3, backgroundColor: '#F4F4F5', overflow: 'hidden' },
+  barTrack: { flex: 1, height: 6, borderRadius: 3, backgroundColor: C.surface, overflow: 'hidden' },
   barFill: { height: 6, borderRadius: 3, backgroundColor: C.star },
   barPct: { fontSize: 10, color: C.muted, width: 30, textAlign: 'right' },
   voucher: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: C.primarySoft, paddingHorizontal: 14, paddingVertical: 10 },
   cats: { gap: 8, padding: 10, backgroundColor: C.card },
-  cat: { borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: '#F4F4F5' },
+  cat: { borderRadius: R.pill, paddingHorizontal: 12, paddingVertical: 6, backgroundColor: C.surface },
   catOn: { backgroundColor: C.primary },
   catText: { fontSize: 12, color: C.text },
-});
+}));

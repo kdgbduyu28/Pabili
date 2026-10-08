@@ -15,7 +15,7 @@ import { bump, success, tap } from '../../lib/haptics';
 import { useNow } from '../../lib/hooks';
 import { useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 export default function Cart() {
   const insets = useSafeAreaInsets();
@@ -107,9 +107,9 @@ export default function Cart() {
           ) : (
             <>
               {settings.coolOff && selected.length > 0 && (
-                <View style={[styles.cool, !cooling && { backgroundColor: '#ECFDF5' }]}>
-                  <Ionicons name={cooling ? 'hourglass-outline' : 'checkmark-circle'} size={18} color={cooling ? '#475569' : C.success} />
-                  <Text style={{ flex: 1, fontSize: 12, color: cooling ? '#334155' : '#065F46' }}>
+                <View style={[styles.cool, !cooling && { backgroundColor: C.shipBg }]}>
+                  <Ionicons name={cooling ? 'hourglass-outline' : 'checkmark-circle'} size={18} color={cooling ? C.muted : C.ship} />
+                  <Text style={{ flex: 1, fontSize: 12, color: cooling ? C.text : C.ship }}>
                     {cooling
                       ? `Cool-off mode: checkout unlocks in ${coolLabel}. Still want it after? You'll get +10 coins.`
                       : 'Cool-off done! Check out now for a +10 coin patience bonus.'}
@@ -296,30 +296,30 @@ function FreeShipBar({ subtotal, reason, gap }: { subtotal: number; reason: Free
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   header: { backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   headerRow: { height: 52, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 14 },
   headerTitle: { fontSize: 18, fontWeight: '600', color: C.text },
   card: { backgroundColor: C.card, marginBottom: 8 },
-  cool: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#F1F5F9', paddingHorizontal: 12, paddingVertical: 10 },
+  cool: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.surface, paddingHorizontal: 12, paddingVertical: 10 },
   freeShip: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.shipBg, paddingHorizontal: 12, paddingVertical: 10, marginBottom: 8 },
   shopRow: { flexDirection: 'row', alignItems: 'center', gap: 8, padding: 12, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   shopName: { flexDirection: 'row', alignItems: 'center', gap: 2, flex: 1 },
   item: { flexDirection: 'row', alignItems: 'center', gap: 10, padding: 12 },
   itemTitle: { fontSize: 13, lineHeight: 18, color: C.text },
-  variant: { backgroundColor: '#F4F4F5', alignSelf: 'flex-start', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 2, maxWidth: '100%' },
+  variant: { backgroundColor: C.surface, alignSelf: 'flex-start', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 2, maxWidth: '100%' },
   variantText: { fontSize: 11, color: C.muted },
   priceRow: { flexDirection: 'row', alignItems: 'center' },
   nudges: { flexDirection: 'row', flexWrap: 'wrap', gap: 4 },
   svChip: { flexDirection: 'row', alignItems: 'center', gap: 3, borderWidth: 1, borderColor: C.primary, borderRadius: 3, paddingHorizontal: 6, paddingVertical: 2 },
   svText: { fontSize: 11, color: C.primary, fontWeight: '600' },
-  ship: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#F0FBF9', paddingHorizontal: 12, paddingVertical: 8 },
+  ship: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.shipBg, paddingHorizontal: 12, paddingVertical: 8 },
   shipText: { fontSize: 12, color: C.ship },
-  shipTrack: { height: 4, borderRadius: 2, backgroundColor: '#CDEDE8', overflow: 'hidden' },
+  shipTrack: { height: 4, borderRadius: 2, backgroundColor: C.line, overflow: 'hidden' },
   shipFill: { height: 4, borderRadius: 2, backgroundColor: C.ship },
   orig: { fontSize: 11, color: C.faint, textDecorationLine: 'line-through' },
   bar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: C.card, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   barRow: { flexDirection: 'row', alignItems: 'center', gap: 8, height: 60, paddingLeft: 14 },
   checkoutBtn: { backgroundColor: C.primary, alignSelf: 'stretch', justifyContent: 'center', paddingHorizontal: 20 },
   checkoutText: { color: '#fff', fontWeight: '700', fontSize: 15 },
-});
+}));

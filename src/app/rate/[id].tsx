@@ -11,7 +11,7 @@ import { getProduct, variantLabel } from '../../data/catalog';
 import { success, tap } from '../../lib/haptics';
 import { COINS_PER_REVIEW, Review, useShop } from '../../store/useShop';
 import { toast } from '../../store/useUi';
-import { C, R } from '../../theme';
+import { C, R, themed } from '../../theme';
 
 export const REVIEW_TAGS = ['Good quality', 'Legit seller', 'Fast delivery', 'Worth it', 'As described', 'Well packed'];
 const RATING_WORDS = ['', 'Terrible', 'Poor', 'Okay', 'Good', 'Amazing'];
@@ -153,9 +153,9 @@ export default function Rate() {
   );
 }
 
-const styles = StyleSheet.create({
-  banner: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#FFF7E6', padding: 12, marginBottom: 8 },
-  bannerText: { color: '#92400E', fontSize: 13, fontWeight: '600', flex: 1 },
+const styles = themed(() => ({
+  banner: { flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: C.coinSoft, padding: 12, marginBottom: 8 },
+  bannerText: { color: C.coinText, fontSize: 13, fontWeight: '600', flex: 1 },
   card: { backgroundColor: C.card, padding: 12, marginBottom: 8, gap: 12 },
   head: { flexDirection: 'row', alignItems: 'center', gap: 10 },
   small: { fontSize: 12, color: C.muted, marginTop: 2 },
@@ -168,4 +168,4 @@ const styles = StyleSheet.create({
   tagText: { fontSize: 12, color: C.text },
   input: { minHeight: 70, borderWidth: 1, borderColor: C.line, borderRadius: R.sm, padding: 10, fontSize: 13, color: C.text, textAlignVertical: 'top' },
   bar: { position: 'absolute', left: 0, right: 0, bottom: 0, backgroundColor: C.card, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line, paddingTop: 8 },
-});
+}));

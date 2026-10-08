@@ -5,7 +5,7 @@ import { ACHIEVEMENTS } from '../lib/achievements';
 import { dateTime } from '../lib/format';
 import { useMeasuredWidth } from '../lib/hooks';
 import { useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export default function Achievements() {
   const unlocked = useShop((s) => s.achievements);
@@ -56,10 +56,10 @@ export default function Achievements() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   summary: { flexDirection: 'row', alignItems: 'center', gap: 14, backgroundColor: C.card, padding: 16, marginBottom: 8 },
   count: { fontSize: 15, fontWeight: '700', color: C.text, marginBottom: 6 },
-  track: { height: 8, borderRadius: 4, backgroundColor: '#FEF3C7', overflow: 'hidden' },
+  track: { height: 8, borderRadius: 4, backgroundColor: C.coinSoft, overflow: 'hidden' },
   fill: { height: 8, borderRadius: 4, backgroundColor: C.coin },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, padding: 12 },
   badge: { backgroundColor: C.card, borderRadius: R.lg, padding: 14, alignItems: 'center', gap: 6 },
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
   title: { fontSize: 13, fontWeight: '800', color: C.text },
   desc: { fontSize: 11, color: C.muted, textAlign: 'center', minHeight: 28 },
   date: { fontSize: 10, color: C.faint },
-});
+}));

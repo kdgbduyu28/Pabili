@@ -5,7 +5,7 @@ import { Header, Wrap, back } from '../components/Page';
 import { success } from '../lib/haptics';
 import { Address, DEFAULT_ADDRESS, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const FIELDS: { key: keyof Address; label: string; placeholder: string }[] = [
   { key: 'name', label: 'Full Name', placeholder: 'Juan Dela Cruz' },
@@ -56,9 +56,9 @@ export default function AddressScreen() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   note: { fontSize: 12, color: C.muted, lineHeight: 18 },
   field: { backgroundColor: C.card, borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 8 },
   label: { fontSize: 11, color: C.muted },
   input: { fontSize: 15, color: C.text, paddingVertical: 6 },
-});
+}));

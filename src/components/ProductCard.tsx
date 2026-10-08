@@ -6,7 +6,7 @@ import { Product, getShop } from '../data/catalog';
 import { isPreorder, soldOut } from '../data/extras';
 import { unitPrice } from '../data/promos';
 import { soldLabel } from '../lib/format';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 import { Price, Tag } from './bits';
 import { ProductImage } from './ProductImage';
 
@@ -72,7 +72,7 @@ export const ProductCard = memo(function ProductCard({ product: p, width, now }:
   );
 });
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   card: { backgroundColor: C.card, borderRadius: R.sm, overflow: 'hidden' },
   discount: {
     position: 'absolute',
@@ -108,4 +108,4 @@ const styles = StyleSheet.create({
   bottom: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'space-between', marginTop: 2 },
   sold: { fontSize: 11, color: C.muted, marginBottom: 2 },
   loc: { fontSize: 11, color: C.faint },
-});
+}));

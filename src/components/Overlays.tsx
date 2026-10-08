@@ -14,6 +14,7 @@ import { scheduleOnRN } from 'react-native-worklets';
 import { useUi } from '../store/useUi';
 import { Coin } from './Icon';
 import { ProductImage } from './ProductImage';
+import { themed } from '../theme';
 
 /** App-wide layer for the centered toast and items flying into the cart. */
 export function Overlays() {
@@ -90,7 +91,7 @@ function Flight({ id, emoji, gradient, from, to }: ReturnType<typeof useUi.getSt
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   toastWrap: { ...StyleSheet.absoluteFill, alignItems: 'center', justifyContent: 'center' },
   toast: {
     backgroundColor: 'rgba(20,20,20,0.82)',
@@ -115,4 +116,4 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     elevation: 8,
   },
-});
+}));

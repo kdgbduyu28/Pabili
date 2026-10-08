@@ -13,7 +13,7 @@ import { Category, PRODUCTS, TRENDING, getShop, photoCategory, search, suggest }
 import { tap } from '../lib/haptics';
 import { toast } from '../store/useUi';
 import { useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 const FILTERS: Record<string, { label: string; test: (id: string) => boolean }> = {
   mall: { label: 'Pabili Mall', test: (id) => getShop(PRODUCTS.find((p) => p.id === id)!.shopId).mall },
@@ -236,13 +236,13 @@ function speechRecognition(): SpeechCtor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   suggestion: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 14, paddingVertical: 13, backgroundColor: C.card, borderBottomWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   suggestionText: { flex: 1, fontSize: 14, color: C.text },
   suggestionKind: { fontSize: 11, color: C.faint, textTransform: 'capitalize' },
   photo: { width: 36, height: 36, borderRadius: 6 },
   row: { flexDirection: 'row', alignItems: 'center', gap: 12, paddingHorizontal: 12, paddingVertical: 8 },
-  inputWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#fff', borderRadius: 4, paddingHorizontal: 10, height: 38 },
+  inputWrap: { flex: 1, flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: C.card, borderRadius: 4, paddingHorizontal: 10, height: 38 },
   input: { flex: 1, fontSize: 14, color: C.text, height: 38 },
   headRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   head: { fontSize: 14, fontWeight: '600', color: C.text },
@@ -250,4 +250,4 @@ const styles = StyleSheet.create({
   chip: { backgroundColor: C.card, borderRadius: R.pill, paddingHorizontal: 14, paddingVertical: 7 },
   chipText: { fontSize: 13, color: C.text },
   filterBanner: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: C.primarySoft, paddingHorizontal: 12, paddingVertical: 10 },
-});
+}));

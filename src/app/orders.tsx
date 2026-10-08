@@ -8,7 +8,7 @@ import { getProduct, getShop, variantLabel } from '../data/catalog';
 import { useNow } from '../lib/hooks';
 import { ORDER_TABS, OrderTab, STATUS_LABEL, orderStatus, orderTab } from '../lib/orders';
 import { useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export default function Orders() {
   const params = useLocalSearchParams<{ tab?: string }>();
@@ -95,7 +95,7 @@ export default function Orders() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   tabs: { flexDirection: 'row' },
   tab: { flex: 1, alignItems: 'center', paddingVertical: 12, borderBottomWidth: 2, borderColor: 'transparent' },
   tabOn: { borderColor: C.primary },
@@ -107,4 +107,4 @@ const styles = StyleSheet.create({
   small: { fontSize: 12, color: C.muted },
   total: { flexDirection: 'row', justifyContent: 'flex-end', alignItems: 'center', gap: 6, padding: 12, borderTopWidth: StyleSheet.hairlineWidth, borderColor: C.line },
   ctaRow: { flexDirection: 'row', alignItems: 'center', gap: 10, paddingHorizontal: 12, paddingBottom: 12 },
-});
+}));

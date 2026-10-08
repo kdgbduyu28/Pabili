@@ -11,7 +11,7 @@ import { todayKey } from '../lib/format';
 import { bump, success } from '../lib/haptics';
 import { play } from '../lib/sound';
 import { useShop } from '../store/useShop';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 
 export const SHAKES_PER_DAY = 3;
 const THRESHOLD = 1.8; // in g; a deliberate shake, not a walk
@@ -108,15 +108,15 @@ export default function Shake() {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   top: { height: 48, justifyContent: 'center', paddingHorizontal: 14 },
   title: { color: '#fff', fontSize: 32, fontWeight: '900', marginTop: 12 },
   sub: { color: '#fff', opacity: 0.92, marginTop: 6, textAlign: 'center' },
   gift: { width: 200, height: 200, borderRadius: 100, backgroundColor: 'rgba(255,255,255,0.18)', alignItems: 'center', justifyContent: 'center' },
-  result: { backgroundColor: '#fff', borderRadius: R.lg, padding: 16, alignItems: 'center', gap: 6, marginTop: 32, width: '100%', maxWidth: 360 },
+  result: { backgroundColor: C.card, borderRadius: R.lg, padding: 16, alignItems: 'center', gap: 6, marginTop: 32, width: '100%', maxWidth: 360 },
   resultTitle: { fontSize: 18, fontWeight: '800', color: C.text },
   resultSub: { fontSize: 12, color: C.muted, textAlign: 'center' },
   dots: { flexDirection: 'row', gap: 8, marginTop: 28 },
   dot: { width: 12, height: 12, borderRadius: 6, backgroundColor: '#fff' },
   dotUsed: { backgroundColor: 'rgba(255,255,255,0.35)' },
-});
+}));

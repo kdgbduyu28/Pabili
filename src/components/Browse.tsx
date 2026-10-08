@@ -4,7 +4,7 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-
 import { Product, SHOPS, getShop } from '../data/catalog';
 import { unitPrice } from '../data/promos';
 import { tap } from '../lib/haptics';
-import { C, R } from '../theme';
+import { C, R, themed } from '../theme';
 import { Button, EmptyState } from './bits';
 import { Wrap } from './Page';
 import { ProductGrid, SortBar, useSorted } from './ProductGrid';
@@ -196,7 +196,7 @@ function Chip({ on, onPress, children }: { on: boolean; onPress: () => void; chi
   );
 }
 
-const styles = StyleSheet.create({
+const styles = themed(() => ({
   bar: { flexDirection: 'row', backgroundColor: C.card },
   filterBtn: {
     flexDirection: 'row',
@@ -211,9 +211,9 @@ const styles = StyleSheet.create({
   count: { color: C.muted, fontSize: 12, paddingHorizontal: 12, paddingTop: 8 },
   sheetTitle: { fontSize: 17, fontWeight: '700', color: C.text },
   groupTitle: { fontSize: 14, fontWeight: '600', color: C.text },
-  input: { flex: 1, backgroundColor: '#F4F4F5', borderRadius: R.sm, paddingHorizontal: 12, height: 38, fontSize: 14, color: C.text, textAlign: 'center' },
-  chip: { backgroundColor: '#F4F4F5', borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderColor: '#F4F4F5' },
+  input: { flex: 1, backgroundColor: C.surface, borderRadius: R.sm, paddingHorizontal: 12, height: 38, fontSize: 14, color: C.text, textAlign: 'center' },
+  chip: { backgroundColor: C.surface, borderRadius: R.sm, paddingHorizontal: 12, paddingVertical: 8, borderWidth: 1, borderColor: C.surface },
   chipOn: { backgroundColor: C.primarySoft, borderColor: C.primary },
   chipText: { fontSize: 13, color: C.text },
   actions: { flexDirection: 'row', gap: 10, paddingHorizontal: 16, paddingTop: 8 },
-});
+}));
