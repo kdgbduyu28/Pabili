@@ -218,6 +218,8 @@ export const fil: Record<string, string> = {
   'Your For You feed on Home leans toward these.': 'Dito nakabatay ang Para Sa Iyo sa Home.',
   'Save interests': 'I-save ang mga hilig',
   'Reset all data': 'Burahin lahat ng data',
+  'Contact me': 'Makipag-ugnayan',
+  'Email me at': 'Mag-email sa',
 
   // Search and browse
   'Recent Searches': 'Mga Hinanap Kamakailan',

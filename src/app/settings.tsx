@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useState } from 'react';
-import { Alert, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
+import { Alert, Linking, Platform, Pressable, ScrollView, StyleSheet, Switch, Text, View } from 'react-native';
 import { Button } from '../components/bits';
 import { InterestPicker } from '../components/InterestPicker';
 import { Header, Wrap } from '../components/Page';
@@ -11,6 +11,8 @@ import { ThemePref, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
 import { C, R, themed } from '../theme';
 import { Lang, t } from '../i18n';
+
+const CONTACT_EMAIL = 'timothyborja28@gmail.com';
 
 const COOL_OFF_OPTIONS = [5, 10, 30, 60];
 
@@ -171,6 +173,23 @@ export default function Settings() {
               }}
             />
           </View>
+
+          <Pressable
+            style={[styles.card, styles.row]}
+            onPress={() => {
+              tap();
+              Linking.openURL(`mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Pabili')}`).catch(() =>
+                toast(`${t('Email me at')} ${CONTACT_EMAIL}`, 'mail-outline'),
+              );
+            }}
+          >
+            <Ionicons name="mail-outline" size={20} color={C.primary} />
+            <View style={{ flex: 1, gap: 2 }}>
+              <Text style={styles.title}>{t('Contact me')}</Text>
+              <Text style={styles.sub}>{CONTACT_EMAIL}</Text>
+            </View>
+            <Ionicons name="chevron-forward" size={18} color={C.muted} />
+          </Pressable>
 
           <View style={[styles.card, { padding: 14 }]}>
             <Button title={t("Reset all data")} variant="outline" icon="refresh-outline" onPress={reset} />
