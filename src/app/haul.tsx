@@ -14,10 +14,10 @@ import { t } from '../i18n';
 
 function ownedFor(ms: number) {
   const mins = Math.floor(ms / 60000);
-  if (mins < 1) return 'Just unboxed';
-  if (mins < 60) return `Owned ${mins} min`;
+  if (mins < 1) return t('Just unboxed');
+  if (mins < 60) return t('Owned {n} min', { n: mins });
   const days = Math.floor(mins / 1440);
-  return days ? `Owned ${days} day${days > 1 ? 's' : ''}` : `Owned ${Math.floor(mins / 60)} hr`;
+  return days ? t(days > 1 ? 'Owned {n} days' : 'Owned {n} day', { n: days }) : t('Owned {n} hr', { n: Math.floor(mins / 60) });
 }
 
 export default function Haul() {
@@ -91,7 +91,7 @@ export default function Haul() {
                   title={t("Share my haul")}
                   icon="share-social"
                   variant="outline"
-                  onPress={() => shareText(`My Pabili haul: ${pieces} things worth ${peso(value)}, and I spent ₱0.`)}
+                  onPress={() => shareText(t('My Pabili haul: {n} things worth {value}, and I spent ₱0.', { n: pieces, value: peso(value) }))}
                 />
               </View>
             </>

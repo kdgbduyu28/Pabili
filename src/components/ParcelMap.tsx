@@ -4,6 +4,7 @@ import { LayoutChangeEvent, StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, Line, Path, Rect } from 'react-native-svg';
 import { hash, rng } from '../data/catalog';
 import { C, R, themed } from '../theme';
+import { t } from '../i18n';
 
 const H = 190;
 
@@ -87,14 +88,14 @@ export function ParcelMap({ orderId, progress, etaMs, outForDelivery }: { orderI
             <View style={[styles.rider, { left: traveledEnd.x - 16, top: traveledEnd.y - 16 }]}>
               <Ionicons name="bicycle" size={18} color="#fff" />
             </View>
-            <Text style={[styles.label, { left: pts[0].x - 10, top: pts[0].y + 8 }]}>Hub</Text>
+            <Text style={[styles.label, { left: pts[0].x - 10, top: pts[0].y + 8 }]}>{t('Hub')}</Text>
           </>
         )}
       </View>
       <View style={styles.eta}>
         <Ionicons name={outForDelivery ? 'bicycle' : 'business-outline'} size={16} color={C.ship} />
         <Text style={styles.etaText}>
-          {outForDelivery ? `Rider is on the way · arriving in about ${mins} min` : `Heading to the sorting hub · delivery in about ${mins} min`}
+          {outForDelivery ? t('Rider is on the way · arriving in about {n} min', { n: mins }) : t('Heading to the sorting hub · delivery in about {n} min', { n: mins })}
         </Text>
       </View>
     </View>

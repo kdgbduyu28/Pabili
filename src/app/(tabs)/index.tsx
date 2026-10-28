@@ -56,7 +56,7 @@ export default function Home() {
     }
   };
 
-  const placeholder = useMemo(() => `Search "${TRENDING[new Date().getDate() % TRENDING.length]}"`, []);
+  const placeholder = useMemo(() => t('Search "{term}"', { term: TRENDING[new Date().getDate() % TRENDING.length] }), []);
 
   return (
     <View style={{ flex: 1 }}>
@@ -218,7 +218,7 @@ function MegaStrip() {
           <Text style={styles.megaSub}>{mega.live ? t("Free shipping + 2x coins today") : t("Vouchers drop at midnight")}</Text>
         </View>
         <View style={{ alignItems: 'flex-end', gap: 3 }}>
-          <Text style={styles.megaSub}>{mega.live ? 'Ends in' : days > 0 ? `In ${days}d` : 'Starts in'}</Text>
+          <Text style={styles.megaSub}>{mega.live ? t('Ends in') : days > 0 ? t('In {n}d', { n: days }) : t('Starts in')}</Text>
           <Countdown ms={ms % 86400000} dark={false} />
         </View>
       </LinearGradient>

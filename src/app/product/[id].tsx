@@ -133,7 +133,7 @@ function ProductDetail({ p }: { p: Product }) {
   const confirm = (e: GestureResponderEvent) => {
     if (missing) {
       warn();
-      toast(`Please select ${missing.name}`, 'hand-left-outline');
+      toast(t('Please select {option}', { option: t(missing.name).toLowerCase() }), 'hand-left-outline');
       return;
     }
     const line = {
@@ -204,8 +204,8 @@ function ProductDetail({ p }: { p: Product }) {
         </View>
         {(today.drop > 0 || today.mega) && (
           <View style={[styles.flashLeftRow, { gap: 6 }]}>
-            {today.drop > 0 && <Tag text={`Price drop today: -${today.drop}%`} color="#fff" bg={C.success} />}
-            {today.mega && <Tag text={`Mega Day: extra -${MEGA_EXTRA_PCT}%`} color="#fff" bg={C.primary} />}
+            {today.drop > 0 && <Tag text={t('Price drop today: -{pct}%', { pct: today.drop })} color="#fff" bg={C.success} />}
+            {today.mega && <Tag text={t('Mega Day: extra -{pct}%', { pct: MEGA_EXTRA_PCT })} color="#fff" bg={C.primary} />}
           </View>
         )}
         {flash && (
@@ -249,7 +249,7 @@ function ProductDetail({ p }: { p: Product }) {
           onPress={() => {
             success();
             useShop.getState().claimShopVoucher(shop.id);
-            toast(`Shop voucher claimed: ${peso(sv.value)} off ${peso(sv.minSpend)}`, 'pricetag');
+            toast(t('Shop voucher claimed: {value} off {min}', { value: peso(sv.value), min: peso(sv.minSpend) }), 'pricetag');
           }}
         >
           <InfoRow icon="pricetags-outline" title={t("Shop Vouchers")}>
@@ -392,7 +392,7 @@ function ProductDetail({ p }: { p: Product }) {
           </View>
 
           <View style={styles.block}>
-            <SectionTitle title={`Product Ratings ${p.rating.toFixed(1)}/5`} right={`${compact(p.ratingCount)} reviews`} />
+            <SectionTitle title={t('Product Ratings {rating}/5', { rating: p.rating.toFixed(1) })} right={t('{n} reviews', { n: compact(p.ratingCount) })} />
             {myReviews.map((r) => (
               <View key={r.key} style={styles.review}>
                 <View style={[styles.reviewAvatar, { backgroundColor: C.primary }]}>
@@ -401,11 +401,11 @@ function ProductDetail({ p }: { p: Product }) {
                 <View style={{ flex: 1, gap: 3 }}>
                   <Text style={{ fontSize: 12, color: C.text, fontWeight: '600' }}>{t("You")}</Text>
                   <Stars rating={r.rating} size={11} />
-                  {r.variant ? <Text style={styles.small}>Variation: {r.variant}</Text> : null}
+                  {r.variant ? <Text style={styles.small}>{t('Variation: {v}', { v: r.variant })}</Text> : null}
                   {r.tags.length > 0 && (
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 4 }}>
-                      {r.tags.map((t) => (
-                        <Tag key={t} text={t} color={C.muted} border={C.line} />
+                      {r.tags.map((tag) => (
+                        <Tag key={tag} text={t(tag)} color={C.muted} border={C.line} />
                       ))}
                     </View>
                   )}
@@ -421,7 +421,7 @@ function ProductDetail({ p }: { p: Product }) {
                 <View style={{ flex: 1, gap: 3 }}>
                   <Text style={{ fontSize: 12, color: C.text }}>{r.user}</Text>
                   <Stars rating={r.rating} size={11} />
-                  {r.variant ? <Text style={styles.small}>Variation: {r.variant}</Text> : null}
+                  {r.variant ? <Text style={styles.small}>{t('Variation: {v}', { v: r.variant })}</Text> : null}
                   <Text style={{ fontSize: 13, color: C.text, marginTop: 2 }}>{r.text}</Text>
                   <Text style={[styles.small, { color: C.faint }]}>{r.daysAgo} days ago</Text>
                 </View>
@@ -430,7 +430,7 @@ function ProductDetail({ p }: { p: Product }) {
           </View>
 
           <View style={styles.block}>
-            <SectionTitle title={`Questions & Answers (${qa.length + myQs.length})`} />
+            <SectionTitle title={t('Questions & Answers ({n})', { n: qa.length + myQs.length })} />
             {[...myQs.map((q) => ({ ...q, daysAgo: 0, a: q.a ?? '' })), ...qa].map((q) => (
               <View key={q.id} style={styles.qa}>
                 <Text style={styles.qText}>
@@ -439,7 +439,7 @@ function ProductDetail({ p }: { p: Product }) {
                 </Text>
                 <Text style={styles.aText}>
                   <Text style={[styles.qBadge, { color: C.ship }]}>A </Text>
-                  {q.a || 'The seller is typing an answer…'}
+                  {q.a || t('The seller is typing an answer…')}
                 </Text>
                 <Text style={[styles.small, { color: C.faint }]}>
                   Asked by {q.by}
@@ -531,8 +531,8 @@ function ProductDetail({ p }: { p: Product }) {
               <Price value={missing ? lo : selPrice.price} size={20} />
               {selPrice.original > selPrice.price && <Text style={styles.orig}>{peso(missing ? original : selPrice.original)}</Text>}
             </View>
-            <Text style={styles.small}>Stock: {p.stock}</Text>
-            {!!variantLabel(choice) && <Text style={styles.small}>Selected: {variantLabel(choice)}</Text>}
+            <Text style={styles.small}>{t('Stock: {n}', { n: p.stock })}</Text>
+            {!!variantLabel(choice) && <Text style={styles.small}>{t('Selected: {v}', { v: variantLabel(choice) })}</Text>}
           </View>
           <Pressable onPress={() => setMode(null)} hitSlop={10} style={{ alignSelf: 'flex-start' }}>
             <Ionicons name="close" size={24} color={C.muted} />

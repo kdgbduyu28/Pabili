@@ -48,7 +48,7 @@ export function PriceChart({ points }: { points: PricePoint[] }) {
       onResponderMove={pick}
       onResponderRelease={() => setActive(null)}
       onResponderTerminate={() => setActive(null)}
-      accessibilityLabel={`Price over the last 30 days: lowest ${peso(lo)}, highest ${peso(hi)}, today ${peso(prices[today])}`}
+      accessibilityLabel={t('Price over the last 30 days: lowest {lo}, highest {hi}, today {now}', { lo: peso(lo), hi: peso(hi), now: peso(prices[today]) })}
       style={{ height: H + 18 }}
     >
       {w > 0 && (

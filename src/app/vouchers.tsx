@@ -35,9 +35,9 @@ export default function Vouchers() {
                 <View style={styles.notchTop} />
                 <View style={styles.notchBottom} />
                 <View style={{ flex: 1, padding: 12, gap: 3 }}>
-                  <Text style={styles.title}>{v.title}</Text>
-                  <Text style={styles.sub}>{v.subtitle}</Text>
-                  <Text style={[styles.sub, { color: C.faint }]}>Code: {v.id}</Text>
+                  <Text style={styles.title}>{t(v.title)}</Text>
+                  <Text style={styles.sub}>{t(v.subtitle)}</Text>
+                  <Text style={[styles.sub, { color: C.faint }]}>{t('Code: {code}', { code: v.id })}</Text>
                 </View>
                 <View style={{ justifyContent: 'center', paddingRight: 12 }}>
                   {isUsed ? (

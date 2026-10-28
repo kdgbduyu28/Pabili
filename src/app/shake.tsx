@@ -82,7 +82,7 @@ export default function Shake() {
       <Wrap style={{ flex: 1, alignItems: 'center', paddingHorizontal: 20 }}>
         <Text style={styles.title}>{t("Shake It!")}</Text>
         <Text style={styles.sub}>
-          {left > 0 ? `${sensor ? 'Shake your phone' : 'Tap the gift'} to win coins or vouchers · ${left} left today` : 'No shakes left today. Come back tomorrow!'}
+          {left > 0 ? t(sensor ? 'Shake your phone to win coins or vouchers · {n} left today' : 'Tap the gift to win coins or vouchers · {n} left today', { n: left }) : t('No shakes left today. Come back tomorrow!')}
         </Text>
 
         <Pressable onPress={shake} disabled={left === 0} style={{ marginTop: 40 }} accessibilityLabel={t("Shake")}>
@@ -94,8 +94,8 @@ export default function Shake() {
         {reward && (
           <Animated.View entering={ZoomIn.springify().damping(12)} style={styles.result}>
             {reward.coins ? <Coin size={36} /> : <Ionicons name="ticket" size={36} color={C.primary} />}
-            <Text style={styles.resultTitle}>You got {reward.label}!</Text>
-            <Text style={styles.resultSub}>{reward.voucher ? 'Find it in My Vouchers. It applies at checkout.' : 'Added to your Pabili Coins.'}</Text>
+            <Text style={styles.resultTitle}>{t('You got {prize}!', { prize: t(reward.label) })}</Text>
+            <Text style={styles.resultSub}>{reward.voucher ? t('Find it in My Vouchers. It applies at checkout.') : t('Added to your Pabili Coins.')}</Text>
           </Animated.View>
         )}
 

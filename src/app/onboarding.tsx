@@ -34,7 +34,7 @@ export default function Onboarding() {
       </ScrollView>
       <View style={[styles.bar, { paddingBottom: insets.bottom + 12 }]}>
         <Wrap style={{ maxWidth: 560, gap: 8, paddingHorizontal: 20 }}>
-          <Button title={picked.length ? `Start shopping (${picked.length})` : 'Pick at least one'} disabled={!picked.length} onPress={() => finish(picked)} />
+          <Button title={picked.length ? t('Start shopping ({n})', { n: picked.length }) : t('Pick at least one')} disabled={!picked.length} onPress={() => finish(picked)} />
           <Button title={t("Skip for now")} variant="outline" onPress={() => finish([])} />
         </Wrap>
       </View>

@@ -54,7 +54,7 @@ export default function Goal() {
                 }}
                 style={[styles.preset, name === p.name && styles.presetOn]}
               >
-                <Text style={[styles.presetName, name === p.name && { color: C.primary }]}>{p.name}</Text>
+                <Text style={[styles.presetName, name === p.name && { color: C.primary }]}>{t(p.name)}</Text>
                 <Text style={styles.presetAmount}>{peso(p.amount)}</Text>
               </Pressable>
             ))}

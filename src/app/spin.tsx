@@ -87,7 +87,7 @@ export default function Spin() {
     } else if (s.coins >= EXTRA_SPIN_COST) {
       s.addCoins(-EXTRA_SPIN_COST);
     } else {
-      toast(`You need ${EXTRA_SPIN_COST} coins for another spin`, 'coin');
+      toast(t('You need {n} coins for another spin', { n: EXTRA_SPIN_COST }), 'coin');
       return;
     }
     bump();
@@ -118,7 +118,7 @@ export default function Spin() {
         <Wrap style={{ alignItems: 'center', paddingHorizontal: 16 }}>
           <Text style={styles.title}>{t("Spin & Win")}</Text>
           <Text style={styles.sub}>
-            {freeLeft > 0 ? `${freeLeft} free spin${freeLeft > 1 ? 's' : ''} left today` : `Extra spins cost ${EXTRA_SPIN_COST} coins`}
+            {freeLeft > 0 ? t(freeLeft > 1 ? '{n} free spins left today' : '{n} free spin left today', { n: freeLeft }) : t('Extra spins cost {n} coins', { n: EXTRA_SPIN_COST })}
           </Text>
 
           <View style={{ width: SIZE, height: SIZE + 20, marginTop: 20, alignItems: 'center' }}>
@@ -141,7 +141,7 @@ export default function Spin() {
                       fontWeight="bold"
                       textAnchor="middle"
                     >
-                      {p.label}
+                      {t(p.label)}
                     </SvgText>
                   </G>
                 ))}
@@ -157,21 +157,21 @@ export default function Spin() {
             <Animated.View entering={ZoomIn.springify().damping(12)} style={styles.result}>
               {result.coins ? <Coin size={36} /> : <Ionicons name={result.voucher ? 'ticket' : 'sad-outline'} size={36} color={C.primary} />}
               <Text style={styles.resultTitle}>
-                {result.coins ? `+${result.coins} Pabili Coins!` : result.voucher ? `You won ${result.label}!` : 'So close!'}
+                {result.coins ? t('+{n} Pabili Coins!', { n: result.coins }) : result.voucher ? t('You won {prize}!', { prize: t(result.label) }) : t('So close!')}
               </Text>
               <Text style={styles.resultSub}>
-                {result.voucher ? 'The voucher is in your account and applies at checkout.' : result.coins ? 'Use coins for up to 50% off at checkout.' : 'Spin again for another chance.'}
+                {result.voucher ? t('The voucher is in your account and applies at checkout.') : result.coins ? t('Use coins for up to 50% off at checkout.') : t('Spin again for another chance.')}
               </Text>
             </Animated.View>
           )}
 
           <Pressable onPress={spin} disabled={spinning} style={[styles.spinBtn, spinning && { opacity: 0.6 }]}>
             <Text style={styles.spinBtnText}>
-              {freeLeft > 0 ? 'Spin for free' : `Spin for ${EXTRA_SPIN_COST} coins`}
+              {freeLeft > 0 ? t('Spin for free') : t('Spin for {n} coins', { n: EXTRA_SPIN_COST })}
             </Text>
           </Pressable>
           <Text style={styles.note}>
-            Prizes: coins and vouchers. Odds are pretend, but the coins are real (in Pabili).
+            {t('Prizes: coins and vouchers. Odds are pretend, but the coins are real (in Pabili).')}
           </Text>
         </Wrap>
       </ScrollView>

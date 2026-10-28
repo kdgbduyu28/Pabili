@@ -63,13 +63,13 @@ export default function Orders() {
                     {p && <ProductImage emoji={p.emoji} gradient={p.gradient} size={72} radius={R.sm} />}
                     <View style={{ flex: 1, gap: 4 }}>
                       <Text numberOfLines={2} style={{ fontSize: 13, color: C.text }}>
-                        {item.label}
+                        {t(item.label)}
                       </Text>
-                      {!!variantLabel(item.variant) && <Text style={styles.small}>Variation: {variantLabel(item.variant)}</Text>}
+                      {!!variantLabel(item.variant) && <Text style={styles.small}>{t('Variation: {v}', { v: variantLabel(item.variant) })}</Text>}
                       <Text style={styles.small}>x{item.qty}</Text>
                     </View>
                   </View>
-                  {more > 0 && <Text style={[styles.small, { textAlign: 'center', paddingBottom: 8 }]}>View {more} more item{more > 1 ? 's' : ''}</Text>}
+                  {more > 0 && <Text style={[styles.small, { textAlign: 'center', paddingBottom: 8 }]}>{t(more > 1 ? 'View {n} more items' : 'View {n} more item', { n: more })}</Text>}
                   <View style={styles.total}>
                     <Text style={styles.small}>{t("Order Total:")}</Text>
                     <Price value={o.total} size={15} />

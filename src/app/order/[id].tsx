@@ -67,7 +67,7 @@ function Celebrate({ order, onDone }: { order: Order; onDone: () => void }) {
             {t("Order placed!")}
           </Animated.Text>
           <Animated.Text entering={FadeInDown.delay(300)} style={styles.sub}>
-            {items} item{items > 1 ? 's' : ''} on the way from {order.shops.length} shop{order.shops.length > 1 ? 's' : ''}
+            {t(items > 1 ? '{n} items on the way from {shops}' : '{n} item on the way from {shops}', { n: items, shops: t(order.shops.length > 1 ? '{n} shops' : '{n} shop', { n: order.shops.length }) })}
           </Animated.Text>
 
           <Animated.View entering={FadeInDown.delay(450)} style={styles.wallet}>
@@ -77,7 +77,7 @@ function Celebrate({ order, onDone }: { order: Order; onDone: () => void }) {
               That's {peso(lifetime)} not spent since you started using Pabili.
             </Text>
             <View style={styles.pills}>
-              {order.saved > 0 && <Pill text={`Deals saved ${peso(order.saved)}`} />}
+              {order.saved > 0 && <Pill text={t('Deals saved {amount}', { amount: peso(order.saved) })} />}
               <Pill text={`+${order.coinsEarned} coins`} coin />
             </View>
           </Animated.View>
@@ -160,7 +160,7 @@ function OrderDetail({ order }: { order: Order }) {
             <Pressable style={styles.late} onPress={() => router.push('/vouchers')}>
               <Ionicons name="time-outline" size={18} color={C.preferred} />
               <Text style={{ flex: 1, fontSize: 12, color: C.coinText }}>
-                This parcel ran late, so we added a ₱50 voucher (LATE50) to your account.
+                {t('This parcel ran late, so we added a ₱50 voucher (LATE50) to your account.')}
               </Text>
               <Ionicons name="chevron-forward" size={14} color={C.coinText} />
             </Pressable>
@@ -175,7 +175,7 @@ function OrderDetail({ order }: { order: Order }) {
 
           <View style={styles.card}>
             <Text style={styles.cardTitle}>{t("Shipping Information")}</Text>
-            <Text style={styles.small}>Pabili Xpress • Tracking no. {order.id.slice(2)}PH</Text>
+            <Text style={styles.small}>{t('Pabili Xpress • Tracking no. {no}', { no: `${order.id.slice(2)}PH` })}</Text>
             <View style={{ marginTop: 12 }}>
               {steps.map((s, i) => (
                 <View key={s.title} style={styles.step}>
@@ -185,9 +185,9 @@ function OrderDetail({ order }: { order: Order }) {
                   </View>
                   <View style={{ flex: 1, paddingBottom: 14 }}>
                     <Text style={[styles.stepTitle, i === 0 && { color: status === 'cancelled' ? C.text : C.ship, fontWeight: '600' }]}>
-                      {s.title}
+                      {t(s.title)}
                     </Text>
-                    <Text style={styles.small}>{s.detail}</Text>
+                    <Text style={styles.small}>{t(s.detail)}</Text>
                     <Text style={[styles.small, { color: C.faint }]}>{dateTime(s.at)}</Text>
                   </View>
                 </View>
@@ -199,7 +199,7 @@ function OrderDetail({ order }: { order: Order }) {
             <LinearGradient colors={getWrap(order.gift.wrap).colors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }} style={styles.giftCard}>
               <View style={[styles.giftRibbon, { backgroundColor: getWrap(order.gift.wrap).ribbon }]} />
               <View style={styles.giftNote}>
-                <Text style={styles.giftTo}>A gift for {order.gift.to}</Text>
+                <Text style={styles.giftTo}>{t('A gift for {name}', { name: order.gift.to })}</Text>
                 {!!order.gift.message && <Text style={styles.giftMsg}>“{order.gift.message}”</Text>}
                 <Button
                   title={t("Send the gift link")}
@@ -241,7 +241,7 @@ function OrderDetail({ order }: { order: Order }) {
                         <Text numberOfLines={1} style={{ fontSize: 13, color: C.text }}>
                           {i.label}
                         </Text>
-                        {!!variantLabel(i.variant) && <Text style={styles.small}>Variation: {variantLabel(i.variant)}</Text>}
+                        {!!variantLabel(i.variant) && <Text style={styles.small}>{t('Variation: {v}', { v: variantLabel(i.variant) })}</Text>}
                         <View style={{ flexDirection: 'row' }}>
                           <Text style={styles.small}>x{i.qty}</Text>
                           <View style={{ flex: 1 }} />
@@ -252,7 +252,7 @@ function OrderDetail({ order }: { order: Order }) {
                     </Pressable>
                   );
                 })}
-                {!!s.message && <Text style={[styles.small, { paddingHorizontal: 12, paddingTop: 4 }]}>Your message: “{s.message}”</Text>}
+                {!!s.message && <Text style={[styles.small, { paddingHorizontal: 12, paddingTop: 4 }]}>{t('Your message: “{msg}”', { msg: s.message })}</Text>}
               </View>
             );
           })}
@@ -302,7 +302,7 @@ function OrderDetail({ order }: { order: Order }) {
             <Button title={t("Return/Refund")} variant="outline" style={{ flex: 1 }} onPress={() => setReturning(true)} />
           )}
           {status === 'completed' && unrated > 0 && (
-            <Button title={`Rate (+${unrated * COINS_PER_REVIEW})`} style={{ flex: 1 }} onPress={() => router.push(`/rate/${order.id}`)} />
+            <Button title={t('Rate (+{n})', { n: unrated * COINS_PER_REVIEW })} style={{ flex: 1 }} onPress={() => router.push(`/rate/${order.id}`)} />
           )}
           {(status === 'to_receive' || status === 'cancelled' || status === 'returned' || (status === 'completed' && unrated === 0)) && (
             <Button title={t("Buy Again")} style={{ flex: 1 }} onPress={buyAgain} />
@@ -317,7 +317,7 @@ function OrderDetail({ order }: { order: Order }) {
         </View>
         {RETURN_REASONS.map((r) => (
           <Pressable key={r} style={styles.reason} onPress={() => setReason(r)}>
-            <Text style={{ flex: 1, fontSize: 14, color: C.text }}>{r}</Text>
+            <Text style={{ flex: 1, fontSize: 14, color: C.text }}>{t(r)}</Text>
             <Ionicons name={reason === r ? 'radio-button-on' : 'radio-button-off'} size={20} color={reason === r ? C.primary : C.faint} />
           </Pressable>
         ))}

@@ -23,7 +23,7 @@ export default function Chats() {
       <ScrollView>
         <Wrap>
           {threads.length === 0 ? (
-            <EmptyState icon="chatbubbles-outline" title={t("No chats yet")} subtitle='Tap "Chat" on any product to message the seller.' />
+            <EmptyState icon="chatbubbles-outline" title={t("No chats yet")} subtitle={t('Tap "Chat" on any product to message the seller.')} />
           ) : (
             threads.map(({ shop, last }) => (
               <Pressable key={shop.id} style={styles.row} onPress={() => router.push(`/chat/${shop.id}`)}>
@@ -32,7 +32,7 @@ export default function Chats() {
                   <Text style={styles.name}>{shop.name}</Text>
                   <Text style={styles.last} numberOfLines={1}>
                     {last.from === 'me' ? 'You: ' : ''}
-                    {last.productId ? 'Sent a product' : last.text}
+                    {last.productId ? t('Sent a product') : last.text}
                   </Text>
                 </View>
                 <Text style={styles.time}>{dateTime(last.at)}</Text>

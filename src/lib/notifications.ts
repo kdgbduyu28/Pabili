@@ -6,6 +6,7 @@ import { C } from '../theme';
 import type { IconName } from '../components/Icon';
 import { peso, todayKey } from './format';
 import { timeline } from './orders';
+import { t } from '../i18n';
 
 export type NotifKind = 'order' | 'deal' | 'coins';
 
@@ -68,10 +69,10 @@ export function buildNotifications(s: Input, now: number): Notif[] {
         kind: 'order',
         icon: meta.icon,
         tint: meta.tint,
-        title: delivered && o.receivedAt ? 'Parcel delivered' : meta.title,
+        title: t(delivered && o.receivedAt ? 'Parcel delivered' : meta.title),
         body:
           step.title === 'Order placed'
-            ? `Order ${o.id} confirmed. ${peso(o.total)} stays in your wallet.`
+            ? t('Order {id} confirmed. {amount} stays in your wallet.', { id: o.id, amount: peso(o.total) })
             : `${step.detail}. Order ${o.id}.`,
         at: step.at,
         href: delivered && !o.receivedAt ? `/unbox/${o.id}` : `/order/${o.id}`,
@@ -87,8 +88,8 @@ export function buildNotifications(s: Input, now: number): Notif[] {
           kind: 'coins',
           icon: 'coin',
           tint: C.coin,
-          title: `Rate your items, earn ${unrated * 5} coins`,
-          body: 'Tell other pretend shoppers what you think.',
+          title: t('Rate your items, earn {n} coins', { n: unrated * 5 }),
+          body: t('Tell other pretend shoppers what you think.'),
           at: o.receivedAt + 1,
           href: `/rate/${o.id}`,
           product,
@@ -107,7 +108,7 @@ export function buildNotifications(s: Input, now: number): Notif[] {
         kind: 'deal',
         icon: 'trending-down',
         tint: C.success,
-        title: `Price drop on an item in your cart`,
+        title: t('Price drop on an item in your cart'),
         body: `${p.name} is now ${peso(now$)} (was ${peso(c.unitPrice)}).`,
         at: Math.max(today, slotStart(now), c.addedAt + 1),
         href: '/cart',
@@ -124,7 +125,7 @@ export function buildNotifications(s: Input, now: number): Notif[] {
       kind: 'deal',
       icon: 'flash',
       tint: C.primary,
-      title: 'A liked item is on Flash Sale',
+      title: t('A liked item is on Flash Sale'),
       body: `${d.product.name} is ${peso(d.flashPrice)} until the slot ends.`,
       at: slot,
       href: `/product/${d.product.id}`,
@@ -141,7 +142,7 @@ export function buildNotifications(s: Input, now: number): Notif[] {
       icon: 'sparkles',
       tint: C.primary,
       title: `${mega.label} Mega Sale is LIVE`,
-      body: 'Free shipping on everything, 2x coins and Mega Day vouchers. Today only!',
+      body: t('Free shipping on everything, 2x coins and Mega Day vouchers. Today only!'),
       at: mega.start,
       href: '/mega',
     });
@@ -152,7 +153,7 @@ export function buildNotifications(s: Input, now: number): Notif[] {
       icon: 'calendar',
       tint: C.preferred,
       title: `${mega.label} is ${days === 1 ? 'tomorrow' : `in ${days} days`}`,
-      body: 'Add to cart now so you are ready when vouchers drop at midnight.',
+      body: t('Add to cart now so you are ready when vouchers drop at midnight.'),
       at: today,
       href: '/mega',
     });
@@ -164,8 +165,8 @@ export function buildNotifications(s: Input, now: number): Notif[] {
       kind: 'coins',
       icon: 'coin',
       tint: C.coin,
-      title: 'Your daily coins are waiting',
-      body: 'Check in today to keep your streak going.',
+      title: t('Your daily coins are waiting'),
+      body: t('Check in today to keep your streak going.'),
       at: today,
       href: '/me',
     });
@@ -180,7 +181,7 @@ export function buildNotifications(s: Input, now: number): Notif[] {
         icon: 'cut',
         tint: C.primary,
         title: `${cut.name} helped you slash ${peso(cut.amount)}`,
-        body: 'Keep inviting friends to get it for free.',
+        body: t('Keep inviting friends to get it for free.'),
         at: cut.at,
         href: '/slash',
         product: getProduct(s.slash.productId),
@@ -197,7 +198,7 @@ export function buildNotifications(s: Input, now: number): Notif[] {
       kind: 'deal',
       icon: 'refresh-circle',
       tint: C.success,
-      title: 'Back in stock!',
+      title: t('Back in stock!'),
       body: `${p.name} is available again. Grab it before it sells out.`,
       at,
       href: `/product/${id}`,
@@ -215,8 +216,8 @@ export function buildNotifications(s: Input, now: number): Notif[] {
         kind: 'deal',
         icon: 'people',
         tint: C.ship,
-        title: joined.length >= g.size && m === joined[joined.length - 1] ? 'Your group is complete!' : `${m.name} joined your group`,
-        body: joined.length >= g.size ? `Check out now at the group price of ${peso(g.price)}.` : `${g.size - joined.length} more to unlock ${peso(g.price)}.`,
+        title: joined.length >= g.size && m === joined[joined.length - 1] ? t('Your group is complete!') : t('{name} joined your group', { name: m.name }),
+        body: joined.length >= g.size ? t('Check out now at the group price of {price}.', { price: peso(g.price) }) : t('{n} more to unlock {price}.', { n: g.size - joined.length, price: peso(g.price) }),
         at: m.at,
         href: '/group',
         product: getProduct(g.productId),
@@ -231,8 +232,8 @@ export function buildNotifications(s: Input, now: number): Notif[] {
       kind: 'coins',
       icon: 'leaf',
       tint: C.success,
-      title: 'Your plant is thirsty',
-      body: 'Water it today to grow vouchers in your Pabili Garden.',
+      title: t('Your plant is thirsty'),
+      body: t('Water it today to grow vouchers in your Pabili Garden.'),
       at: today + 9 * 3600_000,
       href: '/garden',
     });

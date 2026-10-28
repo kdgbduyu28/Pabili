@@ -70,7 +70,7 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
   }, []);
 
   useEffect(() => {
-    push({ id: `host${index}${Date.now()}`, name: stream.host, text: `Next item: ${product.name} for only ${peso(price)}! Type "Mine" to grab it!` });
+    push({ id: `host${index}${Date.now()}`, name: stream.host, text: t('Next item: {name} for only {price}! Type "Mine" to grab it!', { name: product.name, price: peso(price) }) });
   }, [index]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const heart = () => {
@@ -83,17 +83,17 @@ function Room({ stream }: { stream: NonNullable<ReturnType<typeof getStream>> })
     useShop.getState().addToCart({ productId: product.id, variant: v, qty: 1, unitPrice: price, unitOriginal: product.originalPrice });
     bump();
     useUi.getState().flyToCart(product.emoji, product.gradient, { x: e.nativeEvent.pageX, y: e.nativeEvent.pageY });
-    push({ id: `me${Date.now()}`, name: 'You', text: 'Mine!', me: true });
+    push({ id: `me${Date.now()}`, name: t('You'), text: t('Mine!'), me: true });
     useShop.getState().bumpStat('liveMine');
-    toast(`Added at the live price of ${peso(price)}`);
+    toast(t('Added at the live price of {price}', { price: peso(price) }));
   };
 
   const send = () => {
-    const t = text.trim();
-    if (!t) return;
-    push({ id: `me${Date.now()}`, name: 'You', text: t, me: true });
+    const msg = text.trim();
+    if (!msg) return;
+    push({ id: `me${Date.now()}`, name: t('You'), text: msg, me: true });
     setText('');
-    setTimeout(() => push({ id: `hr${Date.now()}`, name: stream.host, text: `Thank you for joining! Salamat sa support!` }), 1800);
+    setTimeout(() => push({ id: `hr${Date.now()}`, name: stream.host, text: t('Thank you for joining! Salamat sa support!') }), 1800);
   };
 
   return (

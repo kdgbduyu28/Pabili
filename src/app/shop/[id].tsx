@@ -60,7 +60,7 @@ export default function ShopScreen() {
                 onPress={() => {
                   bump();
                   const on = useShop.getState().toggleFollow(shop.id);
-                  if (on) toast(`Following ${shop.name}`, 'heart');
+                  if (on) toast(t('Following {shop}', { shop: shop.name }), 'heart');
                 }}
               >
                 <Text style={[styles.followText, following && { color: '#fff' }]}>{following ? t("Following") : t("+ Follow")}</Text>
@@ -91,7 +91,7 @@ export default function ShopScreen() {
               onPress={() => {
                 success();
                 useShop.getState().claimShopVoucher(shop.id);
-                toast(`Claimed ${peso(v.value)} off`, 'pricetag');
+                toast(t('Claimed {value} off', { value: peso(v.value) }), 'pricetag');
               }}
               style={styles.voucher}
             >
@@ -106,7 +106,7 @@ export default function ShopScreen() {
               <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.cats}>
                 {[null, ...cats].map((c) => (
                   <Pressable key={c ?? 'all'} onPress={() => setCat(c)} style={[styles.cat, cat === c && styles.catOn]}>
-                    <Text style={[styles.catText, cat === c && { color: '#fff' }]}>{c ? getCategory(c)?.name : `All (${all.length})`}</Text>
+                    <Text style={[styles.catText, cat === c && { color: '#fff' }]}>{c ? getCategory(c)?.name : t('All ({n})', { n: all.length })}</Text>
                   </Pressable>
                 ))}
               </ScrollView>

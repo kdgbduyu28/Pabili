@@ -51,8 +51,8 @@ export default function GiftPage() {
     <LinearGradient colors={['#FFF1F2', '#FFE4E6', '#FED7AA']} style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ paddingTop: insets.top + 24, paddingBottom: insets.bottom + 24, alignItems: 'center' }}>
         <Wrap style={{ maxWidth: 520, alignItems: 'center', paddingHorizontal: 20, gap: 8 }}>
-          <Text style={styles.title}>{gift.f ? `${gift.f} sent you a gift!` : 'You got a gift!'}</Text>
-          <Text style={styles.sub}>For {gift.t}</Text>
+          <Text style={styles.title}>{gift.f ? t('{name} sent you a gift!', { name: gift.f }) : t('You got a gift!')}</Text>
+          <Text style={styles.sub}>{t('For {name}', { name: gift.t })}</Text>
 
           {!open ? (
             <Pressable onPress={unwrap} accessibilityLabel={t("Unwrap gift")} style={{ marginTop: 24, alignItems: 'center', gap: 14 }}>

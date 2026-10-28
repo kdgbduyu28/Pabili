@@ -66,7 +66,7 @@ export default function Checkout() {
       const order = useShop.getState().placeOrder(sum, {
         payment: PAYMENTS.find((p) => p.id === payment)!.name,
         messages,
-        gift: gifting ? { ...gift, to: gift.to.trim() || 'Someone special', message: gift.message.trim() } : undefined,
+        gift: gifting ? { ...gift, to: gift.to.trim() || t('Someone special'), message: gift.message.trim() } : undefined,
       });
       if (gifting) useShop.getState().bumpStat('gifts');
       play('chaching');
@@ -84,7 +84,7 @@ export default function Checkout() {
             <LinearGradient colors={C.grad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={styles.promo}>
               <Ionicons name={slash ? 'cut' : 'sparkles'} size={18} color="#fff" />
               <Text style={styles.promoText}>
-                {slash ? 'Slash It prize: this one is free, shipping included!' : 'Mega Day: free shipping on everything + 2x coins'}
+                {slash ? t('Slash It prize: this one is free, shipping included!') : t('Mega Day: free shipping on everything + 2x coins')}
               </Text>
             </LinearGradient>
           )}
@@ -116,14 +116,14 @@ export default function Checkout() {
                       <Text numberOfLines={1} style={{ fontSize: 13, color: C.text }}>
                         {l.product.title}
                       </Text>
-                      {!!variantLabel(l.variant) && <Text style={styles.small}>Variation: {variantLabel(l.variant)}</Text>}
+                      {!!variantLabel(l.variant) && <Text style={styles.small}>{t('Variation: {v}', { v: variantLabel(l.variant) })}</Text>}
                       <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Price value={l.unitPrice} size={14} color={C.text} style={{ fontWeight: '400' }} />
                         {l.unitOriginal > l.unitPrice && <Text style={styles.orig}>{peso(l.unitOriginal)}</Text>}
                         <View style={{ flex: 1 }} />
                         <Text style={styles.small}>x{l.qty}</Text>
                       </View>
-                      {l.bundlePct > 0 && <Text style={styles.deal}>Bundle Deal: {l.bundlePct}% off for buying {l.qty}</Text>}
+                      {l.bundlePct > 0 && <Text style={styles.deal}>{t('Bundle Deal: {pct}% off for buying {n}', { pct: l.bundlePct, n: l.qty })}</Text>}
                     </View>
                   </View>
                 ))}
@@ -155,12 +155,12 @@ export default function Checkout() {
                     <Text style={{ fontSize: 13, color: C.ship, fontWeight: '600' }}>
                       Shipping Option: {g.express ? t("Express") : t("Standard Local")}
                     </Text>
-                    <Text style={styles.small}>Get by {deliveryWindow(d1, d2)}</Text>
-                    {g.freeShip === 'threshold' && <Text style={[styles.small, { color: C.ship }]}>Free shipping unlocked: you spent ₱499+ in this shop</Text>}
+                    <Text style={styles.small}>{t('Get by {date}', { date: deliveryWindow(d1, d2) })}</Text>
+                    {g.freeShip === 'threshold' && <Text style={[styles.small, { color: C.ship }]}>{t('Free shipping unlocked: you spent ₱499+ in this shop')}</Text>}
                     {!g.freeShip && !slash && (
-                      <Text style={[styles.small, { color: C.preferred }]}>Add {peso(g.freeShipGap)} more from this shop for free shipping</Text>
+                      <Text style={[styles.small, { color: C.preferred }]}>{t('Add {amount} more from this shop for free shipping', { amount: peso(g.freeShipGap) })}</Text>
                     )}
-                    <Text style={[styles.small, { color: C.ship }]}>Tap to switch to {g.express ? 'Standard' : `Express (+${peso(EXPRESS_FEE)})`}</Text>
+                    <Text style={[styles.small, { color: C.ship }]}>{t('Tap to switch to {option}', { option: g.express ? t('Standard') : t('Express (+{fee})', { fee: peso(EXPRESS_FEE) }) })}</Text>
                   </View>
                   <View style={{ alignItems: 'flex-end' }}>
                     {g.shippingDiscount > 0 && <Text style={styles.strike}>{peso(g.shippingFee)}</Text>}
@@ -184,7 +184,7 @@ export default function Checkout() {
               <Ionicons name="ticket-outline" size={20} color={C.primary} />
               <Text style={styles.optTitle}>{t("Pabili Voucher")}</Text>
               <Text style={[styles.small, sum.voucher && { color: C.primary }]}>
-                {sum.voucher ? sum.voucher.title : myVouchers.length ? 'Select voucher' : 'No vouchers claimed'}
+                {sum.voucher ? sum.voucher.title : myVouchers.length ? t('Select voucher') : t('No vouchers claimed')}
               </Text>
               <Ionicons name={voucherOpen ? 'chevron-up' : 'chevron-down'} size={16} color={C.faint} />
             </Pressable>
@@ -210,15 +210,15 @@ export default function Checkout() {
                     >
                       <Ionicons name={v.kind === 'shipping' ? 'car' : 'ticket'} size={22} color={v.kind === 'shipping' ? C.ship : C.primary} />
                       <View style={{ flex: 1 }}>
-                        <Text style={{ fontWeight: '700', color: C.text }}>{v.title}</Text>
+                        <Text style={{ fontWeight: '700', color: C.text }}>{t(v.title)}</Text>
                         <Text style={styles.small}>
                           {ok
                             ? v.subtitle
                             : slash
-                              ? 'Not needed, this order is free'
+                              ? t('Not needed, this order is free')
                               : v.megaOnly && !sum.megaLive
-                                ? 'Usable on Mega Day only'
-                                : `Spend ${peso(v.minSpend - (sum.subtotal - sum.shopVoucherDiscount))} more to use`}
+                                ? t('Usable on Mega Day only')
+                                : t('Spend {amount} more to use', { amount: peso(v.minSpend - (sum.subtotal - sum.shopVoucherDiscount)) })}
                         </Text>
                       </View>
                       <Ionicons name={on ? 'radio-button-on' : 'radio-button-off'} size={20} color={on ? C.primary : C.faint} />
@@ -291,7 +291,7 @@ export default function Checkout() {
                       <LinearGradient colors={w.colors} style={styles.wrapSwatch}>
                         <View style={[styles.wrapRibbon, { backgroundColor: w.ribbon }]} />
                       </LinearGradient>
-                      <Text style={{ fontSize: 12, color: C.text }}>{w.name}</Text>
+                      <Text style={{ fontSize: 12, color: C.text }}>{t(w.name)}</Text>
                     </Pressable>
                   ))}
                 </View>
@@ -315,8 +315,8 @@ export default function Checkout() {
                 >
                   <Ionicons name={p.icon} size={22} color={C.primary} />
                   <View style={{ flex: 1 }}>
-                    <Text style={{ color: C.text, fontSize: 14 }}>{p.name}</Text>
-                    <Text style={styles.small}>{p.note}</Text>
+                    <Text style={{ color: C.text, fontSize: 14 }}>{t(p.name)}</Text>
+                    <Text style={styles.small}>{t(p.note)}</Text>
                   </View>
                   <Ionicons name={on ? 'checkmark-circle' : 'ellipse-outline'} size={22} color={on ? C.primary : C.faint} />
                 </Pressable>
@@ -339,11 +339,11 @@ export default function Checkout() {
             </View>
             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
               <Coin size={14} />
-              <Text style={[styles.small, { color: C.coin }]}>You'll earn {sum.coinsEarned} Pabili Coins with this order</Text>
+              <Text style={[styles.small, { color: C.coin }]}>{t("You'll earn {n} Pabili Coins with this order", { n: sum.coinsEarned })}</Text>
             </View>
           </View>
           <Text style={styles.disclaimer}>
-            Pabili is a pretend shop. Placing an order never charges you, and nothing will be delivered.
+            {t('Pabili is a pretend shop. Placing an order never charges you, and nothing will be delivered.')}
           </Text>
         </Wrap>
       </ScrollView>
@@ -354,7 +354,7 @@ export default function Checkout() {
             <Text style={{ fontSize: 13, color: C.text }}>
               Total Payment <Text style={{ color: C.primary, fontSize: 18, fontWeight: '700' }}>{peso(sum.total)}</Text>
             </Text>
-            {sum.saved > 0 && <Text style={{ fontSize: 11, color: C.primary }}>Saved {peso(sum.saved)}</Text>}
+            {sum.saved > 0 && <Text style={{ fontSize: 11, color: C.primary }}>{t('Saved {amount}', { amount: peso(sum.saved) })}</Text>}
           </View>
           <Pressable onPress={place} style={styles.placeBtn}>
             <Text style={styles.placeText}>{t("Place Order")}</Text>

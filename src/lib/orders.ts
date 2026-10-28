@@ -1,5 +1,6 @@
 import { hash } from '../data/catalog';
 import type { Order } from '../store/useShop';
+import { t } from '../i18n';
 
 export type OrderStatus = 'to_ship' | 'to_receive' | 'delivered' | 'completed' | 'cancelled' | 'returned';
 
@@ -87,7 +88,7 @@ export function timeline(o: Order, now: number): TimelineStep[] {
   if (o.returnedAt) {
     out.push({
       title: 'Return accepted',
-      detail: `Reason: ${o.returnReason ?? 'Change of mind'}. Refund of ₱0 completed.`,
+      detail: t('Reason: {reason}. Refund of ₱0 completed.', { reason: t(o.returnReason ?? 'Change of mind') }),
       at: o.returnedAt,
     });
   }

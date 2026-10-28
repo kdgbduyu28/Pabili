@@ -110,7 +110,7 @@ export default function Me() {
               <View style={styles.goalHead}>
                 <Ionicons name={goal.reachedAt ? 'trophy' : 'flag'} size={14} color={C.primary} />
                 <Text style={styles.goalName} numberOfLines={1}>
-                  {goal.name}
+                  {t(goal.name)}
                 </Text>
                 <Text style={styles.goalPct}>
                   {peso(Math.min(kept, goal.amount))} / {peso(goal.amount)}

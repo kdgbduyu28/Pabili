@@ -6,6 +6,7 @@ import Animated, { useAnimatedStyle, useSharedValue, withSequence, withSpring } 
 import { cartCount, useShop } from '../store/useShop';
 import { Point, useUi } from '../store/useUi';
 import { C, themed } from '../theme';
+import { t } from '../i18n';
 
 export function CartButton({ color = '#fff', size = 24 }: { color?: string; size?: number }) {
   const count = useShop(cartCount);
@@ -36,7 +37,7 @@ export function CartButton({ color = '#fff', size = 24 }: { color?: string; size
   const animated = useAnimatedStyle(() => ({ transform: [{ scale: scale.value }] }));
 
   return (
-    <Pressable ref={ref} hitSlop={8} onPress={() => router.navigate('/cart')} accessibilityLabel={`Cart, ${count} items`}>
+    <Pressable ref={ref} hitSlop={8} onPress={() => router.navigate('/cart')} accessibilityLabel={t('Cart, {n} items', { n: count })}>
       <Animated.View style={animated}>
         <Ionicons name="cart-outline" size={size} color={color} />
         {count > 0 && (

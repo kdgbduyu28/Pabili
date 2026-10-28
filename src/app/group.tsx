@@ -30,16 +30,16 @@ export default function Group() {
 
   const start = (d: GroupDeal) => {
     // Strangers trickle in over a minute or two; inviting friends speeds it up.
-    const t = Date.now();
-    const strangers = ['shopper_ph', 'suki.mae', 'kuya.bong', 'ate.gina'].slice(0, d.size - 2).map((name, i) => ({ name, at: t + 25_000 + i * 35_000 }));
-    useShop.getState().startGroup({ productId: d.product.id, price: d.price, size: d.size, startedAt: t, members: [{ name: 'You', at: t }, ...strangers] });
+    const now = Date.now();
+    const strangers = ['shopper_ph', 'suki.mae', 'kuya.bong', 'ate.gina'].slice(0, d.size - 2).map((name, i) => ({ name, at: now + 25_000 + i * 35_000 }));
+    useShop.getState().startGroup({ productId: d.product.id, price: d.price, size: d.size, startedAt: now, members: [{ name: 'You', at: now }, ...strangers] });
     success();
-    toast(`Group started! ${d.size - 1} more to go`, 'people');
+    toast(t('Group started! {n} more to go', { n: d.size - 1 }), 'people');
   };
 
   const invite = async () => {
     if (!active || !product) return;
-    await shareText(`Join my Pabili group buy: ${product.name} for only ${peso(active.price)}!`);
+    await shareText(t('Join my Pabili group buy: {name} for only {price}!', { name: product.name, price: peso(active.price) }));
     const used = new Set(active.members.map((m) => m.name));
     const friend = GROUP_FRIENDS.find((f) => !used.has(f));
     if (friend) useShop.getState().addGroupMembers([{ name: friend, at: Date.now() + 4000 }]);
@@ -73,7 +73,7 @@ export default function Group() {
                     <Price value={active.price} size={22} />
                     <Text style={styles.strike}>{peso(product.price)}</Text>
                   </View>
-                  <Text style={styles.small}>Group price for {active.size} people</Text>
+                  <Text style={styles.small}>{t('Group price for {n} people', { n: active.size })}</Text>
                 </View>
               </View>
               <View style={styles.seats}>
@@ -92,16 +92,16 @@ export default function Group() {
                 })}
               </View>
               <Text style={[styles.small, { textAlign: 'center' }]}>
-                {full ? 'Group complete! Check out at the group price.' : `${active.size - joined.length} more needed. Strangers join on their own, or invite friends to speed it up.`}
+                {full ? t('Group complete! Check out at the group price.') : t('{n} more needed. Strangers join on their own, or invite friends to speed it up.', { n: active.size - joined.length })}
               </Text>
-              {full ? <Button title={`Check out for ${peso(active.price)}`} icon="cart" onPress={checkout} /> : <Button title={t("Invite friends")} icon="share-social" onPress={invite} />}
+              {full ? <Button title={t('Check out for {price}', { price: peso(active.price) })} icon="cart" onPress={checkout} /> : <Button title={t("Invite friends")} icon="share-social" onPress={invite} />}
             </View>
           ) : (
             <View style={[styles.card, { alignItems: 'center' }]}>
               <Ionicons name="people" size={34} color={C.primary} />
               <Text style={styles.cardTitle}>{t("Shop together, pay less")}</Text>
               <Text style={[styles.small, { textAlign: 'center' }]}>
-                Start a group and fill every seat within 24 hours to unlock the group price. {group?.claimedAt ? 'Your last group order is on its way!' : ''}
+                {t('Start a group and fill every seat within 24 hours to unlock the group price.')} {group?.claimedAt ? t('Your last group order is on its way!') : ''}
               </Text>
             </View>
           )}

@@ -7,6 +7,7 @@ import { useNow } from '../lib/hooks';
 import { isLate, timeline } from '../lib/orders';
 import { keptInWallet, useShop } from '../store/useShop';
 import { toast } from '../store/useUi';
+import { t } from '../i18n';
 
 /** App-wide side effects driven by the clock: late-parcel vouchers and goal milestones. */
 export function Watcher() {
@@ -30,7 +31,7 @@ export function Watcher() {
     if (keptInWallet(orders) >= goal.amount) {
       useShop.getState().markGoalReached();
       success();
-      toast(`Goal reached! ${peso(goal.amount)} kept for ${goal.name}`, 'trophy');
+      toast(t('Goal reached! {amount} kept for {goal}', { amount: peso(goal.amount), goal: t(goal.name) }), 'trophy');
     }
   }, [orders, goal]);
 
@@ -42,14 +43,14 @@ export function Watcher() {
       if (!fresh.length) return;
       s.unlockAchievements(fresh.map((a) => a.id));
       play('tada');
-      toast(fresh.length === 1 ? `Achievement unlocked: ${fresh[0].title}` : `${fresh.length} achievements unlocked!`, 'trophy');
+      toast(fresh.length === 1 ? t('Achievement unlocked: {name}', { name: t(fresh[0].title) }) : t('{n} achievements unlocked!', { n: fresh.length }), 'trophy');
     };
     const unsubscribe = useShop.subscribe(check);
     // Also check once after the saved state loads, crediting progress made before achievements existed.
-    const t = setTimeout(check, 1500);
+    const timer = setTimeout(check, 1500);
     return () => {
       unsubscribe();
-      clearTimeout(t);
+      clearTimeout(timer);
     };
   }, []);
 

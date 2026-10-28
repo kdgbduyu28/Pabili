@@ -54,23 +54,23 @@ export default function Slash() {
     useShop.getState().startSlash(id, p.price, { name: 'You', amount: first, at: Date.now() });
     success();
     play('whoosh');
-    toast(`You slashed ${peso(first)}!`, 'cut');
+    toast(t('You slashed {amount}!', { amount: peso(first) }), 'cut');
   };
 
   const invite = async () => {
     if (!active || !product) return;
-    await shareText(`Help me slash the price of ${product.name} on Pabili to ₱0!`);
+    await shareText(t('Help me slash the price of {name} on Pabili to ₱0!', { name: product.name }));
     // Friends "click" the link a few seconds later. The last invite always finishes it.
     const left = slashRemaining(active.start, active.cuts, Number.MAX_SAFE_INTEGER);
     const final = active.invites + 1 >= INVITES_TO_WIN;
     const used = new Set(active.cuts.map((c) => c.name));
     const names = FRIENDS.filter((f) => !used.has(f)).sort(() => Math.random() - 0.5);
-    const t = Date.now();
+    const now = Date.now();
     const cuts: SlashCut[] = final
-      ? [{ name: names[0] ?? 'A friend', amount: left, at: t + 4000 }]
+      ? [{ name: names[0] ?? t('A friend'), amount: left, at: now + 4000 }]
       : [
-          { name: names[0] ?? 'A friend', amount: Math.max(1, Math.round(left * (0.15 + Math.random() * 0.15))), at: t + 3000 + Math.random() * 4000 },
-          ...(Math.random() < 0.5 ? [{ name: names[1] ?? 'Another friend', amount: Math.max(1, Math.round(left * 0.08)), at: t + 9000 + Math.random() * 8000 }] : []),
+          { name: names[0] ?? t('A friend'), amount: Math.max(1, Math.round(left * (0.15 + Math.random() * 0.15))), at: now + 3000 + Math.random() * 4000 },
+          ...(Math.random() < 0.5 ? [{ name: names[1] ?? t('Another friend'), amount: Math.max(1, Math.round(left * 0.08)), at: now + 9000 + Math.random() * 8000 }] : []),
         ];
     useShop.getState().inviteToSlash(cuts);
     bump();
@@ -132,12 +132,12 @@ export default function Slash() {
                   />
                 </View>
                 <Text style={[styles.small, { textAlign: 'center' }]}>
-                  {remaining === 0 ? 'Slashed to ₱0! Claim it for free.' : `${peso(active.start - remaining)} slashed · ${peso(remaining)} to go`}
+                  {remaining === 0 ? t('Slashed to ₱0! Claim it for free.') : t('{done} slashed · {left} to go', { done: peso(active.start - remaining), left: peso(remaining) })}
                 </Text>
                 {remaining === 0 ? (
                   <Button title={t("Claim for FREE")} icon="gift" onPress={claim} />
                 ) : (
-                  <Button title={pending ? 'Friends are slashing…' : 'Invite friends to slash'} icon="share-social" onPress={invite} />
+                  <Button title={pending ? t('Friends are slashing…') : t('Invite friends to slash')} icon="share-social" onPress={invite} />
                 )}
               </View>
 
@@ -165,7 +165,7 @@ export default function Slash() {
               <View style={[styles.card, { alignItems: 'center' }]}>
                 <Text style={styles.cardTitle}>{t("Get it for ₱0")}</Text>
                 <Text style={[styles.small, { textAlign: 'center' }]}>
-                  Pick an item and slash the price. Invite friends to slash more. Hit ₱0 within 24 hours and it's yours, shipping included.
+                  {t("Pick an item and slash the price. Invite friends to slash more. Hit ₱0 within 24 hours and it's yours, shipping included.")}
                 </Text>
                 {slash?.claimedAt && <Text style={{ color: C.success, fontWeight: '600', marginTop: 4 }}>{t("Your last slash prize is on its way!")}</Text>}
               </View>

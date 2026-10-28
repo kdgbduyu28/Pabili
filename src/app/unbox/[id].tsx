@@ -117,7 +117,7 @@ export default function Unbox() {
         <Wrap style={{ maxWidth: 520, alignItems: 'center', paddingHorizontal: 20 }}>
           <Text style={styles.title}>{open ? t("Your haul is here!") : t("Your parcel has arrived")}</Text>
           <Text style={styles.sub}>
-            {open ? `${items.length} item${items.length > 1 ? 's' : ''} from order ${order.id}` : `Tap the box ${TAPS - taps} more time${TAPS - taps === 1 ? '' : 's'} to open it`}
+            {open ? t(items.length > 1 ? '{n} items from order {id}' : '{n} item from order {id}', { n: items.length, id: order.id }) : t(TAPS - taps === 1 ? 'Tap the box {n} more time to open it' : 'Tap the box {n} more times to open it', { n: TAPS - taps })}
           </Text>
 
           {!alreadyOpen && (
@@ -138,7 +138,7 @@ export default function Unbox() {
 
           {open && order.gift && (
             <Animated.View entering={FadeInDown.delay(300)} style={styles.giftNote}>
-              <Text style={styles.giftTo}>Gift for {order.gift.to}</Text>
+              <Text style={styles.giftTo}>{t('Gift for {name}', { name: order.gift.to })}</Text>
               {!!order.gift.message && <Text style={styles.giftMsg}>“{order.gift.message}”</Text>}
             </Animated.View>
           )}
@@ -168,7 +168,7 @@ export default function Unbox() {
           {open && (
             <Animated.View entering={FadeInDown.delay(alreadyOpen ? 0 : 900)} style={{ width: '100%', gap: 10, marginTop: 28 }}>
               <Pressable style={styles.whiteBtn} onPress={() => router.replace(`/rate/${order.id}`)}>
-                <Text style={styles.whiteBtnText}>Rate & earn {items.length * COINS_PER_REVIEW} coins</Text>
+                <Text style={styles.whiteBtnText}>{t('Rate & earn {n} coins', { n: items.length * COINS_PER_REVIEW })}</Text>
               </Pressable>
               <Pressable style={styles.ghostBtn} onPress={() => router.replace(`/order/${order.id}`)}>
                 <Text style={styles.ghostBtnText}>{t("View order")}</Text>

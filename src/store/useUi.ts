@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import type { IconName } from '../components/Icon';
 import { play } from '../lib/sound';
+import { t } from '../i18n';
 
 export type ToastIcon = IconName | 'coin';
 
@@ -46,4 +47,4 @@ export const useUi = create<Ui>()((set, get) => ({
   },
 }));
 
-export const toast = (text: string, icon?: ToastIcon) => useUi.getState().showToast(text, icon);
+export const toast = (text: string, icon?: ToastIcon) => useUi.getState().showToast(t(text), icon);

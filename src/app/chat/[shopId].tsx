@@ -66,7 +66,7 @@ export default function Chat() {
             <ShopAvatar shop={shop} size={44} />
             <View style={{ flex: 1 }}>
               <Text style={{ fontWeight: '700', color: C.text }}>{shop.name}</Text>
-              <Text style={styles.small}>Usually replies within minutes · {shop.responseRate}% response rate</Text>
+              <Text style={styles.small}>{t('Usually replies within minutes · {pct}% response rate', { pct: shop.responseRate })}</Text>
             </View>
           </View>
 
@@ -106,7 +106,7 @@ export default function Chat() {
             <Pressable style={styles.ask} onPress={() => send('', asked.id)}>
               <ProductImage emoji={asked.emoji} gradient={asked.gradient} size={36} radius={4} />
               <Text style={{ flex: 1, fontSize: 12, color: C.text }} numberOfLines={1}>
-                Ask about: {asked.name}
+                {t('Ask about: {name}', { name: asked.name })}
               </Text>
               <Text style={{ color: C.primary, fontWeight: '700', fontSize: 12 }}>{t("Send")}</Text>
             </Pressable>

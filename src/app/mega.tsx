@@ -46,7 +46,7 @@ export default function Mega() {
           <CartButton />
         </Wrap>
         <Wrap style={styles.hero}>
-          <Text style={styles.label}>{mega.label}</Text>
+          <Text style={styles.label}>{t(mega.label)}</Text>
           <Text style={styles.heroTitle}>{t("MEGA SALE")}</Text>
           <View style={styles.statusPill}>
             <View style={[styles.liveDot, !mega.live && { backgroundColor: '#FDE68A' }]} />
@@ -85,8 +85,8 @@ export default function Mega() {
                 <View key={v.id} style={styles.voucher}>
                   <Ionicons name={v.kind === 'shipping' ? 'car' : 'ticket'} size={26} color={C.primary} />
                   <View style={{ flex: 1 }}>
-                    <Text style={{ fontWeight: '800', color: C.text, fontSize: 16 }}>{v.title}</Text>
-                    <Text style={{ color: C.muted, fontSize: 12 }}>{v.subtitle}</Text>
+                    <Text style={{ fontWeight: '800', color: C.text, fontSize: 16 }}>{t(v.title)}</Text>
+                    <Text style={{ color: C.muted, fontSize: 12 }}>{t(v.subtitle)}</Text>
                   </View>
                   {mega.live ? (
                     <Button
@@ -107,7 +107,7 @@ export default function Mega() {
             })}
             {!mega.live && (
               <Button
-                title={reminded ? 'Reminder set' : `Remind me when ${mega.label} starts`}
+                title={reminded ? t('Reminder set') : t('Remind me when {sale} starts', { sale: t(mega.label) })}
                 variant="outline"
                 icon="alarm-outline"
                 disabled={reminded}
@@ -123,7 +123,7 @@ export default function Mega() {
 
         <View style={styles.picksHead}>
           <Text style={styles.picksTitle}>{t("MEGA PICKS")}</Text>
-          <Text style={styles.picksSub}>{mega.live ? `Extra ${MEGA_EXTRA_PCT}% off already applied` : `Add to cart now. Extra ${MEGA_EXTRA_PCT}% off on ${mega.label}`}</Text>
+          <Text style={styles.picksSub}>{mega.live ? t('Extra {pct}% off already applied', { pct: MEGA_EXTRA_PCT }) : t('Add to cart now. Extra {pct}% off on {sale}', { pct: MEGA_EXTRA_PCT, sale: t(mega.label) })}</Text>
         </View>
         <ProductGrid products={picks} keyPrefix="mega" />
       </Wrap>

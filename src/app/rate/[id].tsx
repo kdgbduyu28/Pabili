@@ -56,7 +56,7 @@ export default function Rate() {
     });
     const coins = useShop.getState().addReviews(rs);
     success();
-    toast(`Thanks! +${coins} Pabili Coins`, 'coin');
+    toast(t('Thanks! +{n} Pabili Coins', { n: coins }), 'coin');
     router.replace(`/order/${order.id}`);
   };
 
@@ -83,7 +83,7 @@ export default function Rate() {
                     <Text numberOfLines={2} style={{ fontSize: 13, color: C.text }}>
                       {l.label}
                     </Text>
-                    {!!variantLabel(l.variant) && <Text style={styles.small}>Variation: {variantLabel(l.variant)}</Text>}
+                    {!!variantLabel(l.variant) && <Text style={styles.small}>{t('Variation: {v}', { v: variantLabel(l.variant) })}</Text>}
                   </View>
                   {done && (
                     <View style={styles.rated}>
@@ -110,18 +110,18 @@ export default function Rate() {
                       <Text style={styles.word}>{RATING_WORDS[d.rating]}</Text>
                     </View>
                     <View style={styles.tags}>
-                      {REVIEW_TAGS.map((t) => {
-                        const on = d.tags.includes(t);
+                      {REVIEW_TAGS.map((tag) => {
+                        const on = d.tags.includes(tag);
                         return (
                           <Pressable
-                            key={t}
+                            key={tag}
                             onPress={() => {
                               tap();
-                              update(l.key, { tags: on ? d.tags.filter((x) => x !== t) : [...d.tags, t] });
+                              update(l.key, { tags: on ? d.tags.filter((x) => x !== tag) : [...d.tags, tag] });
                             }}
                             style={[styles.tag, on && styles.tagOn]}
                           >
-                            <Text style={[styles.tagText, on && { color: C.primary }]}>{t}</Text>
+                            <Text style={[styles.tagText, on && { color: C.primary }]}>{t(tag)}</Text>
                           </Pressable>
                         );
                       })}
@@ -144,7 +144,7 @@ export default function Rate() {
       <View style={[styles.bar, { paddingBottom: insets.bottom + 8 }]}>
         <Wrap style={{ paddingHorizontal: 12, maxWidth: 720 }}>
           {pending.length ? (
-            <Button title={`Submit & earn ${pending.length * COINS_PER_REVIEW} coins`} onPress={submit} />
+            <Button title={t('Submit & earn {n} coins', { n: pending.length * COINS_PER_REVIEW })} onPress={submit} />
           ) : (
             <Button title={t("All rated. Back to order")} variant="outline" onPress={() => router.replace(`/order/${order.id}`)} />
           )}

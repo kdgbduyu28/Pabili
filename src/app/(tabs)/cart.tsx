@@ -53,7 +53,7 @@ export default function Cart() {
   const changeMind = () => {
     const amount = useShop.getState().resist(selected.map((c) => c.key));
     success();
-    toast(`You kept ${peso(amount)} for real. Iron will!`, 'shield-checkmark');
+    toast(t('You kept {amount} for real. Iron will!', { amount: peso(amount) }), 'shield-checkmark');
   };
 
   const checkout = () => {
@@ -62,7 +62,7 @@ export default function Cart() {
       return;
     }
     if (cooling) {
-      toast(`Cooling off. Check out in ${coolLabel}`, 'hourglass');
+      toast(t('Cooling off. Check out in {time}', { time: coolLabel }), 'hourglass');
       return;
     }
     if (settings.coolOff) {
@@ -123,7 +123,7 @@ export default function Cart() {
               <View style={styles.freeShip}>
                 <Ionicons name="car-outline" size={16} color={C.ship} />
                 <Text style={{ color: C.ship, fontSize: 12, flex: 1 }}>
-                  Claim the FREESHIP voucher to get up to ₱80 off shipping
+                  {t('Claim the FREESHIP voucher to get up to ₱80 off shipping')}
                 </Text>
                 <Pressable onPress={() => router.push('/vouchers')}>
                   <Text style={{ color: C.ship, fontSize: 12, fontWeight: '700' }}>{t("Claim ›")}</Text>
@@ -167,9 +167,9 @@ export default function Cart() {
                             )}
                             <View style={styles.nudges}>
                               {item.was > l.unitPrice && (
-                                <Tag text={`Price dropped ${peso(item.was - l.unitPrice)}`} color="#fff" bg={C.success} />
+                                <Tag text={t('Price dropped {amount}', { amount: peso(item.was - l.unitPrice) })} color="#fff" bg={C.success} />
                               )}
-                              {l.product.stock < 40 && <Tag text={`Only ${l.product.stock} left`} color={C.primary} border={C.primary} />}
+                              {l.product.stock < 40 && <Tag text={t('Only {n} left', { n: l.product.stock })} color={C.primary} border={C.primary} />}
                               {l.bundlePct > 0 ? (
                                 <Tag text={`Bundle -${l.bundlePct}%`} color="#fff" bg={C.preferred} />
                               ) : (
@@ -217,7 +217,7 @@ export default function Cart() {
             <View style={{ flex: 1 }} />
             {editing ? (
               <Button
-                title={`Delete (${selected.length})`}
+                title={t('Delete ({n})', { n: selected.length })}
                 variant="outline"
                 disabled={!selected.length}
                 onPress={() => {
@@ -255,13 +255,13 @@ function ShopVoucherChip({ shopId, claimed }: { shopId: string; claimed: boolean
       onPress={() => {
         success();
         useShop.getState().claimShopVoucher(shopId);
-        toast(`Shop voucher claimed: ${peso(v.value)} off ${peso(v.minSpend)}`, 'pricetag');
+        toast(t('Shop voucher claimed: {value} off {min}', { value: peso(v.value), min: peso(v.minSpend) }), 'pricetag');
       }}
       style={[styles.svChip, claimed && { borderColor: C.line }]}
     >
       <Ionicons name="pricetag-outline" size={12} color={claimed ? C.muted : C.primary} />
       <Text style={[styles.svText, claimed && { color: C.muted }]}>
-        {claimed ? `${peso(v.value)} off claimed` : `Claim ${peso(v.value)} off`}
+        {claimed ? t('{value} off claimed', { value: peso(v.value) }) : t('Claim {value} off', { value: peso(v.value) })}
       </Text>
     </Pressable>
   );
@@ -272,7 +272,7 @@ function FreeShipBar({ subtotal, reason, gap }: { subtotal: number; reason: Free
     return (
       <View style={styles.ship}>
         <Ionicons name="car" size={14} color={C.ship} />
-        <Text style={styles.shipText}>{reason === 'mega' ? 'Mega Day: free shipping on everything' : t("Free shipping on this shop")}</Text>
+        <Text style={styles.shipText}>{reason === 'mega' ? t('Mega Day: free shipping on everything') : t("Free shipping on this shop")}</Text>
       </View>
     );
   }
@@ -282,7 +282,7 @@ function FreeShipBar({ subtotal, reason, gap }: { subtotal: number; reason: Free
       <Ionicons name="car-outline" size={14} color={C.ship} />
       <View style={{ flex: 1, gap: 4 }}>
         <Text style={styles.shipText}>
-          {reason === 'threshold' ? 'Free shipping unlocked!' : `Add ${peso(gap)} more for FREE shipping`}
+          {reason === 'threshold' ? t('Free shipping unlocked!') : t('Add {amount} more for FREE shipping', { amount: peso(gap) })}
         </Text>
         <View style={styles.shipTrack}>
           <View style={[styles.shipFill, { width: `${Math.round(pct * 100)}%` }]} />

@@ -93,7 +93,7 @@ export default function Search() {
               value={text}
               onChangeText={setText}
               onSubmitEditing={() => submit(text)}
-              placeholder={filter ? `Search in ${FILTERS[filter].label}` : 'Search Pabili'}
+              placeholder={filter ? t('Search in {place}', { place: t(FILTERS[filter].label) }) : t('Search Pabili')}
               placeholderTextColor={C.faint}
               returnKeyType="search"
               style={styles.input}
@@ -196,7 +196,7 @@ export default function Search() {
               </View>
             ) : filter ? (
               <View style={styles.filterBanner}>
-                <Text style={{ color: C.primary, fontWeight: '700' }}>{FILTERS[filter].label}</Text>
+                <Text style={{ color: C.primary, fontWeight: '700' }}>{t(FILTERS[filter].label)}</Text>
                 <Pressable onPress={() => router.setParams({ filter: '' })}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
                     <Text style={{ color: C.muted, fontSize: 12 }}>{t("Clear filter")}</Text>

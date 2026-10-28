@@ -35,16 +35,16 @@ export default function AddressScreen() {
       <ScrollView keyboardShouldPersistTaps="handled">
         <Wrap style={{ maxWidth: 640, padding: 12, gap: 12 }}>
           <Text style={styles.note}>
-            This is only used to make the checkout feel real. It stays on this device and nothing is ever shipped.
-            Make one up if you like!
+            {t('This is only used to make the checkout feel real. It stays on this device and nothing is ever shipped.')}
+            {t('Make one up if you like!')}
           </Text>
           {FIELDS.map((f) => (
             <View key={f.key} style={styles.field}>
-              <Text style={styles.label}>{f.label}</Text>
+              <Text style={styles.label}>{t(f.label)}</Text>
               <TextInput
                 value={form[f.key]}
                 onChangeText={(t) => setForm((x) => ({ ...x, [f.key]: t }))}
-                placeholder={f.placeholder}
+                placeholder={t(f.placeholder)}
                 placeholderTextColor={C.faint}
                 style={styles.input}
               />

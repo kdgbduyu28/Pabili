@@ -172,7 +172,7 @@ const ClipPage = memo(function ClipPage({ clip, active, height, width, onComment
         </View>
         <RailButton icon={liked ? 'heart' : 'heart-outline'} color={liked ? C.primary : '#fff'} label={compact(clip.likes + (liked ? 1 : 0))} onPress={like} />
         <RailButton icon="chatbubble-ellipses" label={compact(clip.comments)} onPress={onComments} />
-        <RailButton icon="arrow-redo" label={t("Share")} onPress={() => shareText(`Look what I found on Pabili: ${p.name} for ${peso(price)}`)} />
+        <RailButton icon="arrow-redo" label={t("Share")} onPress={() => shareText(t('Look what I found on Pabili: {name} for {price}', { name: p.name, price: peso(price) }))} />
       </View>
 
       <View style={[styles.bottom, { paddingBottom: insets.bottom + 16 }]}>

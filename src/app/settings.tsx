@@ -41,9 +41,9 @@ export default function Settings() {
     };
     warn();
     if (Platform.OS === 'web') {
-      if (window.confirm('Clear your cart, orders, likes, coins and achievements?')) doIt();
+      if (window.confirm(t('Clear your cart, orders, likes, coins and achievements?'))) doIt();
     } else {
-      Alert.alert('Reset everything?', 'Clears your cart, orders, likes, coins and achievements.', [
+      Alert.alert(t('Reset everything?'), t('Clears your cart, orders, likes, coins and achievements.'), [
         { text: 'Cancel', style: 'cancel' },
         { text: 'Reset', style: 'destructive', onPress: doIt },
       ]);

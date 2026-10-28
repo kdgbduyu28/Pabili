@@ -77,7 +77,7 @@ export default function Garden() {
     if (stageOf(points).name !== before.name) {
       success();
       play('tada');
-      toast(points >= HARVEST_AT ? 'Ready to harvest!' : `Grew into a ${stageOf(points).name.toLowerCase()}!`, 'leaf');
+      toast(points >= HARVEST_AT ? t('Ready to harvest!') : t('Grew into a {stage}!', { stage: t(stageOf(points).name).toLowerCase() }), 'leaf');
     }
     return points;
   };
@@ -96,7 +96,7 @@ export default function Garden() {
   const fertilize = () => {
     if (ready) return;
     if (!useShop.getState().spendCoins(FERTILIZER_COST)) {
-      toast(`You need ${FERTILIZER_COST} coins`, 'coin');
+      toast(t('You need {n} coins', { n: FERTILIZER_COST }), 'coin');
       return;
     }
     tap();
@@ -129,9 +129,9 @@ export default function Garden() {
         </Wrap>
 
         <Wrap style={{ alignItems: 'center', paddingHorizontal: 16 }}>
-          <Text style={styles.plantName}>{plantName}</Text>
+          <Text style={styles.plantName}>{t(plantName)}</Text>
           <Text style={styles.stage}>
-            {stage.name} · {farm.harvests} harvest{farm.harvests === 1 ? '' : 's'} so far
+            {t(stage.name)} · {t(farm.harvests === 1 ? '{n} harvest so far' : '{n} harvests so far', { n: farm.harvests })}
           </Text>
 
           <View style={styles.scene}>
@@ -157,7 +157,7 @@ export default function Garden() {
               <View style={[styles.fill, { width: `${Math.round((farm.points / HARVEST_AT) * 100)}%` }]} />
             </View>
             <Text style={styles.progressText}>
-              {ready ? 'Fully grown!' : `${farm.points}/${HARVEST_AT} growth${next ? ` · ${next.name} at ${next.at}` : ''}`}
+              {ready ? t('Fully grown!') : t('{points}/{goal} growth', { points: farm.points, goal: HARVEST_AT }) + (next ? ' · ' + t('{stage} at {n}', { stage: t(next.name), n: next.at }) : '')}
             </Text>
           </View>
 
@@ -168,12 +168,12 @@ export default function Garden() {
               <Pressable onPress={water} disabled={left === 0} style={[styles.action, left === 0 && { opacity: 0.5 }]}>
                 <Ionicons name="water" size={26} color="#0EA5E9" />
                 <Text style={styles.actionTitle}>{t("Water")}</Text>
-                <Text style={styles.actionSub}>{left > 0 ? `${left} free left today` : 'Come back tomorrow'}</Text>
+                <Text style={styles.actionSub}>{left > 0 ? t('{n} free left today', { n: left }) : t('Come back tomorrow')}</Text>
               </Pressable>
               <Pressable onPress={fertilize} style={styles.action}>
                 <Ionicons name="flask" size={26} color="#A855F7" />
                 <Text style={styles.actionTitle}>{t("Fertilize")}</Text>
-                <Text style={styles.actionSub}>+{FERTILIZER_POINTS} for {FERTILIZER_COST} coins</Text>
+                <Text style={styles.actionSub}>{t('+{points} for {n} coins', { points: FERTILIZER_POINTS, n: FERTILIZER_COST })}</Text>
               </Pressable>
             </View>
           )}
@@ -181,14 +181,14 @@ export default function Garden() {
           {prize && (
             <Animated.View entering={ZoomIn.springify().damping(12)} style={styles.prize}>
               <Ionicons name="gift" size={34} color={C.primary} />
-              <Text style={styles.prizeTitle}>You harvested {prize.label}!</Text>
-              <Text style={styles.actionSub}>A new {PLANTS[farm.plant % PLANTS.length].toLowerCase()} seed is planted.</Text>
+              <Text style={styles.prizeTitle}>{t('You harvested {prize}!', { prize: t(prize.label) })}</Text>
+              <Text style={styles.actionSub}>{t('A new {plant} seed is planted.', { plant: t(PLANTS[farm.plant % PLANTS.length]).toLowerCase() })}</Text>
               {prize.voucher && <Button title={t("See my vouchers")} small variant="outline" onPress={() => router.push('/vouchers')} />}
             </Animated.View>
           )}
 
           <Text style={styles.how}>
-            Water up to {WATERS_PER_DAY} times a day (+{WATER_POINTS} each). Every fully grown plant drops a coin or voucher reward.
+            {t('Water up to {n} times a day (+{points} each). Every fully grown plant drops a coin or voucher reward.', { n: WATERS_PER_DAY, points: WATER_POINTS })}
           </Text>
         </Wrap>
       </ScrollView>

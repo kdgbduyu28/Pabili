@@ -75,7 +75,7 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
             }}
           >
             <Ionicons name="funnel-outline" size={16} color={active ? C.primary : C.text} />
-            <Text style={[styles.filterText, active > 0 && { color: C.primary }]}>Filter{active ? ` (${active})` : ''}</Text>
+            <Text style={[styles.filterText, active > 0 && { color: C.primary }]}>{active ? t('Filter ({n})', { n: active }) : t('Filter')}</Text>
           </Pressable>
         </Wrap>
         <Wrap>
@@ -89,7 +89,7 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
               <EmptyState
                 icon="search"
                 title={t("No products found")}
-                subtitle={active ? 'Try loosening your filters.' : 'Try a different keyword.'}
+                subtitle={active ? t('Try loosening your filters.') : t('Try a different keyword.')}
                 action={active ? <Button title={t("Clear filters")} variant="outline" onPress={() => setFilters(EMPTY)} style={{ width: 180 }} /> : undefined}
               />
             ))
@@ -154,7 +154,7 @@ export function Browse({ products, top, empty }: { products: Product[]; top?: Re
               {t("Free Shipping")}
             </Chip>
             <Chip on={draft.cod} onPress={() => setDraft((d) => ({ ...d, cod: !d.cod }))}>
-              Cash on Delivery
+              {t("Cash on Delivery")}
             </Chip>
           </Group>
         </ScrollView>

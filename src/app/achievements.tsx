@@ -25,7 +25,7 @@ export default function Achievements() {
             <Ionicons name="trophy" size={34} color={C.coin} />
             <View style={{ flex: 1 }}>
               <Text style={styles.count}>
-                {count} of {ACHIEVEMENTS.length} unlocked
+                {t('{n} of {total} unlocked', { n: count, total: ACHIEVEMENTS.length })}
               </Text>
               <View style={styles.track}>
                 <View style={[styles.fill, { width: `${Math.round((count / ACHIEVEMENTS.length) * 100)}%` }]} />
@@ -41,10 +41,10 @@ export default function Achievements() {
                     <Ionicons name={at ? a.icon : 'lock-closed'} size={28} color="#fff" />
                   </View>
                   <Text style={styles.title} numberOfLines={1}>
-                    {a.title}
+                    {t(a.title)}
                   </Text>
                   <Text style={styles.desc} numberOfLines={2}>
-                    {a.desc}
+                    {t(a.desc)}
                   </Text>
                   {at && <Text style={styles.date}>{dateTime(at)}</Text>}
                 </View>

@@ -45,8 +45,9 @@ export default function WrappedScreen() {
           <Text style={styles.kicker}>{t("You \"bought\"")}</Text>
           <Text style={styles.huge}>{w.items}</Text>
           <Text style={styles.line}>
-            things across {w.orders} order{w.orders === 1 ? '' : 's'}
-            {w.topShop ? `, mostly from ${w.topShop.name}` : ''}.
+            {w.topShop
+              ? t(w.orders === 1 ? 'things across {n} order, mostly from {shop}.' : 'things across {n} orders, mostly from {shop}.', { n: w.orders, shop: w.topShop.name })
+              : t(w.orders === 1 ? 'things across {n} order.' : 'things across {n} orders.', { n: w.orders })}
           </Text>
         </>
       ) : (
@@ -63,7 +64,7 @@ export default function WrappedScreen() {
         <>
           <Text style={styles.kicker}>{t("Stayed in your wallet")}</Text>
           <Text style={styles.huge}>{peso(w.kept)}</Text>
-          <Text style={styles.line}>Plus {peso(w.saved)} in deals you "scored". Real money spent: ₱0.</Text>
+          <Text style={styles.line}>{t('Plus {amount} in deals you "scored". Real money spent: ₱0.', { amount: peso(w.saved) })}</Text>
         </>
       ),
     },
@@ -77,9 +78,9 @@ export default function WrappedScreen() {
                 <View style={styles.iconCircle}>
                   <Ionicons name={w.topCategory.category.icon} size={56} color="#fff" />
                 </View>
-                <Text style={styles.big}>{w.topCategory.category.name}</Text>
+                <Text style={styles.big}>{t(w.topCategory.category.name)}</Text>
                 <Text style={styles.line}>
-                  {w.topCategory.count} item{w.topCategory.count === 1 ? '' : 's'}. You couldn't stop.
+                  {t(w.topCategory.count === 1 ? "{n} item. You couldn't stop." : "{n} items. You couldn't stop.", { n: w.topCategory.count })}
                 </Text>
               </>
             ),
@@ -97,7 +98,7 @@ export default function WrappedScreen() {
                   <ProductImage emoji={w.priciest.product.emoji} gradient={w.priciest.product.gradient} size={150} radius={R.xl} />
                 </Animated.View>
                 <Text style={styles.big}>{peso(w.priciest.price)}</Text>
-                <Text style={styles.line}>{w.priciest.product.name}. Zero buyer's remorse.</Text>
+                <Text style={styles.line}>{w.priciest.product.name}. {t("Zero buyer's remorse.")}</Text>
               </>
             ),
           },
@@ -111,16 +112,16 @@ export default function WrappedScreen() {
             <Text style={styles.kicker}>{t("You talked yourself out of")}</Text>
             <Text style={styles.huge}>{peso(w.resisted)}</Text>
             <Text style={styles.line}>
-              {w.resistedCount} item{w.resistedCount === 1 ? '' : 's'} you changed your mind about. Iron will.
+              {t(w.resistedCount === 1 ? '{n} item you changed your mind about. Iron will.' : '{n} items you changed your mind about. Iron will.', { n: w.resistedCount })}
             </Text>
           </>
         ) : (
           <>
             <Text style={styles.kicker}>{t("Coins earned")}</Text>
             <Coin size={80} />
-            <Text style={styles.big}>{w.coins} coins</Text>
+            <Text style={styles.big}>{t('{n} coins', { n: w.coins })}</Text>
             <Text style={styles.line}>
-              {w.reviews} review{w.reviews === 1 ? '' : 's'} written · {w.achievements} achievement{w.achievements === 1 ? '' : 's'} unlocked
+              {t(w.reviews === 1 ? '{n} review written' : '{n} reviews written', { n: w.reviews })} · {t(w.achievements === 1 ? '{n} achievement unlocked' : '{n} achievements unlocked', { n: w.achievements })}
             </Text>
           </>
         ),
@@ -133,8 +134,8 @@ export default function WrappedScreen() {
           <View style={styles.iconCircle}>
             <Ionicons name={w.persona.icon} size={56} color="#fff" />
           </View>
-          <Text style={styles.big}>{w.persona.title}</Text>
-          <Text style={styles.line}>{w.persona.desc}</Text>
+          <Text style={styles.big}>{t(w.persona.title)}</Text>
+          <Text style={styles.line}>{t(w.persona.desc)}</Text>
         </>
       ),
     },

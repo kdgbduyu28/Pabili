@@ -31,7 +31,7 @@ export default function CoinsShop() {
     const s = useShop.getState();
     if (!s.spendCoins(item.cost)) {
       warn();
-      toast(`You need ${item.cost - s.coins} more coins`, 'coin');
+      toast(t('You need {n} more coins', { n: item.cost - s.coins }), 'coin');
       return;
     }
     if (item.kind === 'voucher') s.claimVoucher(item.voucher);
@@ -39,7 +39,7 @@ export default function CoinsShop() {
     s.bumpStat('coinRedeems');
     success();
     play('chaching');
-    toast(item.kind === 'voucher' ? `${item.title} added to My Vouchers` : 'Fertilizer added to your garden', item.kind === 'voucher' ? 'ticket' : 'flask');
+    toast(item.kind === 'voucher' ? t('{voucher} added to My Vouchers', { voucher: t(item.title) }) : 'Fertilizer added to your garden', item.kind === 'voucher' ? 'ticket' : 'flask');
   };
 
   const grab = (id: string, e: GestureResponderEvent) => {
@@ -48,7 +48,7 @@ export default function CoinsShop() {
     if (s.stats[key]) return;
     if (!s.spendCoins(PESO_DEAL_COST)) {
       warn();
-      toast(`You need ${PESO_DEAL_COST - s.coins} more coins`, 'coin');
+      toast(t('You need {n} more coins', { n: PESO_DEAL_COST - s.coins }), 'coin');
       return;
     }
     const p = deals.find((d) => d.id === id)!;
@@ -76,7 +76,7 @@ export default function CoinsShop() {
 
           <View style={styles.card}>
             <SectionTitle title={t("₱1 DEALS TODAY")} />
-            <Text style={styles.sub}>Spend {PESO_DEAL_COST} coins, pay ₱1. One of each per day.</Text>
+            <Text style={styles.sub}>{t('Spend {n} coins, pay ₱1. One of each per day.', { n: PESO_DEAL_COST })}</Text>
             <View style={styles.deals}>
               {deals.map((p) => {
                 const got = !!stats[`peso:${day}:${p.id}`];
@@ -104,8 +104,8 @@ export default function CoinsShop() {
                   <Ionicons name={item.icon} size={22} color={C.primary} />
                 </View>
                 <View style={{ flex: 1 }}>
-                  <Text style={styles.rowTitle}>{item.title}</Text>
-                  <Text style={styles.sub}>{item.sub}</Text>
+                  <Text style={styles.rowTitle}>{t(item.title)}</Text>
+                  <Text style={styles.sub}>{t(item.sub)}</Text>
                 </View>
                 <Button title={`${item.cost}`} small onPress={() => redeem(item)} disabled={coins < item.cost} />
               </View>
